@@ -4,13 +4,14 @@ import { getUserData } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
 import { bringDates, meProfile } from '../../services/apiCalls';
 import Image from 'react-bootstrap/Image';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 // import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+import Modal from '../../components/Modal/Modal';
+import Memodal from '../../components/Modal/Modal';
 
 //--------------------------------------------------------
 
@@ -37,13 +38,13 @@ export const Profile = () => {
         fetchDataAndProfile();
     }, [token]);
 
-    // const inputHandler = (e) => {
-    //     setProfileData((prevState) => ({
-    //         ...prevState,
-    //         [e.target.name]: e.target.value,
+    const inputHandler = (e) => {
+        setProfileData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
 
-    //     }));
-    // };
+        }));
+    };
 
     return (
         <>
@@ -52,10 +53,16 @@ export const Profile = () => {
                     <Card.Body>
                         <Row className="mb-3">
                             <Col xs={12} md={4}>
-                                <Image src="../../src/Images/iconoPerfil.jpeg" width={200} roundedCircle />
+                                <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
+                                    <>
+                                        <Memodal
+                                            profileData={profileData}
+                                            inputHandler={inputHandler}
+                                            token={token} />
+                                    </>
                             </Col>
                             <Col xs={12} md={8}>
-                                <h1>Me Profile</h1>
+                                <h2>Me Profile</h2>
                                 <Form >
                                     <Form.Group controlId="validationCustomUsername" >
                                         <Form.Label>Email</Form.Label>
@@ -69,6 +76,7 @@ export const Profile = () => {
                                                 aria-describedby="inputGroupPrepend"
                                                 required
                                                 value={profileData.email}
+                                                onChange={inputHandler}
                                                 readOnly
                                             />
                                             <Form.Control.Feedback type="invalid">
@@ -110,12 +118,12 @@ export const Profile = () => {
                                             required
                                             type="text"
                                             placeholder="phone"
-                                            value={profileData.phone || ""}
                                             readOnly
+                                            value={profileData.phone || ""}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-                                    <Button type="submit">Profile</Button>
+
                                 </Form>
                             </Col>
                         </Row>

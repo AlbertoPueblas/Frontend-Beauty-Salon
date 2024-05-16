@@ -1,10 +1,35 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { updateProfile } from '../../services/apiCalls';
 
 //-----------------------------------------------------------
 
-function Modal() {
+function Memodal(props) {
 
+    const {profileData, inputHandler, token} = props
+    const navigate = useNavigate()
+    const [show, setShow] = useState(false)
+
+    const closeModal = () => {
+        navigate("/");
+        setTimeout(() => {
+            navigate("/Profile")
+        });
+        setShow(false);
+    }
+
+    const profileUpdate = async () => {
+
+        await updateProfile(profileData, token);
+        setTimeout(() => {
+            navigate("/Profile")
+            setShow(false);
+        }, 2000)
+    };
 
     return (
         <>
@@ -12,22 +37,80 @@ function Modal() {
                 className="modal show"
                 style={{ display: 'block', position: 'initial' }}
             >
-                <Modal.Dialog>
+                <Button variant="primary" onClick={() => setShow(true)}>
+                    modify profile
+                </Button>
+                <Modal show={show} onHide={closeModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal title</Modal.Title>
+                        <Modal.Title>Edit Profile</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        <p>Modal body text goes here.</p>
-                    </Modal.Body>
+                        <Form.Group controlId="validationCustomUsername" >
+                            <Form.Label>Email</Form.Label>
+                            <InputGroup hasValidation>
+                                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    placeholder="email"
+                                    value={profileData.email}
+                                    onChange={inputHandler}
 
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid email.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Form.Group controlId="validationCustom01">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="firstName"
+                                placeholder="firstName"
+                                value={profileData.firstName}
+                                onChange={inputHandler}
+
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="validationCustom02">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="lastName"
+                                placeholder="lastName"
+                                value={profileData.lastName}
+                                onChange={inputHandler}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="validationCustom03">
+                            <Form.Label>Phone</Form.Label>
+                            <Form.Control
+                                name="phone"
+                                required
+                                type="text"
+                                placeholder="phone"
+                                value={profileData.phone}
+                                onChange={inputHandler}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                    </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary">Close</Button>
-                        <Button variant="primary">Save changes</Button>
+                        <Button variant="secondary"
+                            onClick={closeModal}>Close</Button>
+                        <Button variant="primary"
+                            onClick={() => {
+                                profileUpdate()
+                                closeModal()
+                            }}>Save changes</Button>
                     </Modal.Footer>
-                </Modal.Dialog>
+                </Modal>
             </div>
         </>
     );
 }
-export default Modal
+export default Memodal

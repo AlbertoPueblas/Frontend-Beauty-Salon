@@ -35,3 +35,13 @@ export const bringDates = async (token) => {
     const res = await axios.get(`${API_URL}user/appointment`, config)
     return res.data
 }
+
+export const updateProfile = async (profileData, token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const res = await axios.put(`${API_URL}user/putProfile`, profileData, config)
+    return res
+  }
