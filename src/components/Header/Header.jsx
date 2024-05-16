@@ -8,12 +8,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Header.css"
 import { getUserData, logout } from '../../app/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'react-bootstrap/Image';
+
 
 function Header() {
 
   const userReduxData = useSelector(getUserData) || {}
   const token = userReduxData?.token
-  const userType = userReduxData
+  const userType = userReduxData?.decoded?.userRole
+
 
   const dispatch = useDispatch();
   const logOutMe = () => {
@@ -23,6 +26,7 @@ function Header() {
   return (
     <Navbar expand="lg" className="navBar">
     <Container fluid>
+      <Image src="../../src/Images/MP.jpeg" width={40}></Image>
       <Navbar.Brand href="#">MP Estilistas</Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarScroll" />
       <Navbar.Collapse id="navbarScroll">
@@ -47,7 +51,7 @@ function Header() {
             Link
           </Nav.Link>
         </Nav>
-        <Button onClick={ () => {logOutMe}}>Log Out</Button>
+        <Button href='/home' onClick={ () => {logOutMe()}}>Log Out</Button>
         <Form className="d-flex">
           <Form.Control
             type="search"

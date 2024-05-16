@@ -28,7 +28,7 @@ export const Login = () => {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            await loginMe(navigate("/menu"));
+            await loginMe(navigate("/profile"));
         }
         setValidated(true);
     };
@@ -58,59 +58,59 @@ export const Login = () => {
             dispatch(login(passport))
 
             setTimeout(() => {
-                navigate("/menu")
+                navigate("/profile")
             }, 1000);
         }
     }
 
     return (
         <>
-            <Container className="my-4">
+           <Container className="my-4">
                 <Card className='card'>
                     <Card.Body>
-                        <Col xs={6} md={4}>
-                            <Image src="../../Images/icon1.png" roundedCircle />
-                        </Col>
-                        <Card.Title>Login</Card.Title>
-                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                            <Row className="mb-3">
-                                <Form.Group as={Col} sm="12" md="4" controlId="validationCustomUsername" >
-                                    <Form.Label>Email</Form.Label>
-                                    <InputGroup hasValidation>
-                                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                        <Row className="mb-3">
+                            <Col xs={12} md={4}>
+                                <Image src="../../src/Images/iconoPerfil.jpeg" width={200} roundedCircle />
+                            </Col>
+                            <Col xs={12} md={8}>
+                                <h1>Login</h1>
+                                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                                    <Form.Group controlId="validationCustomUsername" >
+                                        <Form.Label>Email</Form.Label>
+                                        <InputGroup hasValidation>
+                                            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                                            <Form.Control
+                                                className="input"
+                                                name="email"
+                                                type="email"
+                                                placeholder="Email"
+                                                aria-describedby="inputGroupPrepend"
+                                                required
+                                                value={credentials.email}
+                                                onChange={inputHandler}
+                                            />
+                                            <Form.Control.Feedback type="invalid">
+                                                Please provide a valid email.
+                                            </Form.Control.Feedback>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group controlId="validationCustom02">
+                                        <Form.Label>Password</Form.Label>
                                         <Form.Control
                                             className="input"
-                                            name="email"
-                                            type="email"
-                                            placeholder="Email"
-                                            aria-describedby="inputGroupPrepend"
+                                            name="password"
                                             required
-                                            value={credentials.email}
+                                            type="password"
+                                            placeholder="Password"
+                                            value={credentials.password}
                                             onChange={inputHandler}
                                         />
-                                        <Form.Control.Feedback type="invalid">
-                                            Please provide a valid email.
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
-                                <Form.Group as={Col} sm="12" md="4" controlId="validationCustom02">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        className="input"
-                                        name="password"
-                                        required
-                                        type="password"
-                                        placeholder="Password"
-                                        value={credentials.password}
-                                        onChange={inputHandler}
-                                    />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                                </Form.Group>
-                            </Row>
-                            <Form.Group className="mb-3">
-                            </Form.Group>
-                            <Button type="submit">Login me</Button>
-                        </Form>
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Button type="submit">Login me</Button>
+                                </Form>
+                            </Col>
+                        </Row>
                     </Card.Body>
                 </Card>
             </Container>

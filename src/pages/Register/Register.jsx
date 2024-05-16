@@ -8,6 +8,9 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { newRegister } from "../../services/apiCalls"
+import Image from 'react-bootstrap/Image';
+
+//------------------------------------------------------------------------------
 
 export const Register = () => {
 
@@ -53,68 +56,77 @@ export const Register = () => {
     };
 
     return (
-        <Container className="my-4">
-            <Card className='card'>
-                <Card.Body>
-                    <Card.Title>Register</Card.Title>
-                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                        <Row className="mb-3">
-                            <Form.Group as={Col} sm="12" md="4" controlId="validationCustom01">
-                                <Form.Label>First name</Form.Label>
-                                <Form.Control
-                                    name="firstName"
-                                    required
-                                    type="text"
-                                    placeholder="First name"
-                                    value={credentials.firstName}
-                                    onChange={inputHandler}
-                                />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            </Form.Group>
-                            <Form.Group as={Col} sm="12" md="4" controlId="validationCustomUsername">
-                                <Form.Label>Email</Form.Label>
-                                <InputGroup hasValidation>
-                                    <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                                    <Form.Control
-                                        name="email"
-                                        type="email"
-                                        placeholder="Email"
-                                        aria-describedby="inputGroupPrepend"
-                                        required
-                                        value={credentials.email}
-                                        onChange={inputHandler}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please provide a valid email.
-                                    </Form.Control.Feedback>
-                                </InputGroup>
-                            </Form.Group>
-                            <Form.Group as={Col} sm="12" md="4" controlId="validationCustom02">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    name="password"
-                                    required
-                                    type="password"
-                                    placeholder="Password"
-                                    value={credentials.password}
-                                    onChange={inputHandler}
-                                />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            </Form.Group>
+        <>
+            <Container className="my-4">
+                <Card className='card'>
+                            <h4>Register</h4>
+                    <Card.Body>
+                        <Row>
+                            <Col xs={12} md={4}>
+                                <Image src="../../src/Images/MP.jpeg" width={200} roundedCircle />
+                            </Col>
+                            <Col xs={12} md={8}>
+                                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                                    <Row className="mb-3">
+                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom01">
+                                            <Form.Label>First name</Form.Label>
+                                            <Form.Control
+                                                name="firstName"
+                                                required
+                                                type="text"
+                                                placeholder="First name"
+                                                value={credentials.firstName}
+                                                onChange={inputHandler}
+                                            />
+                                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        </Form.Group>
+                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustomUsername">
+                                            <Form.Label>Email</Form.Label>
+                                            <InputGroup hasValidation>
+                                                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                                                <Form.Control
+                                                    name="email"
+                                                    type="email"
+                                                    placeholder="Email"
+                                                    aria-describedby="inputGroupPrepend"
+                                                    required
+                                                    value={credentials.email}
+                                                    onChange={inputHandler}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Please provide a valid email.
+                                                </Form.Control.Feedback>
+                                            </InputGroup>
+                                        </Form.Group>
+                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom02">
+                                            <Form.Label>Password</Form.Label>
+                                            <Form.Control
+                                                name="password"
+                                                required
+                                                type="password"
+                                                placeholder="Password"
+                                                value={credentials.password}
+                                                onChange={inputHandler}
+                                            />
+                                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Row>
+                                    <Form.Group className="mb-3">
+                                        <Form.Check
+                                            required
+                                            label="Agree to terms and conditions"
+                                            feedback="You must agree before submitting."
+                                            feedbackType="invalid"
+                                        />
+                                    </Form.Group>
+                                    <Button type="submit">Register me</Button>
+                                </Form>
+                            </Col>
                         </Row>
-                        <Form.Group className="mb-3">
-                            <Form.Check
-                                required
-                                label="Agree to terms and conditions"
-                                feedback="You must agree before submitting."
-                                feedbackType="invalid"
-                            />
-                        </Form.Group>
-                        <Button type="submit">Register me</Button>
-                    </Form>
-                </Card.Body>
-            </Card>
-        </Container>
+                    </Card.Body>
+                </Card>
+            </Container>
+        </>
     );
 }
 

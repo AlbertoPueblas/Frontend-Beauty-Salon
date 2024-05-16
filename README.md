@@ -1,12 +1,11 @@
-# React + Vite
+# Frontend-Beauty-Salon
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##objetivo.
 
-Currently, two official plugins are available:
+El objetivo de este proyecto es crear la parte visual basada en una base de datos relacional creada previamente con diferentes endpoints y vistas de usuario y administrador.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# Frontend-Beauty-Salon
-# Frontend-Beauty-Salon
-# Frontend-Beauty-Salon
-# Frontend-Beauty-Salon
+## Tecnologías utilizadas:
+
+![js](https://img.shields.io/badge/JavaScript-yellow?logo=JavaScript) ![](https://img.shields.io/badge/React-ligthblue?logo=React) ![](https://img.shields.io/badge/Redux-purple?logo=Redux) ![css](https://img.shields.io/badge/CSS3-blue?logo=CSS3) ![html](https://img.shields.io/badge/html5-orange?logo=html5)
+
+

@@ -15,3 +15,23 @@ export const loginCall = async (credentials) => {
     const res = await axios.post(`${API_URL}auth/login`, credentials);
     return res
 };
+
+export const meProfile = async (token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const res = await axios.get(`${API_URL}user/profile`, config)
+    return res.data
+}
+
+export const bringDates = async (token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const res = await axios.get(`${API_URL}user/appointment`, config)
+    return res.data
+}
