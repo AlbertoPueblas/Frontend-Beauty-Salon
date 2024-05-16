@@ -9,3 +9,4 @@ Currently, two official plugins are available:
 # Frontend-Beauty-Salon
 # Frontend-Beauty-Salon
 # Frontend-Beauty-Salon
+# Frontend-Beauty-Salon
