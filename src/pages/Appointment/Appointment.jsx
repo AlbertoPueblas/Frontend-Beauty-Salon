@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
+import { FcOk } from "react-icons/fc";
 
 //--------------------------------------------------------------------------
 
@@ -19,6 +21,7 @@ export const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [msg, setMsg] = useState("");
+  const [msgV, setMsgV] = useState("");
 
   const [treatments, setTreatments] = useState([]);
   const [stylists, setStylists] = useState([]);
@@ -52,7 +55,7 @@ export const Appointment = () => {
 
     try {
       const res = await appointmentCreate({ ...appCreate, appointmentDate: selectedDateTime.toISOString() }, token);
-      setMsg("Cita creada con éxito")
+      setMsgV("Cita creada con éxito")
       setTimeout(() => {
         navigate("/profile");
       }, 2000)
@@ -67,9 +70,9 @@ export const Appointment = () => {
       setError(null);
       try {
         const res = await bringAllStylists(token);
-        setStylists(res.data.stylist);
+        setStylists(res.data.stylists);
         const resp = await bringAllTreatments(token);
-        setTreatments(resp.data.treatsment);
+        setTreatments(resp.data.treatment);
       } catch (error) {
         setError("Error al traer datos");
       }
@@ -114,6 +117,7 @@ export const Appointment = () => {
         </Alert>
       )}
       {msg && <Alert variant="danger">{msg}</Alert>}
+      {msgV && <Alert variant="success">{msgV}</Alert>}
       <div className="content">
         <DayPicker
           mode="single"
@@ -128,22 +132,24 @@ export const Appointment = () => {
           />
         </LocalizationProvider>
       </div>
-      <Button onClick={dateForMe}>Crear Cita</Button>
       {selectedDateTime && (
         <div className="result">
-          <select name="treatsmentId" onChange={inputHandlerDates} className="select">
+          <Form.Control as="select" name="treatsmentId" onChange={inputHandlerDates} className="select">
             <option value="">Select Treatment</option>
             {treatments.map((job) => (
-              <option value={job.id} key={job.id}>{job.treatsment}</option>
+              <option value={job.id} key={job.id}>{job.treatsment} {job.price}€</option>
             ))}
-          </select>
-          <select name="stylistId" onChange={inputHandlerDates} className="select">
+          </Form.Control>
+          <Form.Control
+          as="select"
+           name="stylistId" onChange={inputHandlerDates} className="select">
             <option value="">Select Stylist</option>
             {stylists.map((art) => (
               <option value={art.id} key={art.id}>{art.firstName}</option>
             ))}
-          </select>
+          </Form.Control>
           <div>
+          <FcOk className="btnOk" onClick={dateForMe}>Get Appointment</FcOk>
           </div>
         </div>
       )}

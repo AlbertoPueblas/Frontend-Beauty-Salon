@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { useSelector } from 'react-redux';
 import { getUserData } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
-import { bringDates, bringAllStylists, bringAllTreatments } from '../../services/apiCalls';
+import { bringDates, bringAllStylists, bringAllTreatments, deleteDate } from '../../services/apiCalls';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -12,6 +12,7 @@ import { FcEmptyTrash, FcPlus } from "react-icons/fc";
 import "./MeDates.css";
 import { useNavigate } from 'react-router-dom';
 import ModalDate from '../../components/ModalDate/ModalDate';
+import { Alert } from 'react-bootstrap';
 
 //---------------------------------------------------------------------------------------------------
 
@@ -24,6 +25,8 @@ export const Dates = () => {
     const [treatments, setTreatments] = useState([]);
     const myPassport = useSelector(getUserData);
     const token = myPassport.token;
+    const [msg, setMsg] = useState("");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,10 +47,19 @@ export const Dates = () => {
     const handleEditAppointment = (appointment) => {
         setSelectedAppointment(appointment);
     };
+    const deleteAppointment = async (id) => {
+        const res = await deleteDate(id, token)
+        setMsg("Delete appointment successfully")
+        setTimeout(() => {
+            navigate("/profile")
+        },2000)
+
+    }
 
     return (
         <Container className="my-4">
             <Row>
+            {msg && <Alert variant="success">{msg}</Alert>}
                 <Col xs={12} md={8}>
                     <h2>Me Appointment</h2>
                     <Card className='card'>
@@ -58,9 +70,9 @@ export const Dates = () => {
                                         <div className='icon'>
                                             <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                                             <HiOutlinePencil className='icon' onClick={(e) => { e.stopPropagation(); handleEditAppointment(date); }} />
-                                            <FcEmptyTrash className='icon' />
+                                            <FcEmptyTrash className='icon' onClick={() => { 
+                                                deleteAppointment(date.id) }} />
                                         </div>
-
                                         <Card.Title>Appointment</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>
                                         <Card.Title>Stylist</Card.Title>

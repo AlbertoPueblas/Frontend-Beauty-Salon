@@ -4,22 +4,31 @@
     width: 100%;
 }
 
-.clock {
+.reloj {
     background: white;
     border-radius: 2em;
     padding: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex: 1;
-    max-width: 2em;
+    width: 2em;
     max-height: 2em;
 
+}
+
+.btnOk {
+    width: 10em;
+    height: 4em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .message,
 .result {
     margin-top: 0;
-    width: 100%;
+    width: 90%;
     max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Responsive styles */

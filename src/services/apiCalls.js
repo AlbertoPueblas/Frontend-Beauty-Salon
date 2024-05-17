@@ -92,3 +92,13 @@ export const updateAppointment = async (dataToSend, token) => {
   const res = await axios.put(`${API_URL}appointment/modAppointment`,dataToSend, config)
   return res
 }
+
+export const deleteDate = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const res = await axios.delete(`${API_URL}appointment/deleteAppointment/${id}`, config)
+  return res
+}
