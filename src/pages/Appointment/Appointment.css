@@ -1,0 +1,36 @@
+.content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.clock {
+    background: white;
+    border-radius: 2em;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 2em;
+    max-height: 2em;
+
+}
+
+.message,
+.result {
+    margin-top: 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Responsive styles */
+@media (max-width: 800px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar,
+    .clock {
+        width: 100%;
+    }
+}

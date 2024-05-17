@@ -54,12 +54,12 @@ export const Profile = () => {
                         <Row className="mb-3">
                             <Col xs={12} md={4}>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
-                                    <>
-                                        <Memodal
-                                            profileData={profileData}
-                                            inputHandler={inputHandler}
-                                            token={token} />
-                                    </>
+                                <>
+                                    <Memodal
+                                        profileData={profileData}
+                                        inputHandler={inputHandler}
+                                        token={token} />
+                                </>
                             </Col>
                             <Col xs={12} md={8}>
                                 <h2>Me Profile</h2>
@@ -123,7 +123,6 @@ export const Profile = () => {
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-
                                 </Form>
                             </Col>
                         </Row>
