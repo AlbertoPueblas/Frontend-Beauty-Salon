@@ -78,31 +78,31 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
                     </Form.Group>
                     <Form.Group controlId="formBasicStylist">
                         <Form.Label>Estilista</Form.Label>
-                        <Form.Select
+                        <Form.Control
                             name="stylistId"
                             value={modifiedAppointment.stylistId}
                             onChange={handleInputChange}
-                        >
-                            {stylists.map(stylist => (
+                            >
+                            {/* {stylists.map(stylist => (
                                 <option key={stylist.id} value={stylist.id}>
                                     {stylist.firstName}
                                 </option>
-                            ))}
-                        </Form.Select>
+                            ))} */}
+                        </Form.Control>
                     </Form.Group>
                     <Form.Group controlId="formBasicTreatment">
                         <Form.Label>Tratamiento</Form.Label>
-                        <Form.Select
-                            name="treatmentId"
-                            value={modifiedAppointment.treatsment}
+                        <Form.Control
+                            name="treatsmentId"
+                            value={modifiedAppointment.treatsmentId}
                             onChange={handleInputChange}
                         >
-                            {treatments.map(treatment => (
+                            {/* {treatments.map(treatment => (
                                 <option key={treatment.id} value={treatment.id}>
                                     {treatment.treatsment}
                                 </option>
-                            ))}
-                        </Form.Select>
+                            ))} */}
+                        </Form.Control>
                     </Form.Group>
                 </Form>
             </Modal.Body>

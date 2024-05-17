@@ -18,7 +18,7 @@ export const Dates = () => {
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
-    // const [stylists, setStylists] = useState([]);
+    const [stylists, setStylists] = useState([]);
     const [treatments, setTreatments] = useState([]);
     const myPassport = useSelector(getUserData);
     const token = myPassport.token;
@@ -26,20 +26,12 @@ export const Dates = () => {
     useEffect(() => {
         const fetchData = async () => {
             const resDates = await bringDates(token);
+            setDates(resDates.clientDates);
             const resStylists = await bringAllStylists(token);
+            setStylists(resStylists.stylists);
             const resTreatments = await bringAllTreatments(token);
-
-            if (resDates && resDates.clientDates) {
-                setDates(resDates.clientDates);
-            }
-            if (resStylists && resStylists.stylists) {
-                setStylists(resStylists.stylists);
-            }
-            if (resTreatments && resTreatments.treatments) {
-                setTreatments(resTreatments.treatments);
-            }
+            setTreatments(resTreatments.treatments);
         };
-
         fetchData();
     }, [token]);
 
