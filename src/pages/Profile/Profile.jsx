@@ -9,13 +9,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Modal from '../../components/Modal/Modal';
 import Memodal from '../../components/Modal/Modal';
 import { FcPlanner } from "react-icons/fc";
 import { FcFinePrint } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
 import "./Profile.css"
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 //--------------------------------------------------------
 
@@ -52,6 +52,9 @@ export const Profile = () => {
         }));
     };
 
+    const location = useLocation();
+    const isCreatingAppointment = location.pathname.includes("/appointment/create");
+
     return (
         <>
             <Container className="my-4">
@@ -61,8 +64,8 @@ export const Profile = () => {
                             <Col xs={12} md={4}>
                                 <h6>Appointment</h6>
                                 <div className="icons">
-                                    <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
-                                    <FcPlanner className='icon' onClick={() => { navigate("/appointment") }} />
+                                    <FcPlus className='icon' onClick={() => { navigate("/appointment")}} />
+                                    <FcPlanner className='icon' onClick={() => { navigate("/modAppointment", {state: {userData}})}} />
                                     <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
                                 </div>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />

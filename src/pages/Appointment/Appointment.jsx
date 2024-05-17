@@ -6,7 +6,7 @@ import './Appointment.css';
 import { LocalizationProvider, StaticTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Button } from "react-bootstrap";
-import { appointmentCreate, bringAllStylist, bringAllTreatsment } from "../../services/apiCalls";
+import { appointmentCreate, bringAllStylists, bringAllTreatments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -66,9 +66,9 @@ export const Appointment = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await bringAllStylist(token);
+        const res = await bringAllStylists(token);
         setStylists(res.data.stylist);
-        const resp = await bringAllTreatsment(token);
+        const resp = await bringAllTreatments(token);
         setTreatments(resp.data.treatsment);
       } catch (error) {
         setError("Error al traer datos");

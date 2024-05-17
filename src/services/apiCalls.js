@@ -55,7 +55,7 @@ export const updateProfile = async (profileData, token) => {
     return res
 }
 
-export const bringAllStylist = async (token) => {
+export const bringAllStylists = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -64,11 +64,31 @@ export const bringAllStylist = async (token) => {
   return axios.get(`${API_URL}user/allStylist`, config)
 }
 
-export const bringAllTreatsment = async (token) => {
+export const bringAllTreatments = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
   return axios.get(`${API_URL}treatsment/allTreatsment`, config)
+}
+
+export const getAppointmentId = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const res = await axios.get(`${API_URL}appointment/date/${id}`, config)
+  return res
+}
+
+export const updateAppointment = async (dataToSend, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const res = await axios.put(`${API_URL}appointment/modAppointment`,dataToSend, config)
+  return res
 }

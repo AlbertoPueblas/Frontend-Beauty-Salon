@@ -1,71 +1,79 @@
-
 import Card from 'react-bootstrap/Card';
 import { useSelector } from 'react-redux';
 import { getUserData } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
-import { bringDates } from '../../services/apiCalls';
-import Image from 'react-bootstrap/Image';
+import { bringDates, bringAllStylists, bringAllTreatments } from '../../services/apiCalls';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import dayjs from 'dayjs';
-import { HiArchiveBoxXMark } from "react-icons/hi2";
-import { HiOutlinePencil } from "react-icons/hi2";
-import { FcEmptyTrash } from "react-icons/fc";
-import "./MeDates.css"
-import { FcPlus } from "react-icons/fc";
+import { HiArchiveBoxXMark, HiOutlinePencil } from "react-icons/hi2";
+import { FcEmptyTrash, FcPlus } from "react-icons/fc";
+import "./MeDates.css";
 import { useNavigate } from 'react-router-dom';
-
-//--------------------------------------------------------
+import ModalDate from '../../components/ModalDate/ModalDate';
 
 export const Dates = () => {
-
     const navigate = useNavigate();
     const [dates, setDates] = useState([]);
-    const [selectedDate, setSelectedDate] = useState({
-        id: "",
-        userId: "",
-        appointmentDate: "",
-        treatsmentId: "",
-        stylistId: ""
-    });
-
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+    // const [stylists, setStylists] = useState([]);
+    const [treatments, setTreatments] = useState([]);
     const myPassport = useSelector(getUserData);
     const token = myPassport.token;
 
     useEffect(() => {
-        const fetchDataAndProfile = async () => {
-            const res = await bringDates(token);
-            setDates(res.clientDates);
+        const fetchData = async () => {
+            const resDates = await bringDates(token);
+            const resStylists = await bringAllStylists(token);
+            const resTreatments = await bringAllTreatments(token);
+
+            if (resDates && resDates.clientDates) {
+                setDates(resDates.clientDates);
+            }
+            if (resStylists && resStylists.stylists) {
+                setStylists(resStylists.stylists);
+            }
+            if (resTreatments && resTreatments.treatments) {
+                setTreatments(resTreatments.treatments);
+            }
         };
-        fetchDataAndProfile();
+
+        fetchData();
     }, [token]);
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
     };
 
+    const handleEditAppointment = (appointment) => {
+        setSelectedAppointment(appointment);
+    };
+
     return (
         <Container className="my-4">
             <Row>
                 <Col xs={12} md={8}>
-                            <FcPlus className='icon' onClick={() => {navigate("/appointment")}}/>
+                    <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                     <h2>Me Appointment</h2>
                     <Card className='card'>
                         <Card.Body>
-                            {dates.map((date, index) => (
+                            {dates && dates.map((date, index) => (
                                 <Card key={index} className="mb-2" onClick={() => handleDateSelect(date)}>
                                     <Card.Body>
                                         <div className='icon'>
                                             <HiArchiveBoxXMark className='icon' />
-                                            <HiOutlinePencil className='icon' />
+                                            <HiOutlinePencil className='icon' onClick={(e) => { e.stopPropagation(); handleEditAppointment(date); }} />
                                             <FcEmptyTrash className='icon' />
                                         </div>
+                                        <Card.Title>Id</Card.Title>
+                                        <Card>{date.id}</Card>
                                         <Card.Title>Appointment</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>
                                         <Card.Title>Stylist</Card.Title>
-                                        <Card name="stylist"> {date.stylistId}</Card>
-                                        <Card.Title>Treatsment</Card.Title>
+                                        <Card>{date.stylistId}</Card>
+                                        <Card.Title>Treatment</Card.Title>
                                         <Card>{date.treatsmentId}</Card>
                                     </Card.Body>
                                 </Card>
@@ -74,6 +82,21 @@ export const Dates = () => {
                     </Card>
                 </Col>
             </Row>
+            {selectedAppointment && (
+                <ModalDate
+                    appointmentData={selectedAppointment}
+                    token={token}
+                    onUpdateAppointment={async () => {
+                        const res = await bringDates(token);
+                        if (res && res.clientDates) {
+                            setDates(res.clientDates);
+                        }
+                    }}
+                    onClose={() => setSelectedAppointment(null)}
+                    stylists={stylists}
+                    treatments={treatments}
+                />
+            )}
         </Container>
     );
-}
+};
