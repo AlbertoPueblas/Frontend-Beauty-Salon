@@ -9,6 +9,8 @@ import "./Header.css"
 import { getUserData, logout } from '../../app/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'react-bootstrap/Image';
+import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
+import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
@@ -17,6 +19,7 @@ function Header() {
   const token = userReduxData?.token
   const userType = userReduxData?.decoded?.userRole
 
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   const logOutMe = () => {
@@ -51,7 +54,7 @@ function Header() {
             Link
           </Nav.Link>
         </Nav>
-        <Button href='/home' onClick={ () => {logOutMe()}}>Log Out</Button>
+        <HiArrowLeftStartOnRectangle href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</HiArrowLeftStartOnRectangle>
         <Form className="d-flex">
           <Form.Control
             type="search"

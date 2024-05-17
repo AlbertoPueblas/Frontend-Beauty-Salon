@@ -12,6 +12,9 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Modal from '../../components/Modal/Modal';
 import Memodal from '../../components/Modal/Modal';
+import { FcPlanner } from "react-icons/fc";
+import "./Profile.css"
+import { useNavigate } from 'react-router-dom';
 
 //--------------------------------------------------------
 
@@ -27,6 +30,8 @@ export const Profile = () => {
 
     const myPassport = useSelector(getUserData)
     const token = myPassport.token;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDataAndProfile = async () => {
@@ -62,7 +67,10 @@ export const Profile = () => {
                                 </>
                             </Col>
                             <Col xs={12} md={8}>
+
                                 <h2>Me Profile</h2>
+                                <FcPlanner className='icon' onClick={() => {navigate("/appointment")}} />
+
                                 <Form >
                                     <Form.Group controlId="validationCustomUsername" >
                                         <Form.Label>Email</Form.Label>

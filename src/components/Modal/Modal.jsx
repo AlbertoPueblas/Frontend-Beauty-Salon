@@ -105,7 +105,7 @@ function Memodal(props) {
                         <Button variant="primary"
                             onClick={() => {
                                 profileUpdate()
-                                closeModal()
+                                navigate("/profile")
                             }}>Save changes</Button>
                     </Modal.Footer>
                 </Modal>

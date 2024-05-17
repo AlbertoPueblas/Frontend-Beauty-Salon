@@ -1,0 +1,8 @@
+.citas{
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+    height: 2em;
+}

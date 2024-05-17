@@ -4,6 +4,15 @@ import axios from "axios"
 
 const API_URL = "http://localhost:3000/api/"
 
+export const appointmentCreate = async(appCreate, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const res = await axios.post(`${API_URL}appointment/create`,appCreate, config);
+  return res
+}
 
 export const newRegister = async (credentials) => {
     console.log(credentials, "aqui registro");
@@ -44,4 +53,22 @@ export const updateProfile = async (profileData, token) => {
     }
     const res = await axios.put(`${API_URL}user/putProfile`, profileData, config)
     return res
+}
+
+export const bringAllStylist = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   }
+  return axios.get(`${API_URL}user/allStylist`, config)
+}
+
+export const bringAllTreatsment = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.get(`${API_URL}treatsment/allTreatsment`, config)
+}
