@@ -13,6 +13,8 @@ import "./MeDates.css";
 import { useNavigate } from 'react-router-dom';
 import ModalDate from '../../components/ModalDate/ModalDate';
 
+//---------------------------------------------------------------------------------------------------
+
 export const Dates = () => {
     const navigate = useNavigate();
     const [dates, setDates] = useState([]);
@@ -47,7 +49,6 @@ export const Dates = () => {
         <Container className="my-4">
             <Row>
                 <Col xs={12} md={8}>
-                    <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                     <h2>Me Appointment</h2>
                     <Card className='card'>
                         <Card.Body>
@@ -55,12 +56,11 @@ export const Dates = () => {
                                 <Card key={index} className="mb-2" onClick={() => handleDateSelect(date)}>
                                     <Card.Body>
                                         <div className='icon'>
-                                            <HiArchiveBoxXMark className='icon' />
+                                            <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                                             <HiOutlinePencil className='icon' onClick={(e) => { e.stopPropagation(); handleEditAppointment(date); }} />
                                             <FcEmptyTrash className='icon' />
                                         </div>
-                                        <Card.Title>Id</Card.Title>
-                                        <Card>{date.id}</Card>
+
                                         <Card.Title>Appointment</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>
                                         <Card.Title>Stylist</Card.Title>

@@ -1,9 +1,10 @@
+import "./ModalDate.css"
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { updateAppointment } from '../../services/apiCalls';
+import { updateAppointment, bringAllStylists, bringAllTreatments } from '../../services/apiCalls'; // Importa las funciones necesarias desde tus servicios
 import { useNavigate } from 'react-router-dom';
 
 function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
@@ -14,8 +15,7 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
     const navigate = useNavigate();
     const [treatments, setTreatments] = useState([]);
     const [stylists, setStylists] = useState([]);
-
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setModifiedAppointment({
@@ -44,19 +44,12 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
 
     useEffect(() => {
         const fetchStylistAndJobs = async () => {
-
-          try {
-            const res = await bringAllStylists(token);
-            setStylists(res.data.stylist);
-            const resp = await bringAllTreatments(token);
-            setTreatments(resp.data.treatsment);
-          } catch (error) {
-;
-          }
-
+                const res = await bringAllStylists(token);
+                setStylists(res.data.stylists);
+                const resp = await bringAllTreatments(token);
         };
         fetchStylistAndJobs();
-      }, [token]);
+    }, [token]);
 
     return (
         <Modal show={true} onHide={onClose} backdrop="static" keyboard={false}>
@@ -68,9 +61,11 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
                     <Form.Group controlId="formBasicAppointment">
                         <Form.Label>Fecha y hora de la cita</Form.Label>
                         <InputGroup>
-                            <Form.Control
+                            <input className='inputCalendario'
                                 type="datetime-local"
                                 name="appointmentDate"
+                placeholder="date"
+
                                 value={modifiedAppointment.appointmentDate}
                                 onChange={handleInputChange}
                             />
@@ -79,29 +74,33 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
                     <Form.Group controlId="formBasicStylist">
                         <Form.Label>Estilista</Form.Label>
                         <Form.Control
+                            as="select"
                             name="stylistId"
                             value={modifiedAppointment.stylistId}
                             onChange={handleInputChange}
-                            >
-                            {/* {stylists.map(stylist => (
+                        >
+                            <option value="">Selecciona un estilista</option>
+                            {stylists.map(stylist => (
                                 <option key={stylist.id} value={stylist.id}>
                                     {stylist.firstName}
                                 </option>
-                            ))} */}
+                            ))}
                         </Form.Control>
                     </Form.Group>
                     <Form.Group controlId="formBasicTreatment">
                         <Form.Label>Tratamiento</Form.Label>
                         <Form.Control
+                            as="select"
                             name="treatsmentId"
                             value={modifiedAppointment.treatsmentId}
                             onChange={handleInputChange}
                         >
-                            {/* {treatments.map(treatment => (
+                            <option value="">Selecciona un tratamiento</option>
+                            {treatments.map(treatment => (
                                 <option key={treatment.id} value={treatment.id}>
                                     {treatment.treatsment}
                                 </option>
-                            ))} */}
+                            ))}
                         </Form.Control>
                     </Form.Group>
                 </Form>
@@ -119,3 +118,4 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose }) {
 }
 
 export default ModalDate;
+
