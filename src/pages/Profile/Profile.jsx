@@ -8,11 +8,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-// import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Modal from '../../components/Modal/Modal';
 import Memodal from '../../components/Modal/Modal';
 import { FcPlanner } from "react-icons/fc";
+import { FcFinePrint } from "react-icons/fc";
+import { FcPlus } from "react-icons/fc";
 import "./Profile.css"
 import { useNavigate } from 'react-router-dom';
 
@@ -58,6 +59,12 @@ export const Profile = () => {
                     <Card.Body>
                         <Row className="mb-3">
                             <Col xs={12} md={4}>
+                                <h6>Appointment</h6>
+                                <div className="icons">
+                                    <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
+                                    <FcPlanner className='icon' onClick={() => { navigate("/appointment") }} />
+                                    <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
+                                </div>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
                                 <>
                                     <Memodal
@@ -69,7 +76,6 @@ export const Profile = () => {
                             <Col xs={12} md={8}>
 
                                 <h2>Me Profile</h2>
-                                <FcPlanner className='icon' onClick={() => {navigate("/appointment")}} />
 
                                 <Form >
                                     <Form.Group controlId="validationCustomUsername" >

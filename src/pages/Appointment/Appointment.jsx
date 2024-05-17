@@ -10,6 +10,7 @@ import { appointmentCreate, bringAllStylist, bringAllTreatsment } from "../../se
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
 
 //--------------------------------------------------------------------------
 
@@ -54,7 +55,7 @@ export const Appointment = () => {
       setMsg("Cita creada con éxito")
       setTimeout(() => {
         navigate("/profile");
-      },2000)
+      }, 2000)
     } catch (error) {
       setMsg("Error al crear la cita");
     }
@@ -107,6 +108,12 @@ export const Appointment = () => {
 
   return (
     <div className="container">
+      {selectedDateTime && (
+        <Alert variant="success">
+          Selected Date: {selectedDateTime.format("dddd, MMMM D, YYYY h:mm A")}
+        </Alert>
+      )}
+      {msg && <Alert variant="danger">{msg}</Alert>}
       <div className="content">
         <DayPicker
           mode="single"
@@ -121,8 +128,7 @@ export const Appointment = () => {
           />
         </LocalizationProvider>
       </div>
-      {msg && <div className="message">{msg}</div>}
-        <Button onClick={dateForMe}>Crear Cita</Button>
+      <Button onClick={dateForMe}>Crear Cita</Button>
       {selectedDateTime && (
         <div className="result">
           <select name="treatsmentId" onChange={inputHandlerDates} className="select">
@@ -138,7 +144,6 @@ export const Appointment = () => {
             ))}
           </select>
           <div>
-            Selected Date: {selectedDateTime.format("dddd, MMMM D, YYYY h:mm A")}
           </div>
         </div>
       )}

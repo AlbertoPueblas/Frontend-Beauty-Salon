@@ -9,7 +9,7 @@ import "./Header.css"
 import { getUserData, logout } from '../../app/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'react-bootstrap/Image';
-import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
+import { FcImport } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -54,7 +54,7 @@ function Header() {
             Link
           </Nav.Link>
         </Nav>
-        <HiArrowLeftStartOnRectangle href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</HiArrowLeftStartOnRectangle>
+        <FcImport href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
         <Form className="d-flex">
           <Form.Control
             type="search"
