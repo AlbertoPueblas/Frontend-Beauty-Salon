@@ -10,13 +10,13 @@ export const userSlice = createSlice({
             userId: "",
             name: "",
             email: "",
-            role: ""
+            userRole: Number
         }
     },
     // distintas acciones que puedo realizar en este pasillo (todas reciben un state y un action y devuelven un nuevo estado)
     reducers: {
         login: (state, action) => {
-
+            
             return {
                 ...state,
                 ...action.payload,
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
             return {
                 token: "",
                 decodificado: {
-                    role: "",
+                    userRole: "",
                     name: "",
                     email: "",
                     id: ""
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
         setUserDetails: (state, action) => {
             state.decodificado = action.payload; 
         },
-        setUserId: (state, action) => {
+        setUser: (state, action) => {
             state.decodificado.id = action.payload;
         },
         setUserId: (state, action) => {

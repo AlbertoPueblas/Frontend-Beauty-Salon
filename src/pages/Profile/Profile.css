@@ -9,11 +9,12 @@
 
 }
 .modify {
-  margin-left: -3em;
+  margin-left: -2em;
 }
 
 .delete {
-    margin-left: -4em;
+    margin-left: -3em;
+    font-family:cursive;
 }
 
 p {

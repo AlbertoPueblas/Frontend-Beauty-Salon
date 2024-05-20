@@ -9,9 +9,9 @@ import Container from 'react-bootstrap/Container';
 import { useState } from "react";
 import { loginCall } from "../../services/apiCalls";
 import Image from 'react-bootstrap/Image';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../app/slice/userSlice";
+import { getUserData, login } from "../../app/slice/userSlice";
 import { decodeToken } from "react-jwt";
 import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
@@ -66,7 +66,14 @@ export const Home = () => {
                 dispatch(login(passport))
 
                 setTimeout(() => {
-                    navigate("/profile")
+                    const userRole = passport.decoded.userRole
+                    if (userRole === 1 || userRole === 2) {
+                        navigate("/admin")
+                    } else {
+                        navigate("/profile")
+                    }
+                    
+                    console.log(passport.decoded.userRole)
                 }, 1000);
             } else if (res.data && res.data.user && !res.data.user.isActive) {
                 setErrorMsg("Tu cuenta no esta activa contacta con el administrador")
