@@ -6,6 +6,8 @@ import { Menu } from "../Menu/Menu";
 import { Profile } from "../Profile/Profile";
 import { Appointment } from "../Appointment/Appointment"
 import { Dates } from "../MeDates/MeDates"
+import { AdminAppointment } from "../allAppointment/allAppointment";
+import { Treatments } from "../Stylist/Treatment";
 // import { ModAppointment } from "../modAppointmen/modAppointment";
 //--------------------------------------------------------------
 
@@ -20,6 +22,8 @@ export const Body = () => {
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/appointment" element={<Appointment />} />
+                <Route path="/allAppointment" element={<AdminAppointment />} />
+                <Route path="/treatments" element={<Treatments />} />
                 <Route path="/medates" element={<Dates />} />
 
             </Routes>

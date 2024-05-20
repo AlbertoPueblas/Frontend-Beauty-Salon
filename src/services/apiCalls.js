@@ -114,22 +114,22 @@ export const desactiveProfile = async (active, token) => {
 }
 
 //Admin calls.
-export const allUsers = async (token) => {
+export const allUsers = async (token, page = 1, limit =15) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  return axios.get(`${API_URL}user/allUsers`, config);
+  return axios.get(`${API_URL}user/allUsers?page=${page}&limit${limit}`, config);
 }
 
-export const allAppointments = async (token) => {
+export const allAppointments = async (token, page = 1, limit = 15) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  return axios.get(`${API_URL}appointment/totalDates`, config);
+  return axios.get(`${API_URL}appointment/totalDates?page=${page}&limit${limit}`, config);
 }
 
 export const resetUser = async (id, token) => {
@@ -147,6 +147,14 @@ export const deleteUser = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("hola", id, token);
   return axios.delete(`${API_URL}user/permanentDell/${id}`, config)
+}
+
+export const allTreatments = async (token, page = 1, limit = 15) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return axios.get(`${API_URL}treatsment/allTreatsment?page=${page}&limit${limit}`, config);
 }

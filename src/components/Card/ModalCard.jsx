@@ -25,7 +25,7 @@ function UserCard({ user, restoreUser, deleteUser }) {
                 {user.isActive ? (
                     <CgProfile className='icon' variant="primary" onClick={handleShowProfile} />
                 ) : (
-                    <FcCancel className='icon' variant="primary" onClick={handleShowProfile}/>
+                    <FcCancel className='icon' variant="primary" onClick={handleShowProfile} />
                 )}
 
                 {user.clientDates.length > 0 && (

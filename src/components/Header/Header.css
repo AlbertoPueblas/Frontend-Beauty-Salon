@@ -9,3 +9,8 @@
     width: 5em;
     height: 2em;
 }
+
+.d-flex {
+    margin-right: auto;
+    display: right;
+}

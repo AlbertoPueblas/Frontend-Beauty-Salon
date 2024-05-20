@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import "./Admin.css";
 import Table from 'react-bootstrap/Table';
-import { allAppointments, allUsers, deleteUser, resetUser } from "../../services/apiCalls";
+import { allAppointments, deleteUser, resetUser } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
-import UserCard from "../../components/Card/ModalCard";
+import dayjs from "dayjs";
+import { FcFinePrint } from "react-icons/fc";
+import { BiPencil } from "react-icons/bi";
 import Pagination from 'react-bootstrap/Pagination';
 
 //--------------------------------------------------
-export const Admin = () => {
+export const AdminAppointment = () => {
     const [users, setUsers] = useState([]);
     const [show, setShow] = useState(false);
     const [appointment, setAppointment] = useState([])
@@ -20,39 +21,21 @@ export const Admin = () => {
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
     const userType = userReduxData.decoded.userRole;
-  
+
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchAppointments = async () => {
             try {
-                const res = await allUsers(token, currentPage);
-                setUsers(res.data.users);
+
+                const res = await allAppointments(token, currentPage);
+                setAppointment(res.data.appointment);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchUsers();
+        fetchAppointments();
     }, [currentPage, token]);
 
-    const restoreUser = async (id) => {
-        try {
-            console.log("token",id ,token);
-            const response = await resetUser(id, token);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const deletePermanent = async (id) => {
-        try{
-            console.log("token",id ,token);
-        const res = await deleteUser(id, token)
-        console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    //Paginacion
     const handlePageChange = (page) => {
         setCurrentPage(page);
       };
@@ -64,24 +47,27 @@ export const Admin = () => {
                     <tr>
                         <th>ID</th>
                         <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
+                        <th>Stylist</th>
+                        <th>Treatment</th>
+                        <th>User Id</th>
                         <th className="celda">options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
-                            <td>{user.email}</td>
+                    {appointment.map((date) => (
+                        <tr key={date.id}>
+                            <td>{date.id}</td>
+                            <td>{dayjs(date.appointmentDate)
+                                .format("dddd, MMMM D, YYYY h:mm A")}</td>
+                            <td>{date.stylistId}</td>
+                            <td>{date.treatsmentId}</td>
+                            <td>{date.userId}</td>
                             <td className="status">
-                                <UserCard user={user}
-                                restoreUser={restoreUser}
-                                deleteUser={deletePermanent} /></td>
+                                <FcFinePrint />
+                                <BiPencil />
+                            </td>
                         </tr>
-                        ))}
+                    ))}
                 </tbody>
             </Table>
             <div className="pagination">
@@ -105,6 +91,6 @@ export const Admin = () => {
               />
             </Pagination>
           </div>
-        </div>   
+        </div>
     );
 };

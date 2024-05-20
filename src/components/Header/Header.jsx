@@ -12,12 +12,13 @@ import Image from 'react-bootstrap/Image';
 import { FcImport } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
-
+//----------------------------------------------------------------
 function Header() {
 
   const userReduxData = useSelector(getUserData) || {}
   const token = userReduxData?.token
   const userType = userReduxData?.decoded?.userRole
+  console.log(userReduxData?.decoded?.userRole);
 
   const navigate = useNavigate()
 
@@ -37,33 +38,35 @@ function Header() {
           className="me-auto my-2 my-lg-0"
           style={{ maxHeight: '100px' }}
           navbarScroll
-        >
-          <Nav.Link href="/home">Home</Nav.Link>
-          <Nav.Link href="/login">Login</Nav.Link>
-          <NavDropdown title="Link" id="navbarScrollingDropdown">
-            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-            <NavDropdown.Item href="/appointment">
-              Appointment
-            </NavDropdown.Item>
+          >
+            <Nav.Link href="/home">Home</Nav.Link>
+          {userType === 1 ? (
+            <>
+          <NavDropdown title="Actions" id="navbarScrollingDropdown">
+            <NavDropdown.Item href="/admin">Users</NavDropdown.Item>
+            <NavDropdown.Item href="/allAppointment">Appointment</NavDropdown.Item>
+            <NavDropdown.Item href="/treatments">Treatment</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action5">
-              Something else here
-            </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link href="#" disabled>
-            Link
-          </Nav.Link>
-        </Nav>
-        <FcImport className='exit' href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
-        <Form className="d-flex">
+            <Form className="d-flex">
           <Form.Control
             type="search"
             placeholder="Search"
             className="me-2"
             aria-label="Search"
-          />
+            />
           <Button variant="outline-success">Search</Button>
-        </Form>
+        </Form> 
+            </>
+
+        ) : (
+            <>
+          <Nav.Link href="/profile">Profile</Nav.Link>
+          <Nav.Link href="appointment">Appointment</Nav.Link>
+            </>
+            )}
+        </Nav>
+        <FcImport className='exit' href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
       </Navbar.Collapse>
     </Container>
   </Navbar>

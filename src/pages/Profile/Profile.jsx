@@ -85,7 +85,6 @@ export const Profile = () => {
 
                                     <Memodal
                                         profileData={profileData}
-                                        
                                         inputHandler={inputHandler}
                                         token={token} />
                                         <p>Modify</p>
