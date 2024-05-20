@@ -122,3 +122,31 @@ export const allUsers = async (token) => {
   };
   return axios.get(`${API_URL}user/allUsers`, config);
 }
+
+export const allAppointments = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return axios.get(`${API_URL}appointment/totalDates`, config);
+}
+
+export const resetUser = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.put(`${API_URL}user/restore/${id}`,{},  config)
+}
+
+export const deleteUser = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("hola", id, token);
+  return axios.delete(`${API_URL}user/permanentDell/${id}`, config)
+}

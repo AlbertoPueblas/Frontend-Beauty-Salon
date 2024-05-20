@@ -149,7 +149,7 @@ export const Profile = () => {
                                             type="text"
                                             placeholder="lastName"
                                             readOnly
-                                            value={profileData.lastName || ""}
+                                            value={profileData.lastName || ""}//Pueden estar vacios
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
