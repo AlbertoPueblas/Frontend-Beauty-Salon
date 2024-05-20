@@ -72,8 +72,6 @@ export const Home = () => {
                     } else {
                         navigate("/profile")
                     }
-                    
-                    console.log(passport.decoded.userRole)
                 }, 1000);
             } else if (res.data && res.data.user && !res.data.user.isActive) {
                 setErrorMsg("Tu cuenta no esta activa contacta con el administrador")

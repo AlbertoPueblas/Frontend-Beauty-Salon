@@ -19,6 +19,14 @@ function UserCard({ user, restoreUser, deleteUser }) {
     const handleCloseAppointments = () => setShowAppointments(false);
     const handleShowAppointments = () => setShowAppointments(true);
 
+    const handleDeleteConfirmation = (userId) => {
+        const confirmDelete = window.confirm('¿Estás seguro de que quieres borrar este perfil?');
+
+        if (confirmDelete) {
+            deleteUser(userId);
+        }
+    };
+
     return (
         <>
             <div className="icons">
@@ -33,7 +41,7 @@ function UserCard({ user, restoreUser, deleteUser }) {
                 )}
             </div>
 
-            <Modal show={showProfile} onHide={handleCloseProfile}>
+            <Modal show={showProfile} onHide={handleCloseProfile} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{user.id} : {user.firstName} {user.lastName}</Modal.Title>
                 </Modal.Header>
@@ -48,7 +56,7 @@ function UserCard({ user, restoreUser, deleteUser }) {
                             <Card.Text>
                             </Card.Text>
                             <Card.Link onClick={() => restoreUser(user.id)} href="admin">Restore Profile</Card.Link>
-                            <Card.Link className='deleteProfile' onClick={() => deleteUser(user.id)} href="#">Delete Profile</Card.Link>
+                            <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(user.id)} href="admin">Delete Profile</Card.Link>
                         </Card.Body>
                     </Card>
                 </Modal.Body>

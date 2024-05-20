@@ -18,7 +18,6 @@ function Header() {
   const userReduxData = useSelector(getUserData) || {}
   const token = userReduxData?.token
   const userType = userReduxData?.decoded?.userRole
-  console.log(userReduxData?.decoded?.userRole);
 
   const navigate = useNavigate()
 

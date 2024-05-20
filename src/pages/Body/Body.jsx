@@ -7,7 +7,7 @@ import { Profile } from "../Profile/Profile";
 import { Appointment } from "../Appointment/Appointment"
 import { Dates } from "../MeDates/MeDates"
 import { AdminAppointment } from "../allAppointment/allAppointment";
-import { Treatments } from "../Stylist/Treatment";
+import { Treatments } from "../Treatment/Treatment";
 // import { ModAppointment } from "../modAppointmen/modAppointment";
 //--------------------------------------------------------------
 

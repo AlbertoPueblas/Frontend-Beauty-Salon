@@ -7,12 +7,13 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import dayjs from 'dayjs';
-import { HiArchiveBoxXMark, HiOutlinePencil } from "react-icons/hi2";
+import { HiOutlinePencil } from "react-icons/hi2";
 import { FcEmptyTrash, FcPlus } from "react-icons/fc";
 import "./MeDates.css";
 import { useNavigate } from 'react-router-dom';
 import ModalDate from '../../components/ModalDate/ModalDate';
 import { Alert } from 'react-bootstrap';
+import { FcDownLeft } from "react-icons/fc"
 
 //---------------------------------------------------------------------------------------------------
 
@@ -72,6 +73,7 @@ export const Dates = () => {
                                             <HiOutlinePencil className='icon' onClick={(e) => { e.stopPropagation(); handleEditAppointment(date); }} />
                                             <FcEmptyTrash className='icon' onClick={() => { 
                                                 deleteAppointment(date.id) }} />
+                                                <FcDownLeft className='icon' onClick={() => navigate("/profile")}/>
                                         </div>
                                         <Card.Title>Appointment</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>

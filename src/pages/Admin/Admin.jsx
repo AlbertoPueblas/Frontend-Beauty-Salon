@@ -66,7 +66,7 @@ export const Admin = () => {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th className="celda">options</th>
+                        <th className="celda">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
