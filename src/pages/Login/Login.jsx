@@ -23,27 +23,27 @@ export const Login = () => {
     const dispatch = useDispatch();
 
     const [validated, setValidated] = useState(false);
-    const handleSubmit = async (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            await loginMe(navigate("/profile"));
-        }
-        setValidated(true);
-    };
-
     const [errorMsg, setErrorMsg] = useState("");
-
     const [credentials, setCredentials] = useState({
         email: "",
-        password: ""
+        password: "",
     });
+
     const [isValid, setIsValid] = useState({
         email: null,
         password: null,
     });
+
+    const handleSubmit = async (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        } else {
+            event.preventDefault()
+            await loginMe();
+        }
+        setValidated(true);
+    };
 
     const inputHandler = (e) => {
         setCredentials((prevState) => ({
@@ -68,6 +68,8 @@ export const Login = () => {
                 setTimeout(() => {
                     navigate("/profile")
                 }, 1000);
+            } else if (!res.data.user.isActive) {
+                setErrorMsg("Tu cuenta no esta activa contacta con el administrador")
             } else {
                 setErrorMsg("Error al iniciar sesion")
             }

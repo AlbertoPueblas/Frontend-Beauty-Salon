@@ -3,5 +3,9 @@
     flex-direction: row;
     text-align: center;
     background-color: aliceblue;
+}
 
+.exit {
+    width: 5em;
+    height: 2em;
 }

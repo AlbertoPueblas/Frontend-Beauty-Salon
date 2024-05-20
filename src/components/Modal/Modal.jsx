@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { updateProfile } from '../../services/apiCalls';
+import Password from '../ModalPassword/ModalPassword';
+import { FcDataConfiguration } from "react-icons/fc";
 
 //-----------------------------------------------------------
 
 function Memodal(props) {
 
-    const {profileData, inputHandler, token} = props
+    const { profileData, inputHandler, token } = props
     const navigate = useNavigate()
     const [show, setShow] = useState(false)
 
@@ -37,9 +39,9 @@ function Memodal(props) {
                 className="modal show"
                 style={{ display: 'block', position: 'initial' }}
             >
-                <Button variant="primary" onClick={() => setShow(true)}>
+                <FcDataConfiguration className='icon' variant="primary" onClick={() => setShow(true)}>
                     modify profile
-                </Button>
+                </FcDataConfiguration>
                 <Modal show={show} onHide={closeModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Profile</Modal.Title>
@@ -102,11 +104,16 @@ function Memodal(props) {
                     <Modal.Footer>
                         <Button variant="secondary"
                             onClick={closeModal}>Close</Button>
-                        <Button variant="primary"
+                        <Button variant="success"
                             onClick={() => {
                                 profileUpdate()
                                 navigate("/profile")
                             }}>Save changes</Button>
+                            <Password
+                                profileData={profileData}
+                                inputHandler={inputHandler}
+                                token={token} />
+                    
                     </Modal.Footer>
                 </Modal>
             </div>

@@ -1,8 +1,9 @@
+import "./Profile.css"
 import Card from 'react-bootstrap/Card';
-import { useSelector } from 'react-redux';
-import { getUserData } from '../../app/slice/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData, logout } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
-import { bringDates, meProfile } from '../../services/apiCalls';
+import { bringDates, desactiveProfile, meProfile } from '../../services/apiCalls';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -10,12 +11,14 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Memodal from '../../components/Modal/Modal';
-import { FcPlanner } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
+import Delete from "../../components/ModalAlert/ModalAlert";
+//Iconos
 import { FcFinePrint } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
-import "./Profile.css"
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { FcHome } from "react-icons/fc";
+import { Alert } from "react-bootstrap";
+
 
 //--------------------------------------------------------
 
@@ -25,14 +28,19 @@ export const Profile = () => {
         firstName: "",
         lastName: "",
         email: "",
-        phone: ""
+        phone: "",
+        password:""
     });
+
     const [userData, setUserData] = useState([]);
+    const [msg, setMsg] = useState("");
 
     const myPassport = useSelector(getUserData)
     const token = myPassport.token;
 
     const navigate = useNavigate();
+
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const fetchDataAndProfile = async () => {
@@ -42,7 +50,7 @@ export const Profile = () => {
             setUserData(res.clientDates);
         };
         fetchDataAndProfile();
-    }, [token]);
+    }, [token || ""]);
 
     const inputHandler = (e) => {
         setProfileData((prevState) => ({
@@ -52,8 +60,10 @@ export const Profile = () => {
         }));
     };
 
-    const location = useLocation();
-    const isCreatingAppointment = location.pathname.includes("/appointment/create");
+    const dispatch = useDispatch();
+    const logOutMe = () => {
+        dispatch(logout())
+    }
 
     return (
         <>
@@ -64,21 +74,37 @@ export const Profile = () => {
                             <Col xs={12} md={4}>
                                 <h6>Appointment</h6>
                                 <div className="icons">
-                                    <FcPlus className='icon' onClick={() => { navigate("/appointment")}} />
-                                    <FcPlanner className='icon' onClick={() => { navigate("/modAppointment", {state: {userData}})}} />
+                                    <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
+                                    <FcHome className='icon' onClick={() => { navigate("/modAppointment", { state: { userData } }) }} />
                                     <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
                                 </div>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
-                                <>
+                                <h6>Profile</h6>
+                                <div className="profile">
+                                    <div className="modify">
+
                                     <Memodal
                                         profileData={profileData}
+                                        
                                         inputHandler={inputHandler}
                                         token={token} />
-                                </>
+                                        <p>Modify</p>
+                                        </div>
+                                        <div className="delete">
+                                    <Delete
+                                        profileData={profileData}
+                                        // inputHandler={inputHandler}
+                                        token={token} 
+                                        />
+                                        <p>Delete</p>
+                                        </div>
+                                        
+                                        </div>
                             </Col>
                             <Col xs={12} md={8}>
 
                                 <h2>Me Profile</h2>
+                                {msg && <Alert variant="danger">{setMsg}</Alert>}
 
                                 <Form >
                                     <Form.Group controlId="validationCustomUsername" >

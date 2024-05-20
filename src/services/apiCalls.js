@@ -102,3 +102,29 @@ export const deleteDate = async (id, token) => {
   const res = await axios.delete(`${API_URL}appointment/deleteAppointment/${id}`, config)
   return res
 }
+
+
+export const desactiveProfile = async (active, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.put(`${API_URL}user/Delete`, active, config)
+}
+
+// export const verifyPassword = (passwordData, token) => {
+//   return axios.put(`${API_URL}user/putProfile`, passwordData, {
+//       headers: {
+//           Authorization: `Bearer ${token}`
+//       }
+//   }).then(response => response.data.valid);
+// };
+
+// export const changePassword = (passwordData, token) => {
+//   return axios.put(`${API_URL}user/putProfile`, passwordData, {
+//       headers: {
+//           Authorization: `Bearer ${token}`
+//       }
+//   });
+// };

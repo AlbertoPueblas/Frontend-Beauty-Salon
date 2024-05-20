@@ -5,7 +5,6 @@ import 'react-day-picker/dist/style.css';
 import './Appointment.css';
 import { LocalizationProvider, StaticTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Button } from "react-bootstrap";
 import { appointmentCreate, bringAllStylists, bringAllTreatments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
@@ -36,23 +35,30 @@ export const Appointment = () => {
   const navigate = useNavigate()
   const myPassport = useSelector(getUserData);
   const token = myPassport.token;
-
+  
+  //Control de dias 
   const manageDate = (date) => {
-    if (dayjs(date).diff(now, "d") <= 0) {
-      setMsg("No puedes seleccionar una fecha anterior a la actual");
+    if (dayjs(date).diff(now, "d") <= 0 && dayjs(date).day() === 0 || dayjs(date).day() === 6) {
+      setMsg("No puedes seleccionar una fecha anterior a la actual o fin de semana");
       setSelectedDate(null);
       return;
     }
     setMsg("");
     setSelectedDate(dayjs(date));
   };
-
+  //Control de horas
+  const manageTime = (time) => {
+    if(dayjs(time).hour() < 8 || dayjs(time).hour() < 20)
+      setMsg("El horario es: 08:00h a 20:00h")
+    setSelectedTime(time);
+  };
+  
   const dateForMe = async () => {
     if (!appCreate.stylistId || !appCreate.treatsmentId || !selectedDateTime) {
       setMsg("Por favor selecciona un estilista, un tratamiento y una fecha/hora.");
       return;
     }
-
+    
     try {
       const res = await appointmentCreate({ ...appCreate, appointmentDate: selectedDateTime.toISOString() }, token);
       setMsgV("Cita creada con éxito")
@@ -88,9 +94,6 @@ export const Appointment = () => {
     }));
   };
 
-  const manageTime = (time) => {
-    setSelectedTime(time);
-  };
 
   const getSelectedDateTime = () => {
     if (selectedDate && selectedTime) {

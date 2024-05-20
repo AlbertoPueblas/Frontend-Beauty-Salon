@@ -2,3 +2,21 @@
 .icons {
     display: flex;
 }
+
+.profile {
+    display: flex;
+    margin-right: 1em;
+
+}
+.modify {
+  margin-left: -3em;
+}
+
+.delete {
+    margin-left: -4em;
+}
+
+p {
+    
+    font-size: 0.6em;
+}

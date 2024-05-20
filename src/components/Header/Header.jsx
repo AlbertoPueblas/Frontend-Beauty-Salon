@@ -54,7 +54,7 @@ function Header() {
             Link
           </Nav.Link>
         </Nav>
-        <FcImport href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
+        <FcImport className='exit' href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
         <Form className="d-flex">
           <Form.Control
             type="search"

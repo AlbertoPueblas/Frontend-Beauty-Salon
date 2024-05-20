@@ -9,12 +9,15 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { newRegister } from "../../services/apiCalls"
 import Image from 'react-bootstrap/Image';
+import { Alert } from 'react-bootstrap';
 
 //------------------------------------------------------------------------------
 
 export const Register = () => {
 
     const navigate = useNavigate();
+    const [msg, setMsg] = useState("");
+
 
     const [validated, setValidated] = useState(false);
     const [credentials, setCredentials] = useState({
@@ -24,29 +27,40 @@ export const Register = () => {
     })
 
     const handleSubmit = async (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         } else {
-            await register(navigate("/Home"));
+            await register();
         }
         setValidated(true);
     };
 
     const register = async () => {
         try {
-            const res = await newRegister(credentials)
+            const res = await newRegister(credentials);
 
-            if (res.data) {
+            if (res.data && res.data.email) {
+                setMsg("Registro exitoso. Redirigiendo a login...");
                 setTimeout(() => {
-                    navigate("/Home");
-                }, 2000);
+                    navigate("/login");
+                }, 1000);
+            } else {
+                setMsg(res.data.message || "Registro fallido");
+                setTimeout(() => {
+                    navigate("/home")
+                },1000)
             }
         } catch (error) {
-            console.error("not register", error)
+            if (error.response && error.response.data && error.response.data.message === "Email already exists") {
+                setMsg("Error al registrar, prueba de nuevo");
+            } else {
+                setMsg("El correo electrónico ya está registrado");
+            }
+            console.error("Error al registrar");
         }
-    }
+    };
 
     const inputHandler = (e) => {
         setCredentials((prevState) => ({
@@ -60,6 +74,7 @@ export const Register = () => {
             <Container className="my-4">
                 <Card className='card'>
                             <h4>Register</h4>
+                            {msg && <Alert variant="warning">{msg}</Alert> }
                     <Card.Body>
                         <Row>
                             <Col xs={12} md={4}>
