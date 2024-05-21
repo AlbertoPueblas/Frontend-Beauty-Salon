@@ -6,6 +6,8 @@ import { FcPlanner, FcCancel } from 'react-icons/fc';
 import { CgProfile } from "react-icons/cg";
 import { MdDeleteForever } from "react-icons/md";
 import "./ModalCard.css";
+import { BiPencil } from "react-icons/bi";
+
 
 //------------------------------------------------
 
@@ -86,9 +88,10 @@ function UserCard({ user, restoreUser, deleteUser, deleteAppointmentByAdmin }) {
                                         Fecha: {new Date(appointment.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Tratamiento: {appointment.treatsmentId} <br />
+                                        Tratamiento: {appointment.treatmentId} <br />
                                         Estilista : {appointment.stylistId}
                                     </Card.Subtitle>
+                                    <BiPencil className='icon' onClick={() => navigate("")} />
                                     <MdDeleteForever className='icon'
                                     onClick={() => deleteAppointmentByAdmin(appointment.id)} />
                                 </Card.Body>

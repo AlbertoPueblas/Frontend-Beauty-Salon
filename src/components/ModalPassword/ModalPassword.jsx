@@ -97,7 +97,7 @@ function Password(props) {
                                 type="password"
                                 name="currentPassword"
                                 placeholder="Current password"
-                                value={currentPassword}
+                                value={currentPassword || ""}
                                 onChange={(e) => setCurrentPassword(e.target.value)}
 
                             />
@@ -109,7 +109,7 @@ function Password(props) {
                                 type="password"
                                 name="newPassword"
                                 placeholder="New password"
-                                value={newPassword}
+                                value={newPassword || ""}
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -120,7 +120,7 @@ function Password(props) {
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="Confirm new password"
-                                value={confirmPassword}
+                                value={confirmPassword || ""}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>

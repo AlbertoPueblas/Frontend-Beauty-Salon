@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import { allAppointments, allTreatments, deleteUser, resetUser } from "../../services/apiCalls";
+import { allTreatments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
-import { FcFinePrint } from "react-icons/fc";
+import { FcFinePrint, FcPlus } from "react-icons/fc";
 import { BiPencil } from "react-icons/bi";
 import Pagination from 'react-bootstrap/Pagination';
 
@@ -57,9 +57,10 @@ export const Treatments = () => {
                     {treatment.map((date) => (
                         <tr key={date.id}>
                             <td>{date.id}</td>
-                            <td>{date.treatsment}</td>
+                            <td>{date.treatment}</td>
                             <td>{date.price} €</td>
                             <td className="status">
+                                <FcPlus />
                                 <FcFinePrint />
                                 <BiPencil />
                             </td>

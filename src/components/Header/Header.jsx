@@ -60,12 +60,22 @@ function Header() {
 
         ) : (
             <>
-          <Nav.Link href="/profile">Profile</Nav.Link>
-          <Nav.Link href="appointment">Appointment</Nav.Link>
+          {token && <Nav.Link href="/profile">Profile</Nav.Link>}
+          {token && <Nav.Link href="appointment">Appointment</Nav.Link>}
             </>
             )}
         </Nav>
-        <FcImport className='exit' href='/home' onClick={ () => {logOutMe(),navigate("/home")}}>Log Out</FcImport>
+        {token && (
+            <FcImport 
+              className='exit' 
+              onClick={() => {
+                logOutMe();
+                navigate("/home");
+              }}
+            >
+              Log Out
+            </FcImport>
+          )}
       </Navbar.Collapse>
     </Container>
   </Navbar>

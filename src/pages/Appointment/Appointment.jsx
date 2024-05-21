@@ -3,7 +3,7 @@ import { DayPicker } from "react-day-picker";
 import dayjs from "dayjs";
 import 'react-day-picker/dist/style.css';
 import './Appointment.css';
-import { LocalizationProvider, StaticTimePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { appointmentCreate, bringAllStylists, bringAllTreatments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { FcOk } from "react-icons/fc";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 //--------------------------------------------------------------------------
 
@@ -29,8 +31,31 @@ export const Appointment = () => {
   const [appCreate, setAppCreate] = useState({
     appointmentDate: "",
     stylistId: "",
-    treatsmentId: "",
+    treatmentId: "",
   });
+
+  const showToast = (message) => {
+    Toastify({
+        text: message,
+        duration: 3000, // Duración 3 seg
+        close: true, // Mostrar botón de cierre
+        gravity: "top", // Posición del toast
+        position: "center", // Alineación del toast
+        backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+        stopOnFocus: true, // Mantener el toast mientras esté enfocado
+    }).showToast();
+}
+
+const showToastVariant = (message) => {
+  Toastify({
+      text: message,
+      duration: 3000, 
+      close: true, 
+      gravity: "top",
+      backgroundColor: "rgb(122, 201, 43)",
+      stopOnFocus: true,
+  }).showToastVariant();
+}
 
   const navigate = useNavigate()
   const myPassport = useSelector(getUserData);
@@ -39,34 +64,34 @@ export const Appointment = () => {
   //Control de dias 
   const manageDate = (date) => {
     if (dayjs(date).diff(now, "d") <= 0 && dayjs(date).day() === 0 || dayjs(date).day() === 6) {
-      setMsg("No puedes seleccionar una fecha anterior a la actual o fin de semana");
+      showToast("Fecha anterior a la actual o fin de semana");
       setSelectedDate(null);
       return;
     }
-    setMsg("");
+    // showToast("");
     setSelectedDate(dayjs(date));
   };
   //Control de horas
   const manageTime = (time) => {
     if(dayjs(time).hour() < 8 || dayjs(time).hour() < 20)
-      setMsg("El horario es: 08:00h a 20:00h")
+      showToast("El horario es: 08:00h a 20:00h")
     setSelectedTime(time);
   };
   
   const dateForMe = async () => {
-    if (!appCreate.stylistId || !appCreate.treatsmentId || !selectedDateTime) {
-      setMsg("Por favor selecciona un estilista, un tratamiento y una fecha/hora.");
+    if (!appCreate.stylistId || !appCreate.treatmentId || !selectedDateTime) {
+      showToast("Por favor selecciona un estilista, un tratamiento y una fecha/hora.");
       return;
     }
-    
+
     try {
       const res = await appointmentCreate({ ...appCreate, appointmentDate: selectedDateTime.toISOString() }, token);
-      setMsgV("Cita creada con éxito")
       setTimeout(() => {
         navigate("/profile");
+        showToastVariant("Cita creada con éxito")
       }, 2000)
     } catch (error) {
-      setMsg("Error al crear la cita");
+      showToast("Error al crear la cita");
     }
   };
 
@@ -114,48 +139,39 @@ export const Appointment = () => {
 
   return (
     <div className="container">
-      {selectedDateTime && (
-        <Alert variant="success">
-          Selected Date: {selectedDateTime.format("dddd, MMMM D, YYYY h:mm A")}
-        </Alert>
-      )}
-      {msg && <Alert variant="danger">{msg}</Alert>}
-      {msgV && <Alert variant="success">{msgV}</Alert>}
       <div className="content">
         <DayPicker
           mode="single"
           selected={selectedDate ? selectedDate.toDate() : undefined}
           onSelect={manageDate}
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticTimePicker
+        <LocalizationProvider label="Mobile variant" dateAdapter={AdapterDayjs}>
+        <TimePicker defaultValue={dayjs('2022-04-17T15:30')}
             displayStaticWrapperAs="desktop"
             value={selectedTime}
             onChange={manageTime}
           />
         </LocalizationProvider>
-      </div>
-      {selectedDateTime && (
         <div className="result">
-          <Form.Control as="select" name="treatsmentId" onChange={inputHandlerDates} className="select">
+          <Form.Control as="select" name="treatmentId" onChange={inputHandlerDates} className="select">
             <option value="">Select Treatment</option>
             {treatments.map((job) => (
-              <option value={job.id} key={job.id}>{job.treatsment} {job.price}€</option>
+              <option value={job.id} key={job.id}>{job.treatment} {job.price}€</option>
             ))}
           </Form.Control>
           <Form.Control
           as="select"
-           name="stylistId" onChange={inputHandlerDates} className="select">
+          name="stylistId" onChange={inputHandlerDates} className="select">
             <option value="">Select Stylist</option>
             {stylists.map((art) => (
               <option value={art.id} key={art.id}>{art.firstName}</option>
             ))}
           </Form.Control>
           <div>
+            </div>
           <FcOk className="btnOk" onClick={dateForMe}>Get Appointment</FcOk>
           </div>
         </div>
-      )}
     </div>
   );
 };

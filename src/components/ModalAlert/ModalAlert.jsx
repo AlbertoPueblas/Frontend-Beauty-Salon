@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { desactiveProfile } from '../../services/apiCalls';
 import { useSelector } from 'react-redux';
 import { getUserData } from '../../app/slice/userSlice';
-import { FcOk } from "react-icons/fc";
-import { FcDeleteDatabase } from "react-icons/fc";;
+import { FcDeleteDatabase, FcOk } from "react-icons/fc";;
 
 //------------------------------------------------------------------------
 
@@ -29,10 +28,7 @@ function Delete( profileData) {
 
     const deleteProfile = async () => {
         try {
-
             setTimeout(() => {
-                // Cierra sesión antes de redirigir
-
                 // Redirecciona al usuario
                 navigate("/Home");
             },1000)
@@ -40,6 +36,7 @@ function Delete( profileData) {
             // Espera un momento antes de realizar la llamada a la API
             setTimeout(async () => {
                 try {
+
                     // Realiza la llamada a desactiveProfile
                     const res = await desactiveProfile(profileData, token);
     
@@ -63,12 +60,18 @@ function Delete( profileData) {
         }
     };
 
+    const handleDeleteClick = () => {
+        if (window.confirm("Are you sure you want to delete your profile?")) {
+            setShow(true);
+        }
+    };
+
     return (
         <div
             className="modal show"
             style={{ display: 'block', position: 'initial' }}
         >
-            <FcDeleteDatabase className="iconOk" variant="primary" onClick={() => setShow(true)}>
+            <FcDeleteDatabase className="iconOk" variant="primary" onClick={handleDeleteClick}>
             </FcDeleteDatabase>
             <Modal show={show} onHide={closeModal}>
                 <Modal.Header className="modalShow" closeButton>

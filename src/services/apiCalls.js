@@ -15,7 +15,6 @@ export const appointmentCreate = async(appCreate, token) => {
 }
 
 export const newRegister = async (credentials) => {
-    console.log(credentials, "aqui registro");
     return axios.post(`${API_URL}auth/register`, credentials)
 }
 
@@ -69,7 +68,7 @@ export const bringAllTreatments = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  return axios.get(`${API_URL}treatsment/allTreatsment`, config)
+  return axios.get(`${API_URL}treatment/allTreatment`, config)
 }
 
 export const getAppointmentId = async (id, token) => {
@@ -88,6 +87,7 @@ export const updateAppointment = async (dataToSend, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
+  console.log("hhhh",dataToSend);
   const res = await axios.put(`${API_URL}appointment/modAppointment`,dataToSend, config)
   return res
 }
@@ -155,7 +155,7 @@ export const allTreatments = async (token, page = 1, limit = 15) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  return axios.get(`${API_URL}treatsment/allTreatsment?page=${page}&limit${limit}`, config);
+  return axios.get(`${API_URL}treatment/allTreatment?page=${page}&limit${limit}`, config);
 }
 
 export const deleteAppointmentByAdmin = async (id, token) => {
@@ -166,4 +166,14 @@ export const deleteAppointmentByAdmin = async (id, token) => {
   }
   console.log("borratis", id);
   return axios.delete(`${API_URL}appointment/deleteByAdmin/${id}`, config)
+}
+
+export const updateForUser = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.put(`${API_URL}user/updateByAd/${id}`,{}, config)
+
 }

@@ -1,7 +1,16 @@
+.select {
+ width: 17.5em;
+ margin-top: 0.2em;
+}
+
 .content {
-    display: flex;
+    margin-top: 1em;
+    display: grid;
     justify-content: center;
     width: 100%;
+
+    border-radius: 1em;
+    box-shadow: 1em 1em 2em rgb(31, 30, 30);  
 }
 
 .reloj {
@@ -12,7 +21,10 @@
     flex: 1;
     width: 2em;
     max-height: 2em;
+}
 
+p {
+    font-size: 1em;
 }
 
 .btnOk {

@@ -14,11 +14,8 @@ import Memodal from '../../components/Modal/Modal';
 import { useNavigate } from 'react-router-dom';
 import Delete from "../../components/ModalAlert/ModalAlert";
 //Iconos
-import { FcFinePrint } from "react-icons/fc";
-import { FcPlus } from "react-icons/fc";
-import { FcHome } from "react-icons/fc";
+import { FcFinePrint, FcPlus, FcHome,  } from "react-icons/fc";
 import { Alert } from "react-bootstrap";
-
 
 //--------------------------------------------------------
 
@@ -76,7 +73,9 @@ export const Profile = () => {
                                 <div className="icons">
                                     <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                                     <FcHome className='icon' onClick={() => { navigate("/modAppointment", { state: { userData } }) }} />
-                                    <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
+                                    {userData.length > 0 && (
+                                        <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
+                                    )}
                                 </div>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
                                 <h6>Profile</h6>

@@ -83,7 +83,7 @@ function Memodal(props) {
                                 type="text"
                                 name="lastName"
                                 placeholder="lastName"
-                                value={profileData.lastName}
+                                value={profileData.lastName || ""}
                                 onChange={inputHandler}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -95,7 +95,7 @@ function Memodal(props) {
                                 required
                                 type="text"
                                 placeholder="phone"
-                                value={profileData.phone}
+                                value={profileData.phone || ""}
                                 onChange={inputHandler}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>

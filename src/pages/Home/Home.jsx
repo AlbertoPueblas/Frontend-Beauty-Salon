@@ -16,6 +16,9 @@ import { decodeToken } from "react-jwt";
 import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
+
 //---------------------------------------------------------------------------------
 
 export const Home = () => {
@@ -74,13 +77,25 @@ export const Home = () => {
                     }
                 }, 1000);
             } else if (res.data && res.data.user && !res.data.user.isActive) {
-                setErrorMsg("Tu cuenta no esta activa contacta con el administrador")
+                showToast("Tu cuenta no esta activa contacta con el administrador")
             } else {
-                setErrorMsg("Error al iniciar sesion")
+                showToast("Error al iniciar sesion")
             }
         } catch (error) {
-            setErrorMsg("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+            showToast("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
         }
+    }
+
+    const showToast = (message) => {
+        Toastify({
+            text: message,
+            duration: 3000, // Duración 3 seg
+            close: true, // Mostrar botón de cierre
+            gravity: "top", // Posición del toast
+            position: "center", // Alineación del toast
+            backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+            stopOnFocus: true, // Mantener el toast mientras esté enfocado
+        }).showToast();
     }
 
     return (

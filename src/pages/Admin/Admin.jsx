@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Admin.css";
 import Table from 'react-bootstrap/Table';
-import { allAppointments, allUsers, deleteAppointmentByAdmin, deleteUser, resetUser } from "../../services/apiCalls";
+import { allUsers, deleteAppointmentByAdmin, deleteUser, resetUser } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import UserCard from "../../components/Card/ModalCard";
@@ -16,11 +16,13 @@ export const Admin = () => {
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    
+    const itemsPerPage = 12;
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
     const userType = userReduxData.decoded.userRole;
-  
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -36,7 +38,7 @@ export const Admin = () => {
 
     const restoreUser = async (id) => {
         try {
-            console.log("token",id ,token);
+            console.log("token", id, token);
             const response = await resetUser(id, token);
         } catch (error) {
             console.log(error);
@@ -44,30 +46,32 @@ export const Admin = () => {
     }
 
     const deletePermanent = async (id) => {
-        try{
-            console.log("token",id ,token);
-        const res = await deleteUser(id, token)
-        console.log(res);
+        try {
+            console.log("token", id, token);
+            const res = await deleteUser(id, token)
+            console.log(res);
         } catch (error) {
             console.log(error);
         }
     }
 
     const delAppointment = async (id) => {
-        try{
-            console.log("token",id, token);
-        const res = await deleteAppointmentByAdmin(id, token)
-        console.log(res);
+        try {
+            console.log("token", id, token);
+            const res = await deleteAppointmentByAdmin(id, token)
+            console.log(res);
         } catch (error) {
             console.log(error);
         }
     }
 
-    
+
     //Paginacion
     const handlePageChange = (page) => {
         setCurrentPage(page);
-      };
+    };
+
+    const placeholders = Array(itemsPerPage - users.length).fill({})
 
     return (
         <div className="table-responsive">
@@ -78,6 +82,7 @@ export const Admin = () => {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
+                        <th>Phone</th>
                         <th className="celda">Actions</th>
                     </tr>
                 </thead>
@@ -88,36 +93,42 @@ export const Admin = () => {
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
                             <td>{user.email}</td>
+                            <td>{user.phone}</td>
                             <td className="status">
                                 <UserCard user={user}
-                                restoreUser={restoreUser}
-                                deleteUser={deletePermanent}
-                                deleteAppointmentByAdmin={delAppointment} /></td>
+                                    restoreUser={restoreUser}
+                                    deleteUser={deletePermanent}
+                                    deleteAppointmentByAdmin={delAppointment} /></td>
                         </tr>
-                        ))}
+                    ))}
+                    {placeholders.map((_, index) => (
+                        <tr key={`placeholder-${index}`}>
+                            <td colSpan={6} className="placeholder-row1"></td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
             <div className="pagination">
-            <Pagination>
-              <Pagination.Prev
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              />
-              {[...Array(totalPages)].map((_, index) => (
-                <Pagination.Item
-                  key={index + 1}
-                  active={index + 1 === currentPage}
-                  onClick={() => handlePageChange(index + 1)}
-                >
-                  {index + 1}
-                </Pagination.Item>
-              ))}
-              <Pagination.Next
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              />
-            </Pagination>
-          </div>
-        </div>   
+                <Pagination>
+                    <Pagination.Prev
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    />
+                    {[...Array(totalPages)].map((_, index) => (
+                        <Pagination.Item
+                            key={index + 1}
+                            active={index + 1 === currentPage}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination>
+            </div>
+        </div>
     );
 };
