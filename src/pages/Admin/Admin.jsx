@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Admin.css";
 import Table from 'react-bootstrap/Table';
-import { allAppointments, allUsers, deleteUser, resetUser } from "../../services/apiCalls";
+import { allAppointments, allUsers, deleteAppointmentByAdmin, deleteUser, resetUser } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import UserCard from "../../components/Card/ModalCard";
@@ -52,6 +52,18 @@ export const Admin = () => {
             console.log(error);
         }
     }
+
+    const delAppointment = async (id) => {
+        try{
+            console.log("token",id, token);
+        const res = await deleteAppointmentByAdmin(id, token)
+        console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    
     //Paginacion
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -79,7 +91,8 @@ export const Admin = () => {
                             <td className="status">
                                 <UserCard user={user}
                                 restoreUser={restoreUser}
-                                deleteUser={deletePermanent} /></td>
+                                deleteUser={deletePermanent}
+                                deleteAppointmentByAdmin={delAppointment} /></td>
                         </tr>
                         ))}
                 </tbody>

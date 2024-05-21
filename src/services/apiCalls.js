@@ -157,3 +157,13 @@ export const allTreatments = async (token, page = 1, limit = 15) => {
   };
   return axios.get(`${API_URL}treatsment/allTreatsment?page=${page}&limit${limit}`, config);
 }
+
+export const deleteAppointmentByAdmin = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("borratis", id);
+  return axios.delete(`${API_URL}appointment/deleteByAdmin/${id}`, config)
+}

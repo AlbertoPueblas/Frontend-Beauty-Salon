@@ -9,7 +9,7 @@ import "./ModalCard.css";
 
 //------------------------------------------------
 
-function UserCard({ user, restoreUser, deleteUser }) {
+function UserCard({ user, restoreUser, deleteUser, deleteAppointmentByAdmin }) {
     const [showProfile, setShowProfile] = useState(false);
     const [showAppointments, setShowAppointments] = useState(false);
 
@@ -55,8 +55,13 @@ function UserCard({ user, restoreUser, deleteUser }) {
                             Status: {user.isActive ? "Activo" : "Inactivo"}
                             <Card.Text>
                             </Card.Text>
-                            <Card.Link onClick={() => restoreUser(user.id)} href="admin">Restore Profile</Card.Link>
-                            <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(user.id)} href="admin">Delete Profile</Card.Link>
+                            <Card.Link onClick={() => restoreUser(
+                                user.id
+                                )} href="admin">Restore Profile</Card.Link>
+                            <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(
+                                user.id
+                                )} 
+                                href="admin">Delete Profile</Card.Link>
                         </Card.Body>
                     </Card>
                 </Modal.Body>
@@ -84,7 +89,8 @@ function UserCard({ user, restoreUser, deleteUser }) {
                                         Tratamiento: {appointment.treatsmentId} <br />
                                         Estilista : {appointment.stylistId}
                                     </Card.Subtitle>
-                                    <MdDeleteForever className='icon' />
+                                    <MdDeleteForever className='icon'
+                                    onClick={() => deleteAppointmentByAdmin(appointment.id)} />
                                 </Card.Body>
                             </Card>
                         ))
