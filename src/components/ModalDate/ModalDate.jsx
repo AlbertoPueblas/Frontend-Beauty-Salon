@@ -8,6 +8,7 @@ import { updateAppointment, bringAllStylists, bringAllTreatments } from '../../s
 import { useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
 
+//---------------------------------------------------------
 function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, stylists, treatments }) {
     const [modifiedAppointment, setModifiedAppointment] = useState({
         ...appointmentData,
@@ -20,6 +21,7 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
 
     useEffect(() => {
         setModifiedAppointment({
+            //Se encarga de asociar el id con el nombre para renderizar el nombre asociado a la id.
             ...appointmentData,
             appointmentData: new Date(appointmentData.appointmentDate).toISOString().slice(0, 16),
             stylistId: appointmentData.stylist ? appointmentData.stylist.id : null,
@@ -29,7 +31,8 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        const parsedValue = name === 'treatmentId' || name === 'stylistId' ? Number(value) : value;
+        const parsedValue = name === 'treatmentId' 
+        || name === 'stylistId' ? Number(value) : value;// Cambia el valor a number
         setModifiedAppointment(prevState => ({
             ...prevState,
             [name]: parsedValue

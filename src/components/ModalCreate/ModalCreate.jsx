@@ -8,7 +8,10 @@ import { getUserData } from '../../app/slice/userSlice';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
+//-----------------------------------------------------------------------------
+
 function Create({ show, onHide, treatmentData, setTreatmentData, onCreate }) {
+
     const myPassport = useSelector(getUserData);
     const token = myPassport.token;
 
@@ -26,7 +29,6 @@ function Create({ show, onHide, treatmentData, setTreatmentData, onCreate }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-    
         // Actualiza el estado con el valor del input
         setTreatmentData(prevState => ({
             ...prevState,

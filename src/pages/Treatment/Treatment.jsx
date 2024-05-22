@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import { allTreatments, createTreatment } from "../../services/apiCalls";
+import { allTreatments, createTreatment, deleteTreatment, modifyTreatment } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import { FcPlus } from "react-icons/fc";
@@ -9,11 +9,15 @@ import Create from "../../components/ModalCreate/ModalCreate";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import { FiSettings } from "react-icons/fi";
+import Modify from "../../components/ModalModify/ModalModify";
+import { MdOutlineDelete, MdOutlineDeleteForever } from "react-icons/md";
 
-//--------------------------------------------------
+//-------------------------------------------------------------------------------------
+
 export const Treatments = () => {
-    const [treatment, setTreatment] = useState([]);
-    const [show, setShow] = useState(false);
+    const [treatments, setTreatments] = useState([]);
+    const [showCreate, setShowCreate] = useState(false);
+    const [showModify, setShowModify] = useState(false);
     const [treatmentData, setTreatmentData] = useState({
         treatment: "",
         price: ""
@@ -22,8 +26,6 @@ export const Treatments = () => {
     // Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
-    const [modalMode, setModalMode] = useState("create")
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
@@ -44,7 +46,7 @@ export const Treatments = () => {
         const fetchTreatments = async () => {
             try {
                 const res = await allTreatments(token, currentPage);
-                setTreatment(res.data.treatment);
+                setTreatments(res.data.treatment);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
@@ -53,97 +55,132 @@ export const Treatments = () => {
         fetchTreatments();
     }, [currentPage, token]);
 
-    const handleShow = (mode) =>{
-        setModalMode(mode);
-        setShow(true);
-    } 
-    const handleClose = () => setShow(false);
+    const handleShowCreate = () => {
+        setTreatmentData({ treatment: "", price: "" });
+        setShowCreate(true);
+    };
+
+    const handleShowModify = (treatment) => {
+        setTreatmentData(treatment);
+        setShowModify(true);
+    };
+
+    const handleCloseCreate = () => setShowCreate(false);
+    const handleCloseModify = () => setShowModify(false);
 
     const handleCreateTreatment = async () => {
         try {
             await createTreatment(treatmentData, token);
-            showToast("Treatment has been created", "#4caf50");
-            setShow(false);
-            setTreatmentData({ name: "", price: "" });
-            
+            showToast("El tratamiento ha sido creado", "#4caf50");
+            setShowCreate(false);
+            setTreatmentData({ treatment: "", price: "" });
+
             const res = await allTreatments(token, currentPage);
-            setTreatment(res.data.treatment);
-            console.log("hii",res.data,"token");
+            setTreatments(res.data.treatment);
         } catch (error) {
             console.log(error);
-            showToast("Failed to create treatment");
+            showToast("Fallo al crear el tratamiento");
         }
     };
 
-    const handleModifyTreatment = async () =>{
+    const handleModifyTreatment = async () => {
+        
         try {
             await modifyTreatment(treatmentData, token);
-            showToast("Treatment has been modified", "#4caf50");
+            showToast("El tratamiento ha sido modificado", "#4caf50");
+            setShowModify(false);
             
+            const res = await allTreatments(token, currentPage);
+            setTreatments(res.data.treatment);
         } catch (error) {
-            showToast("error",error)
+            console.log(error);
+            showToast("Fallo al modificar el tratamiento");
+        }
+    };
+    
+    const handleDeleteTreatment = async (id) => {
+            if(window.confirm("Estas seguro de borrar el tratamiento")){
+            try {
+                await deleteTreatment(id, token);
+                showToast("El tratamiento ha sido eliminado", "#4caf50");
+                
+                const res = await allTreatments(token, currentPage);
+                setTreatments(res.data.treatment);
+            } catch (error) {
+                
+            }
         }
     }
 
-    // Paginación
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
 
-    return (
-        <div className="table-responsive">
-            <Table striped bordered hover className="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name treatment</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {treatment.map((t) => (
-                        <tr key={t.id}>
-                            <td>{t.id}</td>
-                            <td>{t.treatment}</td>
-                            <td>{t.price} €</td>
-                            <td className="status">
-                                <FcPlus onClick={handleShow} />
-                                <FiSettings  onclick={handleShow}/>
-                            </td>
+        // Paginación
+        const handlePageChange = (page) => {
+            setCurrentPage(page);
+        };
+
+        return (
+            <div className="table-responsive">
+                <Table striped bordered hover className="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre del Tratamiento</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <Create
-                show={show}
-                onHide={handleClose}
-                treatmentData={treatmentData}
-                setTreatmentData={setTreatmentData}
-                onCreate={handleCreateTreatment}
-            />
+                    </thead>
+                    <tbody>
+                        {treatments.map((t) => (
+                            <tr key={t.id}>
+                                <td>{t.id}</td>
+                                <td>{t.treatment}</td>
+                                <td>{t.price} €</td>
+                                <td className="status">
+                                    <FcPlus onClick={handleShowCreate} />
+                                    <FiSettings onClick={() => handleShowModify(t)} />
+                                    <MdOutlineDeleteForever onClick={(e) => handleDeleteTreatment(t.id)} />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                <Create
+                    show={showCreate}
+                    onHide={handleCloseCreate}
+                    treatmentData={treatmentData}
+                    setTreatmentData={setTreatmentData}
+                    onCreate={handleCreateTreatment}
+                />
+                <Modify
+                    show={showModify}
+                    onHide={handleCloseModify}
+                    treatmentData={treatmentData}
+                    setTreatmentData={setTreatmentData}
+                    onModify={handleModifyTreatment}
+                />
 
-            <div className="pagination">
-                <Pagination>
-                    <Pagination.Prev
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    />
-                    {[...Array(totalPages)].map((_, index) => (
-                        <Pagination.Item
-                            key={index + 1}
-                            active={index + 1 === currentPage}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </Pagination.Item>
-                    ))}
-                    <Pagination.Next
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                    />
-                </Pagination>
+                <div className="pagination">
+                    <Pagination>
+                        <Pagination.Prev
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        />
+                        {[...Array(totalPages)].map((_, index) => (
+                            <Pagination.Item
+                                key={index + 1}
+                                active={index + 1 === currentPage}
+                                onClick={() => handlePageChange(index + 1)}
+                            >
+                                {index + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        />
+                    </Pagination>
+                </div>
             </div>
-        </div>
-    );
+        );
+
 };

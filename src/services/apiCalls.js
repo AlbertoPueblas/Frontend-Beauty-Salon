@@ -183,17 +183,26 @@ export const createTreatment = async (treatmentData, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("hieee",treatmentData);
+  console.log("Create",treatmentData);
   return axios.post(`${API_URL}treatment/newTreatment`, treatmentData, config)
 }
 
-export const modifyTreatment = async (id, token) => {
+export const modifyTreatment = async (treatmentData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("eee",id);
-  return axios.put(`${API_URL}treatment/putTreatment${id}`, {}, config)
+  console.log("moood",treatmentData);
+  return axios.put(`${API_URL}treatment/putTreatment`, treatmentData, config)
 
+}
+
+export const deleteTreatment = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.delete(`${API_URL}treatment/delTreatment/${id}`, config)
 }
