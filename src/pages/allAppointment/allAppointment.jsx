@@ -20,6 +20,19 @@ export const AdminAppointment = () => {
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
 
+        // Muestra mensajes de error
+        const showToast = (message) => {
+            Toastify({
+                text: message,
+                duration: 3000, // Duración 3 seg
+                close: true, // Mostrar botón de cierre
+                gravity: "top", // Posición del toast
+                position: "center", // Alineación del toast
+                backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+                stopOnFocus: true, // Mantener el toast mientras esté enfocado
+            }).showToast();
+        }
+
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -27,7 +40,7 @@ export const AdminAppointment = () => {
                 setAppointment(res.data.appointment);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
-                console.log(error);
+                showToast(error);
             }
         };
         fetchAppointments();
@@ -41,7 +54,7 @@ export const AdminAppointment = () => {
 
     const updateByAdmin = async (id) => {
         await updateForUser(id, token)
-        setMsg("Update appointment successfully")
+        showToast("Update appointment successfully")
     } 
     return (
         <div className="table-responsive">

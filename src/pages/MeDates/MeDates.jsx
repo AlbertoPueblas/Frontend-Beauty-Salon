@@ -12,8 +12,11 @@ import { FcEmptyTrash, FcPlus } from "react-icons/fc";
 import "./MeDates.css";
 import { useNavigate } from 'react-router-dom';
 import ModalDate from '../../components/ModalDate/ModalDate';
-import { Alert } from 'react-bootstrap';
 import { FcDownLeft } from "react-icons/fc";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
+
+//---------------------------------------------------------------------
 
 export const Dates = () => {
     const navigate = useNavigate();
@@ -24,21 +27,29 @@ export const Dates = () => {
     const [treatments, setTreatments] = useState([]);
     const myPassport = useSelector(getUserData);
     const token = myPassport.token;
-    const [msg, setMsg] = useState("");
+
+    const showToast = (message, backgroundColor = "#f44336") => {
+        Toastify({
+            text: message,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: backgroundColor,
+            stopOnFocus: true,
+        }).showToast();
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             const resDates = await bringDates(token);
             setDates(resDates.clientDates);
-            console.log(resDates.clientDates);
             
             const resStylists = await bringAllStylists(token);
             setStylists(resStylists.data.stylists);
-            console.log(resStylists.data.stylists);
         
             const resTreatments = await bringAllTreatments(token);
             setTreatments(resTreatments.data.treatment || []);
-            console.log(resTreatments.data.treatment || []);
         };
         fetchData();
     }, [token]);
@@ -49,27 +60,27 @@ export const Dates = () => {
 
     const handleEditAppointment = (appointment) => {
         setSelectedAppointment(appointment);
-        console.log(appointment);
     };
 
     const deleteAppointment = async (id) => {
-        const res = await deleteDate(id, token);
-        if (res) {
-            const updatedDates = dates.filter(date => date.id !== id);
-            setDates(updatedDates);
-            setMsg("Delete appointment successfully");
-            setTimeout(() => {
-                setMsg("");
-            }, 2000);
+        const confirmation = window.confirm("¿Estás seguro de que deseas eliminar esta cita?");
+        if (confirmation) {
+            const res = await deleteDate(id, token);
+            if (res) {
+                const updatedDates = dates.filter(date => date.id !== id);
+                setDates(updatedDates);
+                showToast("Cita eliminada con éxito", "rgb(122, 201, 43)");
+            } else {
+                showToast("Error al eliminar la cita");
+            }
         }
     };
 
     return (
-        <Container className="my-4">
-            <Row>
-                {msg && <Alert variant="success">{msg}</Alert>}
+        <Container className="container">
+            <Row className="justify-content-center">
                 <Col xs={12} md={8}>
-                    <h2>Me Appointment</h2>
+                    <h3 className="text-center">Mis Citas</h3>
                     <Card className='card'>
                         <Card.Body>
                             {dates && dates.map((date, index) => (
@@ -78,14 +89,14 @@ export const Dates = () => {
                                         <div className='icon'>
                                             <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
                                             <HiOutlinePencil className='icon' onClick={(e) => { e.stopPropagation(); handleEditAppointment(date); }} />
-                                            <FcEmptyTrash className='icon' onClick={() => { deleteAppointment(date.id) }} />
+                                            <FcEmptyTrash className='icon' onClick={(e) => { e.stopPropagation(); deleteAppointment(date.id) }} />
                                             <FcDownLeft className='icon' onClick={() => navigate("/profile")} />
                                         </div>
-                                        <Card.Title>Appointment</Card.Title>
+                                        <Card.Title>Cita</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>
-                                        <Card.Title>Stylist</Card.Title>
+                                        <Card.Title>Estilista</Card.Title>
                                         <Card>{date.stylist?.firstName}</Card>
-                                        <Card.Title>Treatment</Card.Title>
+                                        <Card.Title>Tratamiento</Card.Title>
                                         <Card>{date.treatment?.treatment}</Card>
                                     </Card.Body>
                                 </Card>

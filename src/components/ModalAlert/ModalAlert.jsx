@@ -15,8 +15,20 @@ function Delete( profileData) {
     const token = myPassport.token;
 
     const [show, setShow] = useState(false);
-    const [msg, setMsg] = useState("");
     const navigate = useNavigate();
+
+    // Muestra mensajes de error
+    const showToast = (message) => {
+        Toastify({
+            text: message,
+            duration: 3000, // Duración 3 seg
+            close: true, // Mostrar botón de cierre
+            gravity: "top", // Posición del toast
+            position: "center", // Alineación del toast
+            backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+            stopOnFocus: true, // Mantener el toast mientras esté enfocado
+        }).showToast();
+    }
 
     const closeModal = () => {
         navigate("/");
@@ -42,16 +54,14 @@ function Delete( profileData) {
     
                     // Verifica si la respuesta es correcta
                     if (res.status !== 200) {
-                        setMsg("Failed to delete profile");
+                        showToast("Failed to delete profile");
                     }
                 } catch (error) {
-                    console.error("Error deleting profile:", error);
-                    setMsg("Error deleting profile");
+                    showToast("Error deleting profile");
                 }
             }, 2000);
         } catch (error) {
-            console.error("Error during the process:", error);
-            setMsg("Error during the process");
+            showToast("Error during the process");
     
             // Realiza el redireccionamiento después de manejar el error
             setTimeout(() => {

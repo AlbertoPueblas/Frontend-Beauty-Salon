@@ -1,31 +1,48 @@
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import { allTreatments } from "../../services/apiCalls";
+import { allTreatments, createTreatment } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
-import { FcFinePrint, FcPlus } from "react-icons/fc";
-import { BiPencil } from "react-icons/bi";
+import { FcPlus } from "react-icons/fc";
 import Pagination from 'react-bootstrap/Pagination';
-
+import Create from "../../components/ModalCreate/ModalCreate";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
+import { FiSettings } from "react-icons/fi";
 
 //--------------------------------------------------
 export const Treatments = () => {
-    const [users, setUsers] = useState([]);
+    const [treatment, setTreatment] = useState([]);
     const [show, setShow] = useState(false);
-    const [treatment, setTreatment] = useState([])
+    const [treatmentData, setTreatmentData] = useState({
+        treatment: "",
+        price: ""
+    });
 
-    //Paginación
+    // Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const [modalMode, setModalMode] = useState("create")
+
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
-    const userType = userReduxData.decoded.userRole;
+
+    const showToast = (message, backgroundColor = "#f44336") => {
+        Toastify({
+            text: message,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: backgroundColor,
+            stopOnFocus: true,
+        }).showToast();
+    };
 
     useEffect(() => {
-        const fetchAppointments = async () => {
+        const fetchTreatments = async () => {
             try {
-
                 const res = await allTreatments(token, currentPage);
                 setTreatment(res.data.treatment);
                 setTotalPages(res.data.total_pages);
@@ -33,14 +50,45 @@ export const Treatments = () => {
                 console.log(error);
             }
         };
-        fetchAppointments();
+        fetchTreatments();
     }, [currentPage, token]);
 
-    //paginacion
+    const handleShow = (mode) =>{
+        setModalMode(mode);
+        setShow(true);
+    } 
+    const handleClose = () => setShow(false);
+
+    const handleCreateTreatment = async () => {
+        try {
+            await createTreatment(treatmentData, token);
+            showToast("Treatment has been created", "#4caf50");
+            setShow(false);
+            setTreatmentData({ name: "", price: "" });
+            
+            const res = await allTreatments(token, currentPage);
+            setTreatment(res.data.treatment);
+            console.log("hii",res.data,"token");
+        } catch (error) {
+            console.log(error);
+            showToast("Failed to create treatment");
+        }
+    };
+
+    const handleModifyTreatment = async () =>{
+        try {
+            await modifyTreatment(treatmentData, token);
+            showToast("Treatment has been modified", "#4caf50");
+            
+        } catch (error) {
+            showToast("error",error)
+        }
+    }
+
+    // Paginación
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-
 
     return (
         <div className="table-responsive">
@@ -54,20 +102,27 @@ export const Treatments = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {treatment.map((date) => (
-                        <tr key={date.id}>
-                            <td>{date.id}</td>
-                            <td>{date.treatment}</td>
-                            <td>{date.price} €</td>
+                    {treatment.map((t) => (
+                        <tr key={t.id}>
+                            <td>{t.id}</td>
+                            <td>{t.treatment}</td>
+                            <td>{t.price} €</td>
                             <td className="status">
-                                <FcPlus />
-                                <FcFinePrint />
-                                <BiPencil />
+                                <FcPlus onClick={handleShow} />
+                                <FiSettings  onclick={handleShow}/>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
+            <Create
+                show={show}
+                onHide={handleClose}
+                treatmentData={treatmentData}
+                setTreatmentData={setTreatmentData}
+                onCreate={handleCreateTreatment}
+            />
+
             <div className="pagination">
                 <Pagination>
                     <Pagination.Prev

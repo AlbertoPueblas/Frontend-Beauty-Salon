@@ -1,10 +1,12 @@
-import "./ModalDate.css";
+import "./ModalDate.css"
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { updateAppointment, bringAllStylists, bringAllTreatments } from '../../services/apiCalls';
+import { useNavigate } from 'react-router-dom';
+import dayjs from "dayjs";
 
 function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, stylists, treatments }) {
     const [modifiedAppointment, setModifiedAppointment] = useState({
@@ -14,10 +16,12 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
         treatmentId: appointmentData.treatment ? appointmentData.treatment.id : null,
     });
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         setModifiedAppointment({
             ...appointmentData,
-            appointmentDate: new Date(appointmentData.appointmentDate).toISOString().slice(0, 16),
+            appointmentData: new Date(appointmentData.appointmentDate).toISOString().slice(0, 16),
             stylistId: appointmentData.stylist ? appointmentData.stylist.id : null,
             treatmentId: appointmentData.treatment ? appointmentData.treatment.id : null,
         });
@@ -25,9 +29,10 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        const parsedValue = name === 'treatmentId' || name === 'stylistId' ? Number(value) : value;
         setModifiedAppointment(prevState => ({
             ...prevState,
-            [name]: Number(value)
+            [name]: parsedValue
         }));
     };
 
@@ -54,7 +59,7 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
                             <input className='inputCalendario'
                                 type="datetime-local"
                                 name="appointmentDate"
-                                value={modifiedAppointment.appointmentDate}
+                                value={dayjs(modifiedAppointment.appointmentDate).format("YYYY-MM-DDTHH:mm")}
                                 onChange={handleInputChange}
                             />
                         </InputGroup>
@@ -64,7 +69,7 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
                         <Form.Control
                             as="select"
                             name="stylistId"
-                            value={modifiedAppointment.stylistId || ""}
+                            value={modifiedAppointment.stylistId}
                             onChange={handleInputChange}
                         >
                             <option value="">Selecciona un estilista</option>
@@ -80,7 +85,7 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
                         <Form.Control
                             as="select"
                             name="treatmentId"
-                            value={modifiedAppointment.treatmentId || ""}
+                            value={modifiedAppointment.treatmentId}
                             onChange={handleInputChange}
                         >
                             <option value="">Selecciona un tratamiento</option>

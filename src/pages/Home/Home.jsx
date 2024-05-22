@@ -9,13 +9,11 @@ import Container from 'react-bootstrap/Container';
 import { useState } from "react";
 import { loginCall } from "../../services/apiCalls";
 import Image from 'react-bootstrap/Image';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserData, login } from "../../app/slice/userSlice";
+import { login } from "../../app/slice/userSlice";
 import { decodeToken } from "react-jwt";
-import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
-
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
@@ -26,7 +24,6 @@ export const Home = () => {
     const dispatch = useDispatch();
 
     const [validated, setValidated] = useState(false);
-    const [errorMsg, setErrorMsg] = useState("");
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
@@ -109,7 +106,6 @@ export const Home = () => {
                             </Col>
                             <Col xs={12} md={8}>
                                 <h1>Login</h1>
-                                {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
                                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                     <Form.Group controlId="validationCustomUsername" >
                                         <Form.Label>Email</Form.Label>

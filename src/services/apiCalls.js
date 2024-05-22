@@ -175,5 +175,25 @@ export const updateForUser = async (id, token) => {
     },
   }
   return axios.put(`${API_URL}user/updateByAd/${id}`,{}, config)
+}
+
+export const createTreatment = async (treatmentData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("hieee",treatmentData);
+  return axios.post(`${API_URL}treatment/newTreatment`, treatmentData, config)
+}
+
+export const modifyTreatment = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("eee",id);
+  return axios.put(`${API_URL}treatment/putTreatment${id}`, {}, config)
 
 }

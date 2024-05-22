@@ -3,3 +3,9 @@
     width:18em;
     height: 2em;
 }
+
+.container {
+    /* margin-top: 1em; */
+    margin-left:auto;
+    margin-right: auto;
+}

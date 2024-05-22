@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import Delete from "../../components/ModalAlert/ModalAlert";
 //Iconos
 import { FcFinePrint, FcPlus, FcHome,  } from "react-icons/fc";
-import { Alert } from "react-bootstrap";
 
 //--------------------------------------------------------
 
@@ -30,7 +29,6 @@ export const Profile = () => {
     });
 
     const [userData, setUserData] = useState([]);
-    const [msg, setMsg] = useState("");
 
     const myPassport = useSelector(getUserData)
     const token = myPassport.token;
@@ -102,8 +100,6 @@ export const Profile = () => {
                             <Col xs={12} md={8}>
 
                                 <h2>Me Profile</h2>
-                                {msg && <Alert variant="danger">{setMsg}</Alert>}
-
                                 <Form >
                                     <Form.Group controlId="validationCustomUsername" >
                                         <Form.Label>Email</Form.Label>

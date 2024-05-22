@@ -9,15 +9,12 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { newRegister } from "../../services/apiCalls"
 import Image from 'react-bootstrap/Image';
-import { Alert } from 'react-bootstrap';
 
 //------------------------------------------------------------------------------
 
 export const Register = () => {
 
     const navigate = useNavigate();
-    const [msg, setMsg] = useState("");
-
 
     const [validated, setValidated] = useState(false);
     const [credentials, setCredentials] = useState({
@@ -25,6 +22,19 @@ export const Register = () => {
         email: "",
         password: ""
     })
+
+    // Muestra mensajes de error
+    const showToast = (message) => {
+        Toastify({
+            text: message,
+            duration: 3000, // Duración 3 seg
+            close: true, // Mostrar botón de cierre
+            gravity: "top", // Posición del toast
+            position: "center", // Alineación del toast
+            backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+            stopOnFocus: true, // Mantener el toast mientras esté enfocado
+        }).showToast();
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,23 +52,23 @@ export const Register = () => {
             const res = await newRegister(credentials);
 
             if (res.data && res.data.email) {
-                setMsg("Registro exitoso. Redirigiendo a login...");
+                showToast("Registro exitoso. Redirigiendo a login...");
                 setTimeout(() => {
                     navigate("/login");
                 }, 1000);
             } else {
-                setMsg(res.data.message || "Registro fallido");
+                showToast(res.data.message || "Registro fallido");
                 setTimeout(() => {
                     navigate("/home")
-                },1000)
+                }, 1000)
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message === "Email already exists") {
-                setMsg("Error al registrar, prueba de nuevo");
+                showToast("Error al registrar, prueba de nuevo");
             } else {
-                setMsg("El correo electrónico ya está registrado");
+                showToast("El correo electrónico ya está registrado");
             }
-            console.error("Error al registrar");
+            showToast("Error al registrar");
         }
     };
 
@@ -73,8 +83,7 @@ export const Register = () => {
         <>
             <Container className="my-4">
                 <Card className='card'>
-                            <h4>Register</h4>
-                            {msg && <Alert variant="warning">{msg}</Alert> }
+                    <h4>Register</h4>
                     <Card.Body>
                         <Row>
                             <Col xs={12} md={4}>
