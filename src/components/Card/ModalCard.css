@@ -9,8 +9,21 @@
 
 .icon {
     cursor: pointer;
+    margin-left: auto;
 }
 
 .deleteProfile {
     color: red;
+}
+
+.active:hover {
+    cursor: pointer;
+    color: rgba(128, 255, 0, 0.788);
+
+}
+
+.desActive:hover {
+    cursor: pointer;
+    color: red;
+
 }

@@ -8,7 +8,8 @@ import { Appointment } from "../Appointment/Appointment"
 import { Dates } from "../MeDates/MeDates"
 import { AdminAppointment } from "../allAppointment/allAppointment";
 import { Treatments } from "../Treatment/Treatment";
-// import { ModAppointment } from "../modAppointmen/modAppointment";
+import { Stylist } from "../Stylist/Stylist";
+
 //--------------------------------------------------------------
 
 export const Body = () => {
@@ -19,6 +20,7 @@ export const Body = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/Admin" element={<Admin />} />
+                <Route path="/stylist" element={<Stylist />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/appointment" element={<Appointment />} />

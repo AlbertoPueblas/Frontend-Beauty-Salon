@@ -43,9 +43,12 @@ function Header() {
             <>
           <NavDropdown title="Actions" id="navbarScrollingDropdown">
             <NavDropdown.Item href="/admin">Users</NavDropdown.Item>
+            <NavDropdown.Item href="/stylist">Stylist</NavDropdown.Item>
             <NavDropdown.Item href="/allAppointment">Appointment</NavDropdown.Item>
             <NavDropdown.Item href="/treatments">Treatment</NavDropdown.Item>
             <NavDropdown.Divider />
+          {token && <Nav.Link href="/profile">Profile</Nav.Link>}
+
           </NavDropdown>
             <Form className="d-flex">
           <Form.Control
@@ -58,27 +61,36 @@ function Header() {
         </Form> 
             </>
 
+        ) : userType === 2 ? (
+          <>
+            <NavDropdown title="Actions" id="navbarScrollingDropdown">
+            <NavDropdown.Item href="/admin">Users</NavDropdown.Item>
+              <NavDropdown.Item href="/treatments">Treatment</NavDropdown.Item>
+              <NavDropdown.Divider />
+              {token && <Nav.Link href="/profile">Profile</Nav.Link>}
+            </NavDropdown>
+          </>
         ) : (
-            <>
-          {token && <Nav.Link href="/profile">Profile</Nav.Link>}
-          {token && <Nav.Link href="appointment">Appointment</Nav.Link>}
-            </>
-            )}
-        </Nav>
-        {token && (
-            <FcImport 
-              className='exit' 
-              onClick={() => {
-                logOutMe();
-                navigate("/home");
-              }}
-            >
-              Log Out
-            </FcImport>
-          )}
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
+          <>
+            {token && <Nav.Link href="/profile">Profile</Nav.Link>}
+            {token && <Nav.Link href="appointment">Appointment</Nav.Link>}
+          </>
+        )}
+      </Nav>
+      {token && (
+        <FcImport 
+          className='exit' 
+          onClick={() => {
+            logOutMe();
+            navigate("/home");
+          }}
+        >
+          Log Out
+        </FcImport>
+      )}
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
   );
 }
 

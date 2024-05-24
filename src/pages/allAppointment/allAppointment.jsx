@@ -32,7 +32,7 @@ export const AdminAppointment = () => {
                 stopOnFocus: true, // Mantener el toast mientras esté enfocado
             }).showToast();
         }
-
+    // Actualiza el estado
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -49,8 +49,9 @@ export const AdminAppointment = () => {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-
-    const placeholders = Array(itemsPerPage - appointment.length).fill({});
+        
+        //Crea el numero de filas necesarias para completar la tabla
+       const placeholders = Array(itemsPerPage - appointment.length).fill({})
 
     const updateByAdmin = async (id) => {
         await updateForUser(id, token)
@@ -61,35 +62,38 @@ export const AdminAppointment = () => {
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Appointment Date</th>
-                        <th>Stylist</th>
+                        <th className="Id">ID</th>
+                        <th>Appointment</th>
                         <th>Treatment</th>
-                        <th>Client</th>
-                        <th className="celda">Options</th>
+                        <th>Stylist</th>
+                        <th>Name</th>
+                        <th className="celda"> Phone</th>
+                        <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
                     {appointment.map((date, index) => (
-                        <tr key={index}>
-                            <td>{date.id}</td>
-                            <td>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</td>
-                            <td>{date.stylist?.firstName || '-'}</td>
-                            <td>{date.treatment?.treatment || '-'}</td>
-                            <td>Name: {date.client?.firstName || '-'} <br />
-                            Phone: {date.client?.phone}</td>
+                        <tr className="rowAppointment" key={index}>
+                            <td className="Id">{date.id}</td>
+                            <td>{dayjs(date.appointmentDate).format("D MMM  YY - h:mm A")}</td>
+                            <td width={250}>{date.treatment?.treatment || '-'}</td>
+                            <td width={120}>{date.stylist?.firstName || '-'}</td>
+                            <td width={200}>{date.client?.firstName || '-'}</td>
+                            <td width={120}>{}{date.client?.phone}</td>
                             <td className="status">
                                 <FcFinePrint />
                                 <BiPencil onClick={() => navigate("")} />
                             </td>
                         </tr>
                           ))}
+                          {/* Genera columnas vacias  */}
                     {placeholders.map((_, index) => (
                       <tr key={`placeholder-${index}`}>
-                            <td colSpan={6} className="placeholder-row"></td>
+                            <td colSpan={8} className="placeholder-row"></td>
                         </tr>
                     ))}
                 </tbody>
+                
             </Table>
             <div className="pagination">
                 <Pagination>

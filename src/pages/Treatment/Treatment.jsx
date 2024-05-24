@@ -10,7 +10,8 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import { FiSettings } from "react-icons/fi";
 import Modify from "../../components/ModalModify/ModalModify";
-import { MdOutlineDelete, MdOutlineDeleteForever } from "react-icons/md";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import "./Treatment.css"
 
 //-------------------------------------------------------------------------------------
 
@@ -22,6 +23,10 @@ export const Treatments = () => {
         treatment: "",
         price: ""
     });
+
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
+
+    const itemsPerPage = 15;
 
     // Paginación
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,7 +58,7 @@ export const Treatments = () => {
             }
         };
         fetchTreatments();
-    }, [currentPage, token]);
+    }, [currentPage, token, deleteSuccess]);
 
     const handleShowCreate = () => {
         setTreatmentData({ treatment: "", price: "" });
@@ -64,6 +69,10 @@ export const Treatments = () => {
         setTreatmentData(treatment);
         setShowModify(true);
     };
+    const handleDeleteSuccess = () => {
+        setDeleteSuccess(!deleteSuccess);
+
+    }
 
     const handleCloseCreate = () => setShowCreate(false);
     const handleCloseModify = () => setShowModify(false);
@@ -84,12 +93,12 @@ export const Treatments = () => {
     };
 
     const handleModifyTreatment = async () => {
-        
+
         try {
             await modifyTreatment(treatmentData, token);
             showToast("El tratamiento ha sido modificado", "#4caf50");
             setShowModify(false);
-            
+
             const res = await allTreatments(token, currentPage);
             setTreatments(res.data.treatment);
         } catch (error) {
@@ -97,90 +106,101 @@ export const Treatments = () => {
             showToast("Fallo al modificar el tratamiento");
         }
     };
-    
+
     const handleDeleteTreatment = async (id) => {
-            if(window.confirm("Estas seguro de borrar el tratamiento")){
+        if (window.confirm("Estas seguro de borrar el tratamiento")) {
             try {
                 await deleteTreatment(id, token);
                 showToast("El tratamiento ha sido eliminado", "#4caf50");
-                
-                const res = await allTreatments(token, currentPage);
-                setTreatments(res.data.treatment);
+
+                handleDeleteSuccess()
             } catch (error) {
-                
+
             }
         }
     }
 
+    let placeholders = [];
 
-        // Paginación
-        const handlePageChange = (page) => {
-            setCurrentPage(page);
-        };
+    if (treatments.length < itemsPerPage) {
+        
+        //Crea el numero de filas necesarias para completar la tabla
+        placeholders = Array(itemsPerPage - treatments.length).fill({})
+    }
 
-        return (
-            <div className="table-responsive">
-                <Table striped bordered hover className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre del Tratamiento</th>
-                            <th>Precio</th>
-                            <th>Acción</th>
+    // Paginación
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    return (
+        <div className="table-responsive">
+            <Table striped bordered hover className="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Tratamiento</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {treatments.map((t) => (
+                        <tr key={t.id}>
+                            <td>{t.id}</td>
+                            <td>{t.treatment}</td>
+                            <td>{t.price} €</td>
+                            <td className="status">
+                                <FcPlus className="cita" onClick={handleShowCreate} />
+                                <FiSettings onClick={() => handleShowModify(t)} />
+                                <MdOutlineDeleteForever className="delete" onClick={(e) => handleDeleteTreatment(t.id)} />
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {treatments.map((t) => (
-                            <tr key={t.id}>
-                                <td>{t.id}</td>
-                                <td>{t.treatment}</td>
-                                <td>{t.price} €</td>
-                                <td className="status">
-                                    <FcPlus onClick={handleShowCreate} />
-                                    <FiSettings onClick={() => handleShowModify(t)} />
-                                    <MdOutlineDeleteForever onClick={(e) => handleDeleteTreatment(t.id)} />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                <Create
-                    show={showCreate}
-                    onHide={handleCloseCreate}
-                    treatmentData={treatmentData}
-                    setTreatmentData={setTreatmentData}
-                    onCreate={handleCreateTreatment}
-                />
-                <Modify
-                    show={showModify}
-                    onHide={handleCloseModify}
-                    treatmentData={treatmentData}
-                    setTreatmentData={setTreatmentData}
-                    onModify={handleModifyTreatment}
-                />
+                    ))}
+                    {placeholders.map((_, index) => (
+                        <tr key={`placeholder-${index}`}>
+                            <td colSpan={6} className="placeholder-row2"></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+            <Create
+                show={showCreate}
+                onHide={handleCloseCreate}
+                treatmentData={treatmentData}
+                setTreatmentData={setTreatmentData}
+                onCreate={handleCreateTreatment}
+            />
+            <Modify
+                show={showModify}
+                onHide={handleCloseModify}
+                treatmentData={treatmentData}
+                setTreatmentData={setTreatmentData}
+                onModify={handleModifyTreatment}
+            />
 
-                <div className="pagination">
-                    <Pagination>
-                        <Pagination.Prev
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        />
-                        {[...Array(totalPages)].map((_, index) => (
-                            <Pagination.Item
-                                key={index + 1}
-                                active={index + 1 === currentPage}
-                                onClick={() => handlePageChange(index + 1)}
-                            >
-                                {index + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        />
-                    </Pagination>
-                </div>
+            <div className="pagination">
+                <Pagination>
+                    <Pagination.Prev
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    />
+                    {[...Array(totalPages)].map((_, index) => (
+                        <Pagination.Item
+                            key={index + 1}
+                            active={index + 1 === currentPage}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination>
             </div>
-        );
+        </div>
+    );
 
 };

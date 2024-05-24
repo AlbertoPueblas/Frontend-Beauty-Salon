@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { newRegister } from "../../services/apiCalls"
 import Image from 'react-bootstrap/Image';
+import Toastify from 'toastify-js';
 
 //------------------------------------------------------------------------------
 

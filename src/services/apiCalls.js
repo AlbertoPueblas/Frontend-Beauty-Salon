@@ -77,7 +77,7 @@ export const getAppointmentId = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  const res = await axios.get(`${API_URL}appointment/date/${id}`, config)
+  const res = await axios.get(`${API_URL}appointment/appointments/${id}`, config)
   return res
 }
 
@@ -149,6 +149,16 @@ export const deleteUser = async (id, token) => {
   return axios.delete(`${API_URL}user/permanentDell/${id}`, config)
 }
 
+export const desactiveUser = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("id Disable", id);
+  return axios.put(`${API_URL}user/disable/${id}`, {}, config)
+}
+
 export const allTreatments = async (token, page = 1, limit = 15) => {
   const config = {
     headers: {
@@ -158,13 +168,21 @@ export const allTreatments = async (token, page = 1, limit = 15) => {
   return axios.get(`${API_URL}treatment/allTreatment?page=${page}&limit${limit}`, config);
 }
 
+export const allStylist = async (token, page = 1, limit = 15) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return axios.get(`${API_URL}user/allStylist?page=${page}&limit${limit}`, config);
+}
+
 export const deleteAppointmentByAdmin = async (id, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("borratis", id);
   return axios.delete(`${API_URL}appointment/deleteByAdmin/${id}`, config)
 }
 
@@ -188,6 +206,17 @@ export const createTreatment = async (treatmentData, token) => {
 }
 
 export const modifyTreatment = async (treatmentData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  console.log("moood",treatmentData);
+  return axios.put(`${API_URL}treatment/putTreatment`, treatmentData, config)
+
+}
+
+export const modifyAppointmentByAdmin = async (treatmentData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

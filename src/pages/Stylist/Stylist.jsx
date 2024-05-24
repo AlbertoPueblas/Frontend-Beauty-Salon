@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import "./Admin.css";
 import Table from 'react-bootstrap/Table';
 import { allUsers, 
     deleteAppointmentByAdmin, 
     deleteUser, 
     resetUser, 
     desactiveUser, 
-    modifyAppointmentByAdmin
+    modifyAppointmentByAdmin,
+    allStylist
 } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
@@ -17,25 +17,22 @@ import Pagination from 'react-bootstrap/Pagination';
 
 //--------------------------------------------------
 
-export const Admin = () => {
+export const Stylist = () => {
 
     const [users, setUsers] = useState([]);
+    const [stylists, setStylists] = useState([]);
+    const [show, setShow] = useState(false);
     const [stateUser, setStateUser] = useState (false)
     const [stateDate, setStateDate] = useState (false)
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
-    //Paginacion en filtrado
-    const [allFetchedUsers, setAllFetchedUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
     
     const itemsPerPage = 12;
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
     const userType = userReduxData.decoded.userRole;
-    const stylistId = userReduxData.decoded.UserRole;
 
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
@@ -52,23 +49,16 @@ export const Admin = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await allUsers(token, currentPage);
-                let fetchedUsers = res.data.users;
-                if (userType === 2) {
-                    // Filtrar usuarios asignados al estilista
-                    fetchedUsers = fetchedUsers.filter(user => 
-                        user.clientDates.some(appointment => appointment.stylist.id === stylistId)
-                    );
-                }
-                setAllFetchedUsers(fetchedUsers);
-                setUsers(fetchedUsers);
-                setTotalPages(res.data.total_pages || 1);
+                const res = await allStylist(token, currentPage);
+                setUsers(res.data.stylists);
+                console.log(res.data.stylists);
+                // setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchUsers();
-    }, [currentPage, token, stateUser, userType, stylistId]);
+    }, [currentPage, token, stateUser]);
 
     //Actualiza el estado del usuario
     const handleStateUserSuccessfully = () => {
@@ -76,10 +66,6 @@ export const Admin = () => {
     }
 
     const restoreProfile = async (id) => {
-        if (userType !== 1) {
-            showToast("Unauthorized action", "#f44336");
-            return;
-        }
         try {
             showToast("Profile restored", "#4caf50")
             const response = await resetUser(id, token);
@@ -89,10 +75,6 @@ export const Admin = () => {
     }
 
     const desactiveProfile = async (id) => {
-        if (userType !== 1) {
-            showToast("Unauthorized action", "#f44336");
-            return;
-        }
         try {
             const response = await desactiveUser(id, token);
             showToast("Profile disabled")
@@ -103,10 +85,6 @@ export const Admin = () => {
     }
 
     const deletePermanent = async (id) => {
-        if (userType !== 1) {
-            showToast("Unauthorized action", "#f44336");
-            return;
-        }
         try {
             const res = await deleteUser(id, token)
             showToast("Delete completed", "#4caf50")
@@ -127,17 +105,21 @@ export const Admin = () => {
             }
         }
     }
+    const handleShowAppointments = (stylist) => {
+        setShow(true); 
+        setStylists(stylist);
+    }
         
     //Paginacion
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    let placeholders = [];
-    //Crea el numero de filas necesarias para completar la tabla
-    if (users.length < itemsPerPage) {
+    // let placeholders = [];
+    // //Crea el numero de filas necesarias para completar la tabla
+    // if (users.length < itemsPerPage) {
 
-        placeholders = Array(itemsPerPage - users.length).fill({})
-    }
+    //     placeholders = Array(itemsPerPage - users.length).fill({})
+    // }
 
     return (
         <div className="table-responsive">
@@ -146,7 +128,6 @@ export const Admin = () => {
                     <tr>
                         <th>ID</th>
                         <th>First Name</th>
-                        <th>Last Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th className="celda">Actions</th>
@@ -157,7 +138,6 @@ export const Admin = () => {
                         <tr key={user.id}>
                             <td>{user.id}</td>
                             <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
                             <td className="status">
@@ -167,14 +147,16 @@ export const Admin = () => {
                                     deleteUser={deletePermanent}
                                     onStateUserSuccess={handleStateUserSuccessfully}
                                     deleteAppointmentByAdmin={delAppointment} 
+                                    handleShowAppointments={() => handleShowAppointments(user.stylist.length > 0)}
+                                    // modifyAppointmentByAdmin={modifyAppointment} 
                                     /></td>
                         </tr>
                     ))}
-                    {placeholders.map((_, index) => (
+                    {/* {placeholders.map((_, index) => (
                         <tr key={`placeholder-${index}`}>
                             <td colSpan={6} className="placeholder-row1"></td>
                         </tr>
-                    ))}
+                    ))} */}
                 </tbody>
             </Table>
             <div className="pagination">

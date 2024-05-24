@@ -7,26 +7,76 @@ import { CgProfile } from "react-icons/cg";
 import { MdDeleteForever } from "react-icons/md";
 import "./ModalCard.css";
 import { BiPencil } from "react-icons/bi";
+import { getUserData } from '../../app/slice/userSlice';
+import { useSelector } from 'react-redux';
+
 
 
 //------------------------------------------------
 
-function UserCard({ user, restoreUser, deleteUser, deleteAppointmentByAdmin }) {
+function UserCard({ user, restoreUser, deleteUser,
+    desactiveUser, onStateUserSuccess, deleteAppointmentByAdmin,
+}) {
     const [showProfile, setShowProfile] = useState(false);
     const [showAppointments, setShowAppointments] = useState(false);
+    const [profileData, setProfileData] = useState(user)
 
     const handleCloseProfile = () => setShowProfile(false);
-    const handleShowProfile = () => setShowProfile(true);
+    const handleShowProfile = () => {
+        setProfileData(user)
+        setShowProfile(true);
+    };
 
     const handleCloseAppointments = () => setShowAppointments(false);
     const handleShowAppointments = () => setShowAppointments(true);
+
+    const handleDeactivate = (userId) => {
+        desactiveUser(userId);
+        setProfileData(prevData => ({
+            ...prevData,
+            isActive: false
+        }));
+        onStateUserSuccess();
+    };
+
+    const userReduxData = useSelector(getUserData) || {}
+    const token = userReduxData?.token
+    const userType = userReduxData?.decoded?.userRole
+
+    const handleRestore = (userId) => {
+        restoreUser(userId);
+        setProfileData(prevData => ({
+            ...prevData,
+            isActive: true
+        }));
+        onStateUserSuccess();
+    };
+
+    const handleDeleteAppointment = (appointmentId) => {
+        deleteAppointmentByAdmin(appointmentId);
+        setProfileData(prevData => ({
+            ...prevData,
+
+        }))
+        onStateUserSuccess();
+    }
+
+    // const handleModifyAppointment = (appointmentId) => {
+    //     deleteAppointmentByAdmin(appointmentId);
+    //     setProfileData(prevData => ({
+    //         ...prevData,
+
+    //     }))
+    //     onStateUserSuccess();
+    // }
 
     const handleDeleteConfirmation = (userId) => {
         const confirmDelete = window.confirm('¿Estás seguro de que quieres borrar este perfil?');
 
         if (confirmDelete) {
-            deleteUser(userId);
+            deleteUser(userId)
         }
+        onStateUserSuccess();
     };
 
     return (
@@ -41,29 +91,39 @@ function UserCard({ user, restoreUser, deleteUser, deleteAppointmentByAdmin }) {
                 {user.clientDates.length > 0 && (
                     <FcPlanner className='icon' variant="primary" onClick={handleShowAppointments} />
                 )}
+
+                {user.stylist.length > 0 && (
+                    <FcPlanner className='icon' variant="primary" onClick={handleShowAppointments} />
+                )}
             </div>
 
             <Modal show={showProfile} onHide={handleCloseProfile} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>{user.id} : {user.firstName} {user.lastName}</Modal.Title>
+                    <Modal.Title>{profileData.id} : {profileData.firstName} {profileData.lastName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Card>
                         <Card.Body>
-                            <Card.Title>Email: {user.email}</Card.Title>
+                            <Card.Title>Email: {profileData.email}</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">
-                                Phone: {user.phone}
+                                Phone: {profileData.phone}
                             </Card.Subtitle>
                             Status: {user.isActive ? "Activo" : "Inactivo"}
                             <Card.Text>
                             </Card.Text>
-                            <Card.Link onClick={() => restoreUser(
-                                user.id
-                                )} href="admin">Restore Profile</Card.Link>
-                            <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(
-                                user.id
-                                )} 
-                                href="admin">Delete Profile</Card.Link>
+
+                            {userType === 1 && user.isActive && (
+                                <Card.Link className='desActive' onClick={() => handleDeactivate(profileData.id)}>Desactive Profile</Card.Link>
+                            )}
+
+                            {userType === 1 && !user.isActive && (
+                                <Card.Link className='active' onClick={() => handleRestore(profileData.id)}>Restore Profile</Card.Link>
+                            )}
+
+                            {userType === 1 && (
+                                <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(profileData.id)} href="admin">Delete Profile</Card.Link>
+                            )}
+
                         </Card.Body>
                     </Card>
                 </Modal.Body>
@@ -88,17 +148,37 @@ function UserCard({ user, restoreUser, deleteUser, deleteAppointmentByAdmin }) {
                                         Fecha: {new Date(appointment.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Tratamiento: {appointment.treatmentId} <br />
-                                        Estilista : {appointment.stylistId}
+                                        Tratamiento: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
+                                        Estilista : {appointment.stylist ? appointment.stylist.firstName : "-"}
                                     </Card.Subtitle>
-                                    <BiPencil className='icon' onClick={() => navigate("")} />
                                     <MdDeleteForever className='icon'
-                                    onClick={() => deleteAppointmentByAdmin(appointment.id)} />
+                                        onClick={() => handleDeleteAppointment(appointment.id)} />
+                                </Card.Body>
+                            </Card>
+                        ))
+
+                    ) : (
+                        <p>No hay citas.</p>
+                    )}
+                    {user.stylist.length > 0 ? (
+                        user.stylist.map((dates) => (
+                            <Card key={dates.id}>
+                                <Card.Body>
+                                    <Card.Title>Cita ID: {dates.id}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">
+                                        Fecha: {new Date(dates.appointmentDate).toLocaleString()}
+                                    </Card.Subtitle>
+                                    <Card.Subtitle>
+                                        Tratamiento: {dates.treatmentId} <br />
+                                        Client : {dates.userId}
+                                    </Card.Subtitle>
+                                    <MdDeleteForever className='icon'
+                                        onClick={() => handleDeleteAppointment(dates.id)} />
                                 </Card.Body>
                             </Card>
                         ))
                     ) : (
-                        <p>No hay citas.</p>
+                        <p></p>
                     )}
                 </Modal.Body>
                 <Modal.Footer>

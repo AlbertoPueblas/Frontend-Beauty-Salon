@@ -4,8 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { updateAppointment, bringAllStylists, bringAllTreatments } from '../../services/apiCalls';
-import { useNavigate } from 'react-router-dom';
+import { updateAppointment } from '../../services/apiCalls';
 import dayjs from "dayjs";
 
 //---------------------------------------------------------
@@ -16,8 +15,6 @@ function ModalDate({ appointmentData, token, onUpdateAppointment, onClose, styli
         stylistId: appointmentData.stylist ? appointmentData.stylist.id : null,
         treatmentId: appointmentData.treatment ? appointmentData.treatment.id : null,
     });
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         setModifiedAppointment({

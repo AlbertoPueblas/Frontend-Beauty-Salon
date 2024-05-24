@@ -30,7 +30,7 @@ export const Appointment = () => {
     treatmentId: "",
   });
 
-  const showToast = (message) => {
+  const showToast = (message, backgroundColor = "#f44336") => {
     Toastify({
       text: message,
       duration: 3000,
