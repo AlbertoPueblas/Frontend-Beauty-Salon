@@ -58,14 +58,6 @@ function UserCard({ user, restoreUser, deleteUser,
         onStateUserSuccess();
     }
 
-    // const handleModifyAppointment = (appointmentId) => {
-    //     deleteAppointmentByAdmin(appointmentId);
-    //     setProfileData(prevData => ({
-    //         ...prevData,
-
-    //     }))
-    //     onStateUserSuccess();
-    // }
 
     const handleDeleteConfirmation = (userId) => {
         const confirmDelete = window.confirm('¿Estás seguro de que quieres borrar este perfil?');
@@ -142,11 +134,10 @@ function UserCard({ user, restoreUser, deleteUser,
                                 <Card.Body>
                                     <Card.Title>Cita ID: {appointment.id}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">
-                                        Fecha: {new Date(appointment.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Tratamiento: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
-                                        Estilista : {appointment.stylist ? appointment.stylist.firstName : "-"}
+                                        Treatment: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
+                                        Stylist : {appointment.stylist ? appointment.stylist.firstName : "-"}
                                     </Card.Subtitle>
                                     <MdDeleteForever className='icon'
                                         onClick={() => handleDeleteAppointment(appointment.id)} />
@@ -166,7 +157,7 @@ function UserCard({ user, restoreUser, deleteUser,
                                         Fecha: {new Date(dates.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Tratamiento: {dates.treatmentId} <br />
+                                        Trateatment: {dates.treatmentId} <br />
                                         Client : {dates.userId}
                                     </Card.Subtitle>
                                     <MdDeleteForever className='icon'

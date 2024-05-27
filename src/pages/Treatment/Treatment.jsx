@@ -139,9 +139,9 @@ export const Treatments = () => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre del Tratamiento</th>
-                        <th>Precio</th>
-                        <th>Acción</th>
+                        <th>Treatment</th>
+                        <th>Price</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

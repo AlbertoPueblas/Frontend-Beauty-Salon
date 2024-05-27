@@ -53,12 +53,6 @@ export const Admin = () => {
             try {
                 const res = await allUsers(token, currentPage);
                 let fetchedUsers = res.data.users;
-                if (userType === 2) {
-                    // Filtrar usuarios asignados al estilista
-                    fetchedUsers = fetchedUsers.filter(user => 
-                        user.clientDates.some(appointment => appointment.stylist.id === stylistId)
-                    );
-                }
                 setAllFetchedUsers(fetchedUsers);
                 setUsers(fetchedUsers);
                 setTotalPages(res.data.total_pages || 1);
@@ -140,7 +134,6 @@ export const Admin = () => {
 
     return (
         <div className="table-responsive">
-            <h5>All Users</h5>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>

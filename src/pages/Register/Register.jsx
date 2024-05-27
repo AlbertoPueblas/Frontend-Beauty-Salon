@@ -53,23 +53,23 @@ export const Register = () => {
             const res = await newRegister(credentials);
 
             if (res.data && res.data.email) {
-                showToast("Registro exitoso. Redirigiendo a login...");
+                showToast("Register successfully.");
                 setTimeout(() => {
                     navigate("/home");
                 }, 1000);
             } else {
-                showToast(res.data.message || "Registro fallido");
+                showToast(res.data.message || "Register failed");
                 setTimeout(() => {
                     navigate("/home")
                 }, 1000)
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message === "Email already exists") {
-                showToast("Error al registrar, prueba de nuevo");
+                showToast("Error to register, please try again");
             } else {
-                showToast("El correo electrónico ya está registrado");
+                showToast("Email is already registered");
             }
-            showToast("Error al registrar");
+            showToast("Error to register");
         }
     };
 

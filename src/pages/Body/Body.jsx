@@ -9,6 +9,7 @@ import { Dates } from "../MeDates/MeDates"
 import { AdminAppointment } from "../allAppointment/allAppointment";
 import { Treatments } from "../Treatment/Treatment";
 import { Stylist } from "../Stylist/Stylist";
+import { Manager } from "../Manager/Manager";
 
 //--------------------------------------------------------------
 
@@ -26,6 +27,7 @@ export const Body = () => {
                 <Route path="/appointment" element={<Appointment />} />
                 <Route path="/allAppointment" element={<AdminAppointment />} />
                 <Route path="/treatments" element={<Treatments />} />
+                <Route path="/manager" element={<Manager />} />
                 <Route path="/medates" element={<Dates />} />
 
             </Routes>

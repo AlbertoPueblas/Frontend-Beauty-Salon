@@ -63,8 +63,8 @@ function Header() {
 
         ) : userType === 2 ? (
           <>
-            <NavDropdown title="Actions" id="navbarScrollingDropdown">
-            <NavDropdown.Item href="/admin">Users</NavDropdown.Item>
+            <NavDropdown title="Manager" >
+            <NavDropdown.Item href="/manager">Users</NavDropdown.Item>
               <NavDropdown.Item href="/treatments">Treatment</NavDropdown.Item>
               <NavDropdown.Divider />
               {token && <Nav.Link href="/profile">Profile</Nav.Link>}

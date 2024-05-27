@@ -68,7 +68,6 @@ export const AdminAppointment = () => {
                         <th>Stylist</th>
                         <th>Name</th>
                         <th className="celda"> Phone</th>
-                        <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,10 +79,6 @@ export const AdminAppointment = () => {
                             <td width={120}>{date.stylist?.firstName || '-'}</td>
                             <td width={200}>{date.client?.firstName || '-'}</td>
                             <td width={120}>{}{date.client?.phone}</td>
-                            <td className="status">
-                                <FcFinePrint />
-                                <BiPencil onClick={() => navigate("")} />
-                            </td>
                         </tr>
                           ))}
                           {/* Genera columnas vacias  */}

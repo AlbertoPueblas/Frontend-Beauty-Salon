@@ -44,6 +44,7 @@ function ModalCreateStylist({ onStateUserSuccess }) {
             ...prevState,
             [e.target.name]: e.target.value,
         }));
+        onStateUserSuccess()
     };
 
     return (

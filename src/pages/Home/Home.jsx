@@ -67,10 +67,11 @@ export const Home = () => {
 
                 setTimeout(() => {
                     const userRole = passport.decoded.userRole
-                    if (userRole === 1 || userRole === 2) {
+                    if ( userRole === 1 ) {
                         navigate("/admin")
-                    } else {
-                        navigate("/profile")
+
+                    } else if(userRole === 2) {
+                        navigate("/manager")
                     }
                 }, 1000);
             } else if (res.data && res.data.user && !res.data.user.isActive) {

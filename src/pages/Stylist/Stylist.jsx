@@ -62,6 +62,25 @@ export const Stylist = () => {
         setStateUser(!stateUser) 
     }
 
+    // const handleRestore = (userId) => {
+    //     resetUser(userId);
+    //     setProfileData(prevData => ({
+    //         ...prevData,
+    //         isActive: true
+    //     }));
+    //     onStateUserSuccess();
+    // };
+
+
+    // const handleDeactivate = (userId) => {
+    //     desactiveUser(userId);
+    //     setProfileData(prevData => ({
+    //         ...prevData,
+    //         isActive: false
+    //     }));
+    //     onStateUserSuccess();
+    // };
+
     const restoreProfile = async (id) => {
         try {
             showToast("Profile restored", "#4caf50")
@@ -107,7 +126,6 @@ export const Stylist = () => {
         const orderArray = stylist.sort((a,b) => a.firstName.localCompare(b.firstName));
         setStylists(orderArray);
     }
-
     return (
         <div className="table-responsive">
                 <h4>Styilist 
