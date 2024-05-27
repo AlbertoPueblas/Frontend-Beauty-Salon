@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import { allUsers, 
+import { 
     deleteAppointmentByAdmin, 
     deleteUser, 
     resetUser, 
     desactiveUser, 
-    modifyAppointmentByAdmin,
     allStylist
 } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
@@ -13,7 +12,7 @@ import { getUserData } from "../../app/slice/userSlice";
 import UserCard from "../../components/Card/ModalCard";
 import "toastify-js/src/toastify.css";
 import Toastify from 'toastify-js';
-import Pagination from 'react-bootstrap/Pagination';
+import ModalCreateStylist from "../../components/ModalCreateStylist/ModalCreateStylist";
 
 //--------------------------------------------------
 
@@ -27,8 +26,6 @@ export const Stylist = () => {
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    
-    const itemsPerPage = 12;
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
@@ -107,22 +104,15 @@ export const Stylist = () => {
     }
     const handleShowAppointments = (stylist) => {
         setShow(true); 
-        setStylists(stylist);
+        const orderArray = stylist.sort((a,b) => a.firstName.localCompare(b.firstName));
+        setStylists(orderArray);
     }
-        
-    //Paginacion
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
-    // let placeholders = [];
-    // //Crea el numero de filas necesarias para completar la tabla
-    // if (users.length < itemsPerPage) {
-
-    //     placeholders = Array(itemsPerPage - users.length).fill({})
-    // }
 
     return (
         <div className="table-responsive">
+                <h4>Styilist 
+                    <ModalCreateStylist
+                    onStateUserSuccess={handleStateUserSuccessfully} /></h4>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
@@ -148,38 +138,11 @@ export const Stylist = () => {
                                     onStateUserSuccess={handleStateUserSuccessfully}
                                     deleteAppointmentByAdmin={delAppointment} 
                                     handleShowAppointments={() => handleShowAppointments(user.stylist.length > 0)}
-                                    // modifyAppointmentByAdmin={modifyAppointment} 
                                     /></td>
                         </tr>
                     ))}
-                    {/* {placeholders.map((_, index) => (
-                        <tr key={`placeholder-${index}`}>
-                            <td colSpan={6} className="placeholder-row1"></td>
-                        </tr>
-                    ))} */}
                 </tbody>
             </Table>
-            <div className="pagination">
-                <Pagination>
-                    <Pagination.Prev
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    />
-                    {[...Array(totalPages)].map((_, index) => (
-                        <Pagination.Item
-                            key={index + 1}
-                            active={index + 1 === currentPage}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </Pagination.Item>
-                    ))}
-                    <Pagination.Next
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                    />
-                </Pagination>
-            </div>
         </div>
     );
 };

@@ -235,3 +235,12 @@ export const deleteTreatment = async (id, token) => {
   }
   return axios.delete(`${API_URL}treatment/delTreatment/${id}`, config)
 }
+
+export const newStylist = async (credentials, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.post(`${API_URL}user/newStylist`, credentials, config)
+}

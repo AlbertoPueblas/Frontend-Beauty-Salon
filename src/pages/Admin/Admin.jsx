@@ -6,7 +6,6 @@ import { allUsers,
     deleteUser, 
     resetUser, 
     desactiveUser, 
-    modifyAppointmentByAdmin
 } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
@@ -103,10 +102,10 @@ export const Admin = () => {
     }
 
     const deletePermanent = async (id) => {
-        if (userType !== 1) {
-            showToast("Unauthorized action", "#f44336");
-            return;
-        }
+            if (userType !== 1) {
+        showToast("Unauthorized action", "#f44336");
+        return;
+    }
         try {
             const res = await deleteUser(id, token)
             showToast("Delete completed", "#4caf50")
@@ -141,6 +140,7 @@ export const Admin = () => {
 
     return (
         <div className="table-responsive">
+            <h5>All Users</h5>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>

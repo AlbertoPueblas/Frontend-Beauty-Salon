@@ -30,3 +30,5 @@ modificar su perfil y contraseña, pedir una cita con día y horarios limitados 
 
 Resultado: </br>
 ![alt text](image-4.png)
+
+3. Al filtrar por usuarios con citas para un estilista de la lista de usuarios totales, me he encotrado con que a la hora de filtrar la paginacion se descuadra porque alarga los usuarios hasta completar las paginas totales.

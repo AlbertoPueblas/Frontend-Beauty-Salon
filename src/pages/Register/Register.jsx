@@ -55,7 +55,7 @@ export const Register = () => {
             if (res.data && res.data.email) {
                 showToast("Registro exitoso. Redirigiendo a login...");
                 setTimeout(() => {
-                    navigate("/login");
+                    navigate("/home");
                 }, 1000);
             } else {
                 showToast(res.data.message || "Registro fallido");

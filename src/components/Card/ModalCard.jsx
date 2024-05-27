@@ -6,11 +6,8 @@ import { FcPlanner, FcCancel } from 'react-icons/fc';
 import { CgProfile } from "react-icons/cg";
 import { MdDeleteForever } from "react-icons/md";
 import "./ModalCard.css";
-import { BiPencil } from "react-icons/bi";
 import { getUserData } from '../../app/slice/userSlice';
 import { useSelector } from 'react-redux';
-
-
 
 //------------------------------------------------
 
@@ -121,7 +118,7 @@ function UserCard({ user, restoreUser, deleteUser,
                             )}
 
                             {userType === 1 && (
-                                <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(profileData.id)} href="admin">Delete Profile</Card.Link>
+                                <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(profileData.id)}>Delete Profile</Card.Link>
                             )}
 
                         </Card.Body>

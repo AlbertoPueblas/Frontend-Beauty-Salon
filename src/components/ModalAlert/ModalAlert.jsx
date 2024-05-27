@@ -3,9 +3,11 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 import { desactiveProfile } from '../../services/apiCalls';
-import { useSelector } from 'react-redux';
-import { getUserData } from '../../app/slice/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData, logout } from '../../app/slice/userSlice';
 import { FcDeleteDatabase, FcOk } from "react-icons/fc";;
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 //------------------------------------------------------------------------
 
@@ -38,11 +40,16 @@ function Delete( profileData) {
         setShow(false);
     }
 
+    const dispatch = useDispatch();
+    const logOutMe = () => {
+      dispatch(logout())
+    }
     const deleteProfile = async () => {
         try {
             setTimeout(() => {
                 // Redirecciona al usuario
                 navigate("/Home");
+                logOutMe()
             },1000)
     
             // Espera un momento antes de realizar la llamada a la API
@@ -53,7 +60,7 @@ function Delete( profileData) {
                     const res = await desactiveProfile(profileData, token);
     
                     // Verifica si la respuesta es correcta
-                    if (res.status !== 200) {
+                    if (res.status === 200) {
                         showToast("Failed to delete profile");
                     }
                 } catch (error) {

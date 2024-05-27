@@ -84,7 +84,7 @@ export const Profile = () => {
                                         profileData={profileData}
                                         inputHandler={inputHandler}
                                         token={token} />
-                                        <p>Modify</p>
+                                        <h6>Mod</h6>
                                         </div>
                                         <div className="delete">
                                     <Delete
@@ -92,7 +92,7 @@ export const Profile = () => {
                                         // inputHandler={inputHandler}
                                         token={token} 
                                         />
-                                        <p>Delete</p>
+                                        <h6>Del</h6>
                                         </div>
                                         
                                         </div>
