@@ -59,7 +59,7 @@ export const bringAllStylists = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  return axios.get(`${API_URL}appointment/allStylists`, config)
+  return axios.get(`${API_URL}user/allStylist`, config)
 }
 
 export const bringAllTreatments = async (token) => {

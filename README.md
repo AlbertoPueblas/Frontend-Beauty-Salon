@@ -10,14 +10,31 @@ El objetivo de este proyecto es crear la parte visual basada en una base de dato
 
 ## Detalles y pasos del proyecto
 
-una vez tenemos los endpoints y la BBDD construiremos diferentes vistas para que todos los usuarios puedan interactuar con nuestro backend a traves de este front con diferentes roles. Los roles son:</br>
+Una vez tenemos los endpoints y la BBDD construiremos diferentes vistas para que todos los usuarios puedan interactuar con nuestro backend a través de este front con diferentes roles. Los roles son:</br>
 <details>
 <summary>Roles</summary>
+
 <details>
-<Summary>Admin</summary>
+<Summary>Rol 1: Admin</summary>
+El Administrador tiene acceso a todos los rincones y puede realizar diversas acciones:</br>
 
+-Visualizar a todos los usuarios y sus citas pudiendo borrar las citas y usuarios, pudiendo solo desactivar y activar usuarios.</br>
+También puede ver su perfil y modificarlo a demás puede también ver todos los estilistas, desactivar y activar su perfil o borrarlo.</br> 
+Tiene a su disposición una lista con todas las citas con información detallada. Puede crear, modificar y borrar tratamientos.
 
+<details>
+<Summary>Rol 2: Manager o estilista</summary>
+El Estilista tiene el acceso algo restringido a diferencia del Administrador, ellos solo pueden visualizar las citas que tienen en su agenda,
+y también pueden crear, modificar o borrar tratamientos. Tienen acceso a su perfil y la posibilidad de crearse una cita, modificarla o borrarla al igual que el perfil.
 
+<details>
+<Summary>Rol 3: User o Cliente</summary>
+
+El usuario puede estar ya en la base de datos o registrarse. Puede editar sus datos de usuario,
+ pedir cita a través de un day picker con horas y días restringidos al impuesto por el admin,
+para crear la cita debe escoger un estilista y un tratamiento. posteriormente, puede editarla o borrarla.
+Puede ver una lista con sus citas y desactivar su usuario si así lo requiere.
+</details>
 
 ##Problemas y soluciones:
 

@@ -133,15 +133,15 @@ function UserCard({ user, restoreUser, deleteUser,
                     <Modal.Title>Citas de {user.firstName} {user.lastName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {user.length > 0 ? (
-                        user.map((appointment) => (
+                    {user.clientDates.length > 0 ? (
+                        user.clientDates.map((appointment) => (
                             <Card key={appointment.id}>
                                 <Card.Body>
                                     <Card.Title>Cita ID: {appointment.id}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Treatment: {appointment.firstName} <br />
+                                        Treatment: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
                                         Stylist : {appointment.stylist ? appointment.stylist.firstName : "-"}
                                     </Card.Subtitle>
                                     <MdDeleteForever className='icon'
