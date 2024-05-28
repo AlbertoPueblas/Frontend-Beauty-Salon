@@ -14,14 +14,14 @@ En esta parte frontal intentaré que toda la aplicación sea responsive, realiza
 
 ##Problemas y soluciones:
 
-1. Realizando una llamada al backend la cual se encargaba de desactivar el usuario, me cruce con el problema de que al realiar la acción al realizarse primero la llamada a la api, los demás pasos de esa función no se llevaran a cabo. </br>
+1. Realizando una llamada al backend la cual se encargaba de desactivar el usuario, me cruce con el problema de que al realizar la acción, al realizarse primero la llamada a la api, los demás pasos de esa función no se llevaran a cabo. </br>
 ![alt text](<Captura de pantalla 2024-05-18 025359.png>) </br>
 
 La solución que yo encontré fue la siguiente: </br>
 ![alt text](image.png)
 
 Después de esta solución, el usuario ya puede: Registrarse, loguearse y des-loguearse,
-modificar su perfil y contraseña, pedir una cita con día y horarios limitados por el Admin. Puede modificar citas escogiendo día, mes, hora, tratamiento a realizar y estilista que lo ejecute, también puede decidir borrarlas. El usuario cuando borra su perfil simplemente lo desactiva, es el admin el encargado de volver a activarlo o borrarlo definitivamente
+modificar su perfil y contraseña, pedir una cita con día y horarios limitados por el Admin. Puede modificar citas escogiendo día, mes, hora, tratamiento a realizar y estilista que lo ejecute, también puede decidir borrarlas. El usuario cuando borra su perfil simplemente lo desactiva, es el administrador el encargado de volver a activarlo o borrarlo definitivamente
 
 2. Al finalizar la tabla de todos los usuarios, la paginación se desplazaba al final de la tabla, para solucionar esto pintaremos un array de filas vacías para no mover la paginación.
 ![alt text](image-1.png) </br>
@@ -32,3 +32,4 @@ Resultado: </br>
 ![alt text](image-4.png)
 
 3. Al filtrar por usuarios con citas para un estilista de la lista de usuarios totales, me he encotrado con que a la hora de filtrar la paginacion se descuadra porque alarga los usuarios hasta completar las paginas totales.
+La manera mas sencilla que he encontrado ha sido separar las tablas y crear otra solo para estilistas. tambien se podria crear un array a partir de los datos filtrados pero al tener la creación de filas en blanco para completar la tabla y que todo sea mas homogeneo he decidido cambiarlo a otra tabla distinta, por ser una solucion mas sencilla.

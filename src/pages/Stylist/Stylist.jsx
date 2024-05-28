@@ -5,7 +5,8 @@ import {
     deleteUser, 
     resetUser, 
     desactiveUser, 
-    allStylist
+    allStylist,
+    bringAllStylists
 } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
@@ -22,7 +23,7 @@ export const Stylist = () => {
     const [stylists, setStylists] = useState([]);
     const [show, setShow] = useState(false);
     const [stateUser, setStateUser] = useState (false)
-    const [stateDate, setStateDate] = useState (false)
+    const [appointment, setAppointment] = useState (false)
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -47,8 +48,11 @@ export const Stylist = () => {
         const fetchUsers = async () => {
             try {
                 const res = await allStylist(token, currentPage);
+                const response = await bringAllStylists(token, currentPage)
                 setUsers(res.data.stylists);
                 console.log(res.data.stylists);
+                setAppointment(res.data);
+                console.log(res.data);
                 // setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +8,7 @@ import { MdDeleteForever } from "react-icons/md";
 import "./ModalCard.css";
 import { getUserData } from '../../app/slice/userSlice';
 import { useSelector } from 'react-redux';
+import { getUsersByStylist } from '../../services/apiCalls';
 
 //------------------------------------------------
 
@@ -17,6 +18,11 @@ function UserCard({ user, restoreUser, deleteUser,
     const [showProfile, setShowProfile] = useState(false);
     const [showAppointments, setShowAppointments] = useState(false);
     const [profileData, setProfileData] = useState(user)
+    const userReduxData = useSelector(getUserData) || {}
+
+    const [appointment, setAppointment ] = useState([])
+    const token = userReduxData?.token
+    const userType = userReduxData?.decoded?.userRole
 
     const handleCloseProfile = () => setShowProfile(false);
     const handleShowProfile = () => {
@@ -27,6 +33,8 @@ function UserCard({ user, restoreUser, deleteUser,
     const handleCloseAppointments = () => setShowAppointments(false);
     const handleShowAppointments = () => setShowAppointments(true);
 
+
+
     const handleDeactivate = (userId) => {
         desactiveUser(userId);
         setProfileData(prevData => ({
@@ -36,9 +44,6 @@ function UserCard({ user, restoreUser, deleteUser,
         onStateUserSuccess();
     };
 
-    const userReduxData = useSelector(getUserData) || {}
-    const token = userReduxData?.token
-    const userType = userReduxData?.decoded?.userRole
 
     const handleRestore = (userId) => {
         restoreUser(userId);
@@ -128,15 +133,15 @@ function UserCard({ user, restoreUser, deleteUser,
                     <Modal.Title>Citas de {user.firstName} {user.lastName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {user.clientDates.length > 0 ? (
-                        user.clientDates.map((appointment) => (
+                    {user.length > 0 ? (
+                        user.map((appointment) => (
                             <Card key={appointment.id}>
                                 <Card.Body>
                                     <Card.Title>Cita ID: {appointment.id}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">
                                     </Card.Subtitle>
                                     <Card.Subtitle>
-                                        Treatment: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
+                                        Treatment: {appointment.firstName} <br />
                                         Stylist : {appointment.stylist ? appointment.stylist.firstName : "-"}
                                     </Card.Subtitle>
                                     <MdDeleteForever className='icon'
@@ -152,9 +157,9 @@ function UserCard({ user, restoreUser, deleteUser,
                         user.stylist.map((dates) => (
                             <Card key={dates.id}>
                                 <Card.Body>
-                                    <Card.Title>Cita ID: {dates.id}</Card.Title>
+                                    <Card.Title>ID: {dates.id}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">
-                                        Fecha: {new Date(dates.appointmentDate).toLocaleString()}
+                                        Date: {new Date(dates.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
                                         Trateatment: {dates.treatmentId} <br />

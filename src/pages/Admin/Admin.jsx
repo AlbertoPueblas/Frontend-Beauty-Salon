@@ -39,7 +39,7 @@ export const Admin = () => {
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 3000,
+            duration: 2000,
             close: true,
             gravity: "top",
             position: "center",

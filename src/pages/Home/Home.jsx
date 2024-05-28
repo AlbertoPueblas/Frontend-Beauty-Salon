@@ -70,8 +70,10 @@ export const Home = () => {
                     if ( userRole === 1 ) {
                         navigate("/admin")
 
-                    } else if(userRole === 2) {
+                    } else if( userRole === 2 ) {
                         navigate("/manager")
+                    } else if ( userRole === 3 ) {
+                        navigate("/menu")
                     }
                 }, 1000);
             } else if (res.data && res.data.user && !res.data.user.isActive) {

@@ -74,6 +74,7 @@ function Header() {
           <>
             {token && <Nav.Link href="/profile">Profile</Nav.Link>}
             {token && <Nav.Link href="appointment">Appointment</Nav.Link>}
+            {/* {token && <Nav.Link href="contact">Contact</Nav.Link>} */}
           </>
         )}
       </Nav>

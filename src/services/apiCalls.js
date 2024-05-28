@@ -59,7 +59,7 @@ export const bringAllStylists = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  return axios.get(`${API_URL}user/allStylist`, config)
+  return axios.get(`${API_URL}appointment/allStylists`, config)
 }
 
 export const bringAllTreatments = async (token) => {
@@ -87,7 +87,6 @@ export const updateAppointment = async (dataToSend, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("hhhh",dataToSend);
   const res = await axios.put(`${API_URL}appointment/modAppointment`,dataToSend, config)
   return res
 }
@@ -200,7 +199,7 @@ export const createTreatment = async (treatmentData, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("Create",treatmentData);
+
   return axios.post(`${API_URL}treatment/newTreatment`, treatmentData, config)
 }
 
@@ -210,7 +209,7 @@ export const modifyTreatment = async (treatmentData, token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  console.log("moood",treatmentData);
+
   return axios.put(`${API_URL}treatment/putTreatment`, treatmentData, config)
 
 }

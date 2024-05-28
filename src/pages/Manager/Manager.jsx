@@ -42,7 +42,10 @@ export const Manager = () => {
         const fetchAppointments = async () => {
             try {
                 const res = await getUsersByStylist(token, currentPage); 
-                setAppointments(res.data.appointment);0
+                const sortedAppointments = res.data.appointment.sort((a, b) => // orden de fecha
+                    new Date(a.appointmentDate) - new Date(b.appointmentDate)
+                );
+                setAppointments(sortedAppointments);
                 setTotalPages(res.data.total_pages || 1); 
             } catch (error) {
                 console.log(error);

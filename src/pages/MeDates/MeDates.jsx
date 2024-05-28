@@ -80,7 +80,7 @@ export const Dates = () => {
         <Container className="container">
             <Row className="justify-content-center">
                 <Col xs={12} md={8}>
-                    <h3 className="text-center">Mis Citas</h3>
+                    <h3 className="text-center">Appointments</h3>
                     <Card className='card'>
                         <Card.Body>
                             {dates && dates.map((date, index) => (
@@ -92,11 +92,11 @@ export const Dates = () => {
                                             <FcEmptyTrash className='icon' onClick={(e) => { e.stopPropagation(); deleteAppointment(date.id) }} />
                                             <FcDownLeft className='icon' onClick={() => navigate("/profile")} />
                                         </div>
-                                        <Card.Title>Cita</Card.Title>
+                                        <Card.Title>appointment</Card.Title>
                                         <Card>{dayjs(date.appointmentDate).format("dddd, MMMM D, YYYY h:mm A")}</Card>
-                                        <Card.Title>Estilista</Card.Title>
+                                        <Card.Title>Stylist</Card.Title>
                                         <Card>{date.stylist?.firstName}</Card>
-                                        <Card.Title>Tratamiento</Card.Title>
+                                        <Card.Title>Treatment</Card.Title>
                                         <Card>{date.treatment?.treatment}</Card>
                                     </Card.Body>
                                 </Card>

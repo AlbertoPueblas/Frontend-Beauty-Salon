@@ -29,7 +29,6 @@ export const Body = () => {
                 <Route path="/treatments" element={<Treatments />} />
                 <Route path="/manager" element={<Manager />} />
                 <Route path="/medates" element={<Dates />} />
-
             </Routes>
         </>
     )
