@@ -10,7 +10,14 @@ El objetivo de este proyecto es crear la parte visual basada en una base de dato
 
 ## Detalles y pasos del proyecto
 
-En esta parte frontal intentaré que toda la aplicación sea responsive, realizando tareas en endpoinds me he cruzado con bastantes problemas y uno de ellos es el siguiente: </br>
+una vez tenemos los endpoints y la BBDD construiremos diferentes vistas para que todos los usuarios puedan interactuar con nuestro backend a traves de este front con diferentes roles. Los roles son:</br>
+<details>
+<summary>Roles</summary>
+
+<Summary>Admin</summary>
+
+
+
 
 ##Problemas y soluciones:
 
