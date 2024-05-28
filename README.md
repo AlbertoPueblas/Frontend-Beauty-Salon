@@ -89,7 +89,7 @@ Puedes hacerlo de dos maneras:
     - Abre una solicitud de Pull Request
 
 ## Licencia
-Este proyecto se encuentra bajo licencia de "Alberto Pueblas"
+Este proyecto se encuentra bajo licencia de "Alberto Pueblas"</br>
 Derechos de imagen: Maria Plaza Estilistas.
 
 ## Webgrafia:
