@@ -14,6 +14,7 @@ import UserCard from "../../components/Card/ModalCard";
 import "toastify-js/src/toastify.css";
 import Toastify from 'toastify-js';
 import ModalCreateStylist from "../../components/ModalCreateStylist/ModalCreateStylist";
+import Pagination from 'react-bootstrap/Pagination';
 
 //--------------------------------------------------
 
@@ -27,6 +28,8 @@ export const Stylist = () => {
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+
+    const itemsPerPage = 12;
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
@@ -50,9 +53,6 @@ export const Stylist = () => {
                 const res = await allStylist(token, currentPage);
                 const response = await bringAllStylists(token, currentPage)
                 setUsers(res.data.stylists);
-                console.log(res.data.stylists);
-                setAppointment(res.data);
-                console.log(res.data);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
@@ -65,25 +65,6 @@ export const Stylist = () => {
     const handleStateUserSuccessfully = () => {
         setStateUser(!stateUser) 
     }
-
-    // const handleRestore = (userId) => {
-    //     resetUser(userId);
-    //     setProfileData(prevData => ({
-    //         ...prevData,
-    //         isActive: true
-    //     }));
-    //     onStateUserSuccess();
-    // };
-
-
-    // const handleDeactivate = (userId) => {
-    //     desactiveUser(userId);
-    //     setProfileData(prevData => ({
-    //         ...prevData,
-    //         isActive: false
-    //     }));
-    //     onStateUserSuccess();
-    // };
 
     const restoreProfile = async (id) => {
         try {
@@ -108,6 +89,11 @@ export const Stylist = () => {
         try {
             const res = await deleteUser(id, token)
             showToast("Delete completed", "#4caf50")
+
+            if(users.length === 1 && currentPage - 1) {
+                setCurrentPage(currentPage - 1)
+            }
+            
         } catch (error) {
             showToast("Error to delete profile")
         }
@@ -130,6 +116,18 @@ export const Stylist = () => {
         const orderArray = stylist.sort((a,b) => a.firstName.localCompare(b.firstName));
         setStylists(orderArray);
     }
+
+        //Paginacion
+        const handlePageChange = (page) => {
+            setCurrentPage(page);
+        };
+        let placeholders = [];
+        //Crea el numero de filas necesarias para completar la tabla
+        if (users.length < itemsPerPage) {
+    
+            placeholders = Array(itemsPerPage - users.length).fill({})
+        }
+
     return (
         <div className="table-responsive">
                 <h4>Styilist 
@@ -163,8 +161,34 @@ export const Stylist = () => {
                                     /></td>
                         </tr>
                     ))}
+                    {placeholders.map((_, index) => (
+                        <tr key={`placeholder-${index}`}>
+                            <td colSpan={6} className="placeholder-row1"></td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
+            <div className="pagination">
+                <Pagination>
+                    <Pagination.Prev
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    />
+                    {[...Array(totalPages)].map((_, index) => (
+                        <Pagination.Item
+                            key={index + 1}
+                            active={index + 1 === currentPage}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination>
+            </div>
         </div>
     );
 };

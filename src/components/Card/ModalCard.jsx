@@ -114,11 +114,15 @@ function UserCard({ user, restoreUser, deleteUser,
                             )}
 
                             {userType === 1 && !user.isActive && (
-                                <Card.Link className='active' onClick={() => handleRestore(profileData.id)}>Restore Profile</Card.Link>
+                                <Card.Link className='active' 
+                                onClick={() => handleRestore(profileData.id)}>
+                                    Restore Profile</Card.Link>
                             )}
 
                             {userType === 1 && (
-                                <Card.Link className='deleteProfile' onClick={() => handleDeleteConfirmation(profileData.id)}>Delete Profile</Card.Link>
+                                <Card.Link className='deleteProfile' 
+                                onClick={() => handleDeleteConfirmation(profileData.id)}>
+                                    Delete Profile</Card.Link>
                             )}
 
                         </Card.Body>

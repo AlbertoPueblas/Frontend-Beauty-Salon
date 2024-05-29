@@ -16,7 +16,7 @@ Lo mismo realizaremos para las vistas de Administrador y Manager, y una vez teng
 
 ## Detalles y pasos del proyecto
 
-Una vez tenemos los endpoints y la BBDD construiremos diferentes vistas para que todos los usuarios puedan interactuar con nuestro backend a través de este front con diferentes roles. Los roles son:</br>
+Una vez tenemos los endpoints y la BBDD construiremos diferentes vistas empezando por el registro que contará con la fecha del registro de usuarios y el logueado, para que todos los usuarios puedan interactuar con nuestro backend a través de este front con diferentes roles. Los roles son:</br>
 <details>
 <summary>Roles</summary>
 
@@ -64,6 +64,19 @@ Resultado: </br>
 La manera mas sencilla que he encontrado ha sido separar las tablas y crear otra solo para estilistas. tambien se podria crear un array a partir de los datos filtrados pero al tener la creación de filas en blanco para completar la tabla y que todo sea mas homogeneo he decidido cambiarlo a otra tabla distinta, por ser una solucion mas sencilla.
 
 4. Otro problema con el que me topé fue, a la hora de renderizar las citas se mostraban el ID de usuarios, clientes, estilistas. Esta solución conllevó tener que volver al back-end para verificar los datos enviados al front y después de algunos console.log conseguimos traer la información deseada.
+
+5. El siguiente problema surgía en la paginación a la hora de borrar un dato que se encuentra el primero y solo en una página. A la hora de borrarlo saltaba el error de que no se encontraba la página y se quedaba congelado. Este es el código con el problema.</br>
+![alt text](image-5.png)</br>
+La solución fue implementar unas líneas de código para que verifique que si la página se queda vacía, debe actualizar el estado y renderizar de nuevo.</br>
+![alt text](image-6.png)
+
+## Futuras actualizaciones.
+
+1. Implementar un input de busqueda para el administrador.
+2. codigo optimizado.
+3. mejoras en ciertas vistas.
+4. mejoras en la parte visual.
+5. incluir funciones para la facturación.
 
 ## Links 
 

@@ -32,10 +32,12 @@ export const Admin = () => {
     const userType = userReduxData.decoded.userRole;
     const stylistId = userReduxData.decoded.UserRole;
 
+    const [filterUser, setFilterUser] = useState([])
+
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 2000,
+            duration: 800,
             close: true,
             gravity: "top",
             position: "center",
@@ -49,9 +51,10 @@ export const Admin = () => {
             try {
                 const res = await allUsers(token, currentPage);
                 let fetchedUsers = res.data.users;
-                console.log(fetchedUsers);
                 setUsers(fetchedUsers);
-                setTotalPages(res.data.total_pages || 1);
+                setFilterUser(res.data.users)
+                console.log(res.data.users);
+                setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
             }
@@ -83,8 +86,8 @@ export const Admin = () => {
             return;
         }
         try {
-            const response = await desactiveUser(id, token);
             showToast("Profile disabled")
+            const response = await desactiveUser(id, token);
 
         } catch (error) {
             showToast("Error to disable")
@@ -97,8 +100,12 @@ export const Admin = () => {
         return;
     }
         try {
-            const res = await deleteUser(id, token)
             showToast("Delete completed", "#4caf50")
+            const res = await deleteUser(id, token)
+
+            if(users.length === 1 && currentPage - 1) {
+                setCurrentPage(currentPage - 1)
+            }
         } catch (error) {
             showToast("Error to delete profile")
         }
@@ -107,8 +114,8 @@ export const Admin = () => {
     const delAppointment = async (id) => {
         if(window.confirm("Are you sure delete this appointment?")) {
             try {
-                const res = await deleteAppointmentByAdmin(id, token)
                 showToast("appointment has delete", "#4caf50")
+                const res = await deleteAppointmentByAdmin(id, token)
 
             } catch (error) {
                 showToast("Error to delete appointment")

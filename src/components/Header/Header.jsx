@@ -33,15 +33,15 @@ function Header() {
       <Navbar.Brand href="#">MP Estilistas</Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarScroll" />
       <Navbar.Collapse id="navbarScroll">
+        <Nav.Link href="/home">Home</Nav.Link>
         <Nav
           className="me-auto my-2 my-lg-0"
           style={{ maxHeight: '100px' }}
           navbarScroll
           >
-            <Nav.Link href="/home">Home</Nav.Link>
           {userType === 1 ? (
             <>
-          <NavDropdown title="Actions" id="navbarScrollingDropdown">
+          <NavDropdown title="Actions" id="navbarScrollingDropdown" >
             <NavDropdown.Item href="/admin">Users</NavDropdown.Item>
             <NavDropdown.Item href="/stylist">Stylist</NavDropdown.Item>
             <NavDropdown.Item href="/allAppointment">Appointment</NavDropdown.Item>

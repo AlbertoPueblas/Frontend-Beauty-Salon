@@ -38,7 +38,7 @@ export const Treatments = () => {
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 3000,
+            duration: 1000,
             close: true,
             gravity: "top",
             position: "center",
@@ -58,7 +58,7 @@ export const Treatments = () => {
             }
         };
         fetchTreatments();
-    }, [currentPage, token, deleteSuccess]);
+    }, [currentPage, token, deleteSuccess, treatmentData]);
 
     const handleShowCreate = () => {
         setTreatmentData({ treatment: "", price: "" });
@@ -108,17 +108,22 @@ export const Treatments = () => {
     };
 
     const handleDeleteTreatment = async (id) => {
-        if (window.confirm("Estas seguro de borrar el tratamiento")) {
+        if (window.confirm("Estás seguro de borrar el tratamiento")) {
             try {
                 await deleteTreatment(id, token);
                 showToast("El tratamiento ha sido eliminado", "#4caf50");
-
-                handleDeleteSuccess()
+                // Verificar si la página actual quedará vacía después de eliminar
+                if (treatments.length === 1 && currentPage > 1) {
+                    // Retroceder una página si la página actual quedará vacía
+                    setCurrentPage(prevPage => prevPage - 1);
+                }
             } catch (error) {
-
+                console.error(error);
+                showToast("Error al eliminar el tratamiento", "#f44336");
             }
         }
-    }
+    };
+    
 
     let placeholders = [];
 
@@ -131,6 +136,7 @@ export const Treatments = () => {
     // Paginación
     const handlePageChange = (page) => {
         setCurrentPage(page);
+        setTotalPages(page)
     };
 
     return (

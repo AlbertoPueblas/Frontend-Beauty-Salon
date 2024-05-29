@@ -50,3 +50,7 @@
     height: 3.06em; 
     background-color: #f8f9fa;
 }
+
+.deleteProfile{
+    cursor: crosshair;
+}
