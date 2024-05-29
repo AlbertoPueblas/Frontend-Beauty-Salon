@@ -24,10 +24,6 @@ export const Admin = () => {
     //Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
-    //Paginacion en filtrado
-    const [allFetchedUsers, setAllFetchedUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
     
     const itemsPerPage = 12;
 
@@ -53,7 +49,7 @@ export const Admin = () => {
             try {
                 const res = await allUsers(token, currentPage);
                 let fetchedUsers = res.data.users;
-                setAllFetchedUsers(fetchedUsers);
+                console.log(fetchedUsers);
                 setUsers(fetchedUsers);
                 setTotalPages(res.data.total_pages || 1);
             } catch (error) {

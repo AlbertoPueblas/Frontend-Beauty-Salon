@@ -24,6 +24,8 @@ export const Register = () => {
         password: ""
     })
 
+    const[registerTime, setRegisterTime] = useState(null)
+
     // Muestra mensajes de error
     const showToast = (message) => {
         Toastify({
@@ -43,7 +45,9 @@ export const Register = () => {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            await register();
+            const currentDate = new Date(); // Obtiene la fecha y hora actual
+            setRegisterTime(currentDate); // Guarda la fecha y hora de registro
+            await register(currentDate); //Pasamos los datos a la función
         }
         setValidated(true);
     };

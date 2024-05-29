@@ -8,7 +8,7 @@ import { MdDeleteForever } from "react-icons/md";
 import "./ModalCard.css";
 import { getUserData } from '../../app/slice/userSlice';
 import { useSelector } from 'react-redux';
-import { getUsersByStylist } from '../../services/apiCalls';
+import dayjs from "dayjs";
 
 //------------------------------------------------
 
@@ -102,7 +102,10 @@ function UserCard({ user, restoreUser, deleteUser,
                             <Card.Subtitle className="mb-2 text-muted">
                                 Phone: {profileData.phone}
                             </Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">
                             Status: {user.isActive ? "Activo" : "Inactivo"}
+                            </Card.Subtitle>
+                            Register in: {dayjs(profileData.registrationDateTime).format("YYYY-MM-DD")}
                             <Card.Text>
                             </Card.Text>
 
@@ -151,7 +154,7 @@ function UserCard({ user, restoreUser, deleteUser,
                         ))
 
                     ) : (
-                        <p>No hay citas.</p>
+                        null
                     )}
                     {user.stylist.length > 0 ? (
                         user.stylist.map((dates) => (

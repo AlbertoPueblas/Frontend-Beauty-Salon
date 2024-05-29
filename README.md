@@ -63,6 +63,8 @@ Resultado: </br>
 3. Al filtrar por usuarios con citas para un estilista de la lista de usuarios totales, me he encotrado con que a la hora de filtrar la paginacion se descuadra porque alarga los usuarios hasta completar las paginas totales.
 La manera mas sencilla que he encontrado ha sido separar las tablas y crear otra solo para estilistas. tambien se podria crear un array a partir de los datos filtrados pero al tener la creación de filas en blanco para completar la tabla y que todo sea mas homogeneo he decidido cambiarlo a otra tabla distinta, por ser una solucion mas sencilla.
 
+4. Otro problema con el que me topé fue, a la hora de renderizar las citas se mostraban el ID de usuarios, clientes, estilistas. Esta solución conllevó tener que volver al back-end para verificar los datos enviados al front y después de algunos console.log conseguimos traer la información deseada.
+
 ## Links 
 
 [Link Back-end](https://github.com/AlbertoPueblas/Backend-Beauty-salon)

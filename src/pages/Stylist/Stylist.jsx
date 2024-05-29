@@ -45,7 +45,7 @@ export const Stylist = () => {
     };
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchStylist = async () => {
             try {
                 const res = await allStylist(token, currentPage);
                 const response = await bringAllStylists(token, currentPage)
@@ -53,12 +53,12 @@ export const Stylist = () => {
                 console.log(res.data.stylists);
                 setAppointment(res.data);
                 console.log(res.data);
-                // setTotalPages(res.data.total_pages);
+                setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchUsers();
+        fetchStylist();
     }, [currentPage, token, stateUser]);
 
     //Actualiza el estado del usuario
