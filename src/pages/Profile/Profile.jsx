@@ -76,7 +76,7 @@ export const Profile = () => {
                                         <IoCalendarSharp className='icon' onClick={() => navigate("/medates")} />
                                     )}
                                 </div>
-                                <Image src="../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
+                                <Image src="src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
                                 <h6>Profile</h6>
                                 <div className="profile">
                                     <div className="modify">
