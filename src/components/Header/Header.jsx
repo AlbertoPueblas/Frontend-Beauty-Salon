@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -12,6 +11,7 @@ import { FcImport } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { IoPersonOutline, IoHomeOutline, IoCalendarOutline, IoImageOutline } from "react-icons/io5";
 import Toastify from 'toastify-js';
+import MPImage from"/Images/MP.jpeg"
 
 //----------------------------------------------------------------
 function Header() {
@@ -43,7 +43,7 @@ function Header() {
   return (
     <Navbar expand="lg" className="navBar">
       <Container fluid>
-        <Image src="Images/MP.jpeg" width={40}></Image>
+        <Image src={MPImage} width={40}></Image>
         <Navbar.Brand href="#"><h2>MP</h2></Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="navbarScroll" /> */}
         {/* <Navbar.Collapse id="navbarScroll"> */}
