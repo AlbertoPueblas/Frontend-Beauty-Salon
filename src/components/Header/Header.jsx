@@ -1,6 +1,5 @@
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -44,7 +43,7 @@ function Header() {
   return (
     <Navbar expand="lg" className="navBar">
       <Container fluid>
-        <Image src="./Images/MP.jpeg" width={40}></Image>
+        <Image src="Images/MP.jpeg" width={40}></Image>
         <Navbar.Brand href="#"><h2>MP</h2></Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="navbarScroll" /> */}
         {/* <Navbar.Collapse id="navbarScroll"> */}
