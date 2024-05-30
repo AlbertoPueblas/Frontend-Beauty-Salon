@@ -105,7 +105,7 @@ export const Home = () => {
                     <Card.Body>
                         <Row className="mb-3">
                             <Col xs={12} md={4}>
-                                <Image src="src/Images/iconoPerfil.jpeg" width={200} roundedCircle />
+                                <Image src="./Images/iconoPerfil.jpeg" width={200} roundedCircle />
                             </Col>
                             <Col xs={12} md={8}>
                                 <h1>Login</h1>

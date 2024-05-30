@@ -11,37 +11,37 @@ export const Menu = () => {
             <h5>Profesionales a su servicio y cuidado.</h5></em></h3>
             <Carousel fade>
                 <Carousel.Item>
-                    <img src='./src/images/intro.jpg' />
+                    <img src='../Images/intro.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p.jpg' text="Second slide" />
+                    <img src='./Images/p.jpg' text="Second slide" />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p1.jpg' />
+                    <img src='./Images/p1.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p2.jpg' />
+                    <img src='./Images/p2.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p3.jpg' />
+                    <img src='./Images/p3.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p4.jpg' />
+                    <img src='./Images/p4.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p5.jpg' />
+                    <img src='./Images/p5.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p6.jpg' />
+                    <img src='./Images/p6.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p7.jpg' />
+                    <img src='./Images/p7.jpg' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p8.jpg' className='imagen' />
+                    <img src='./Images/p8.jpg' className='imagen' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='/src/images/p9.jpg' />
+                    <img src='./Images/p9.jpg' />
                 </Carousel.Item>
             </Carousel>
             <div className="card1">
