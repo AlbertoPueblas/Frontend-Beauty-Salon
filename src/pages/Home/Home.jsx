@@ -16,6 +16,7 @@ import { decodeToken } from "react-jwt";
 import { Link } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+import Icon from "/Images/iconoPerfil.jpeg"
 
 //---------------------------------------------------------------------------------
 
@@ -105,7 +106,7 @@ export const Home = () => {
                     <Card.Body>
                         <Row className="mb-3">
                             <Col xs={12} md={4}>
-                                <Image src="./Images/iconoPerfil.jpeg" width={200} roundedCircle />
+                                <Image src={Icon} width={200} roundedCircle />
                             </Col>
                             <Col xs={12} md={8}>
                                 <h1>Login</h1>

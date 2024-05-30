@@ -16,6 +16,7 @@ import Delete from "../../components/ModalAlert/ModalAlert";
 //Iconos
 import { FcPlus } from "react-icons/fc";
 import { IoCalendarSharp, IoHomeOutline } from "react-icons/io5";
+import  Icon  from "/Images/iconoPerfil.jpeg";
 
 //--------------------------------------------------------
 
@@ -76,7 +77,7 @@ export const Profile = () => {
                                         <IoCalendarSharp className='icon' onClick={() => navigate("/medates")} />
                                     )}
                                 </div>
-                                <Image src="./Images/iconoPerfil.jpeg" width={150} roundedCircle />
+                                <Image src={Icon} width={150} roundedCircle />
                                 <h6>Profile</h6>
                                 <div className="profile">
                                     <div className="modify">

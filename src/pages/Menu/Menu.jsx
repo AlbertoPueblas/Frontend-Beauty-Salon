@@ -1,7 +1,17 @@
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Menu.css"
-
+import INTRO from "/Images/intro.jpg"
+import P from "/Images/p.jpg"
+import P1 from "/Images/p1.jpg"
+import P2 from "/Images/p2.jpg"
+import P3 from "/Images/p3.jpg"
+import P4 from "/Images/p4.jpg"
+import P5 from "/Images/p5.jpg"
+import P6 from "/Images/p6.jpg"
+import P7 from "/Images/p7.jpg"
+import P8 from "/Images/p8.jpg"
+import P9 from "/Images/p9.jpg"
 //-----------------------------------------------------------------------------
 
 export const Menu = () => {
@@ -11,37 +21,37 @@ export const Menu = () => {
             <h5>Profesionales a su servicio y cuidado.</h5></em></h3>
             <Carousel fade>
                 <Carousel.Item>
-                    <img src='../Images/intro.jpg' />
+                    <img src={INTRO} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p.jpg' text="Second slide" />
+                    <img src={P} text="Second slide" />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p1.jpg' />
+                    <img src={P1} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p2.jpg' />
+                    <img src={P2} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p3.jpg' />
+                    <img src={P3} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p4.jpg' />
+                    <img src={P4} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p5.jpg' />
+                    <img src={P5} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p6.jpg' />
+                    <img src={P6} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p7.jpg' />
+                    <img src={P7} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p8.jpg' className='imagen' />
+                    <img src={P8} className='imagen' />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src='./Images/p9.jpg' />
+                    <img src={P9} />
                 </Carousel.Item>
             </Carousel>
             <div className="card1">
