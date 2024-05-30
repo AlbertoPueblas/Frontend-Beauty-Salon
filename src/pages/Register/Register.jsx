@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { newRegister } from "../../services/apiCalls"
 import Image from 'react-bootstrap/Image';
 import Toastify from 'toastify-js';
+import MPImage from"/Images/MP.jpeg"
 
 //------------------------------------------------------------------------------
 
@@ -92,7 +93,7 @@ export const Register = () => {
                     <Card.Body>
                         <Row>
                             <Col xs={12} md={4}>
-                                <Image src="./Images/MP.jpeg" width={200} roundedCircle />
+                                <Image src={MPImage} width={200} roundedCircle />
                             </Col>
                             <Col xs={12} md={8}>
                                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
