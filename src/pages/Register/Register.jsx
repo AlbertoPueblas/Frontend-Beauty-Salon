@@ -97,7 +97,7 @@ export const Register = () => {
                             <Col xs={12} md={8}>
                                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                     <Row className="mb-3">
-                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom01">
+                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom1">
                                             <Form.Label>First name</Form.Label>
                                             <Form.Control
                                                 name="firstName"
@@ -127,7 +127,7 @@ export const Register = () => {
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
-                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom02">
+                                        <Form.Group as={Col} sm="12" md="4" controlId="validationCustom2">
                                             <Form.Label>Password</Form.Label>
                                             <Form.Control
                                                 name="password"

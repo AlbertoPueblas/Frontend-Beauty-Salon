@@ -5,7 +5,7 @@ import 'react-day-picker/dist/style.css';
 import './Appointment.css';
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { appointmentCreate, bringAllStylists, bringAllTreatments } from "../../services/apiCalls";
+import { appointmentCreate, allStylist, bringAllTreatments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -87,7 +87,7 @@ export const Appointment = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await bringAllStylists(token);
+        const res = await allStylist(token);
         setStylists(res.data.stylists);
         const resp = await bringAllTreatments(token);
         setTreatments(resp.data.treatment);

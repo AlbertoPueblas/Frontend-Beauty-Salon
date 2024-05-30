@@ -8,10 +8,11 @@ import { getUserData, logout } from '../../app/slice/userSlice';
 import { FcDeleteDatabase, FcOk } from "react-icons/fc";;
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+import { IoPersonRemove } from "react-icons/io5";
 
 //------------------------------------------------------------------------
 
-function Delete( profileData) {
+function Delete(profileData) {
 
     const myPassport = useSelector(getUserData)
     const token = myPassport.token;
@@ -23,7 +24,7 @@ function Delete( profileData) {
     const showToast = (message) => {
         Toastify({
             text: message,
-            duration: 3000, // Duración 3 seg
+            duration: 1000, // Duración 1 seg
             close: true, // Mostrar botón de cierre
             gravity: "top", // Posición del toast
             position: "center", // Alineación del toast
@@ -42,7 +43,7 @@ function Delete( profileData) {
 
     const dispatch = useDispatch();
     const logOutMe = () => {
-      dispatch(logout())
+        dispatch(logout())
     }
     const deleteProfile = async () => {
         try {
@@ -50,15 +51,15 @@ function Delete( profileData) {
                 // Redirecciona al usuario
                 navigate("/Home");
                 logOutMe()
-            },1000)
-    
+            }, 1000)
+
             // Espera un momento antes de realizar la llamada a la API
             setTimeout(async () => {
                 try {
 
                     // Realiza la llamada a desactiveProfile
                     const res = await desactiveProfile(profileData, token);
-    
+
                     // Verifica si la respuesta es correcta
                     if (res.status === 200) {
                         showToast("Failed to delete profile");
@@ -69,7 +70,7 @@ function Delete( profileData) {
             }, 2000);
         } catch (error) {
             showToast("Error during the process");
-    
+
             // Realiza el redireccionamiento después de manejar el error
             setTimeout(() => {
                 navigate("/Home");
@@ -88,8 +89,8 @@ function Delete( profileData) {
             className="modal show"
             style={{ display: 'block', position: 'initial' }}
         >
-            <FcDeleteDatabase className="iconOk" variant="primary" onClick={handleDeleteClick}>
-            </FcDeleteDatabase>
+            <IoPersonRemove className="iconOk" variant="primary" onClick={handleDeleteClick}>
+            </IoPersonRemove>
             <Modal show={show} onHide={closeModal}>
                 <Modal.Header className="modalShow" closeButton>
                     <Modal.Title>Delete Successfully</Modal.Title>
@@ -99,8 +100,8 @@ function Delete( profileData) {
                     <h5>Your user has been deactivated, to restore it contact the administrator</h5>
                     <FcOk variant="primary" className="iconOk" onClick={() => {
                         deleteProfile(),
-                        closeModal()
-                        }} >Acept</FcOk>
+                            closeModal()
+                    }} >Acept</FcOk>
                 </Modal.Body>
             </Modal>
         </div>

@@ -4,8 +4,6 @@ import { allAppointments } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
 import dayjs from "dayjs";
-import { FcFinePrint } from "react-icons/fc";
-import { BiPencil } from "react-icons/bi";
 import Pagination from 'react-bootstrap/Pagination';
 import './allAppointment.css';
 
@@ -59,6 +57,8 @@ export const AdminAppointment = () => {
     } 
     return (
         <div className="table-responsive">
+      <h3>Appointment</h3>
+
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
@@ -84,7 +84,7 @@ export const AdminAppointment = () => {
                           {/* Genera columnas vacias  */}
                     {placeholders.map((_, index) => (
                       <tr key={`placeholder-${index}`}>
-                            <td colSpan={8} className="placeholder-row"></td>
+                            <td colSpan={6} className="placeholder-row"></td>
                         </tr>
                     ))}
                 </tbody>

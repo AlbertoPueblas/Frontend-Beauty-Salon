@@ -55,7 +55,7 @@ export const Admin = () => {
                 setFilterUser(res.data.users)
                 setTotalPages(res.data.total_pages);
             } catch (error) {
-                console.log(error);
+                showToast(error);
             }
         };
         fetchUsers();
@@ -136,6 +136,7 @@ export const Admin = () => {
 
     return (
         <div className="table-responsive">
+            <h3>Users</h3>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
@@ -155,7 +156,7 @@ export const Admin = () => {
                             <td>{user.lastName}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
-                            <td className="status">
+                            <td >
                                 <UserCard user={user}
                                     restoreUser={restoreProfile}
                                     desactiveUser={desactiveProfile}
@@ -167,7 +168,7 @@ export const Admin = () => {
                     ))}
                     {placeholders.map((_, index) => (
                         <tr key={`placeholder-${index}`}>
-                            <td colSpan={6} className="placeholder-row1"></td>
+                            <td colSpan={8} className="placeholder-row1"></td>
                         </tr>
                     ))}
                 </tbody>

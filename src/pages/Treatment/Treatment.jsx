@@ -26,7 +26,7 @@ export const Treatments = () => {
 
     const [deleteSuccess, setDeleteSuccess] = useState(false);
 
-    const itemsPerPage = 15;
+    const itemsPerPage = 10;
 
     // Paginación
     const [currentPage, setCurrentPage] = useState(1);
@@ -54,7 +54,7 @@ export const Treatments = () => {
                 setTreatments(res.data.treatment);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
-                console.log(error);
+                showToast(error);
             }
         };
         fetchTreatments();
@@ -87,7 +87,6 @@ export const Treatments = () => {
             const res = await allTreatments(token, currentPage);
             setTreatments(res.data.treatment);
         } catch (error) {
-            console.log(error);
             showToast("Fallo al crear el tratamiento");
         }
     };
@@ -102,7 +101,6 @@ export const Treatments = () => {
             const res = await allTreatments(token, currentPage);
             setTreatments(res.data.treatment);
         } catch (error) {
-            console.log(error);
             showToast("Fallo al modificar el tratamiento");
         }
     };
@@ -140,6 +138,7 @@ export const Treatments = () => {
 
     return (
         <div className="table-responsive">
+            <h3>Treatment</h3>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
@@ -155,19 +154,19 @@ export const Treatments = () => {
                             <td>{t.id}</td>
                             <td>{t.treatment}</td>
                             <td>{t.price} €</td>
-                            <td className="status">
-                                    <FcPlus className="cita" 
+                            <td >
+                                <FcPlus className="cita"
                                     onClick={handleShowCreate} />
-                                    <FiSettings className="setings" 
+                                <FiSettings className="setings"
                                     onClick={() => handleShowModify(t)} />
-                                    <MdOutlineDeleteForever className="delete" 
+                                <MdOutlineDeleteForever className="delete"
                                     onClick={(e) => handleDeleteTreatment(t.id)} />
                             </td>
                         </tr>
                     ))}
                     {placeholders.map((_, index) => (
                         <tr key={`placeholder-${index}`}>
-                            <td colSpan={6} className="placeholder-row2"></td>
+                            <td colSpan={6} className="placeholder-row3"></td>
                         </tr>
                     ))}
                 </tbody>

@@ -1,36 +1,42 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { updateProfile } from '../../services/apiCalls';
-import Password from '../ModalPassword/ModalPassword';
-import { FcDataConfiguration } from "react-icons/fc";
+import { IoPersonAddOutline } from 'react-icons/io5';
+import ModalPassword from '../ModalPassword/ModalPassword';
 
 //-----------------------------------------------------------
 
 function Memodal(props) {
 
-    const { profileData, inputHandler, token } = props
-    const navigate = useNavigate()
-    const [show, setShow] = useState(false)
+    const { profileData, inputHandler, token } = props;
+    const navigate = useNavigate();
+    const [show, setShow] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
 
     const closeModal = () => {
-        navigate("/");
-        setTimeout(() => {
-            navigate("/Profile")
-        });
         setShow(false);
     }
 
-    const profileUpdate = async () => {
+    const openPasswordModal = () => {
+        setShow(false);
+        setShowPasswordModal(true);
+    }
 
+    const closePasswordModal = () => {
+        setShowPasswordModal(false);
+        setShow(true); // Reopen Memodal if needed
+    }
+
+    const profileUpdate = async () => {
         await updateProfile(profileData, token);
         setTimeout(() => {
-            navigate("/Profile")
+            navigate("/Profile");
             setShow(false);
-        }, 2000)
+        }, 2000);
     };
 
     return (
@@ -39,14 +45,13 @@ function Memodal(props) {
                 className="modal show"
                 style={{ display: 'block', position: 'initial' }}
             >
-                <FcDataConfiguration className='icon' variant="primary" onClick={() => setShow(true)}>
+                <IoPersonAddOutline className='icon' variant="primary" onClick={() => setShow(true)}>
                     modify profile
-                </FcDataConfiguration>
+                </IoPersonAddOutline>
                 <Modal show={show} onHide={closeModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Profile</Modal.Title>
                     </Modal.Header>
-
                     <Modal.Body>
                         <Form.Group controlId="validationCustomUsername" >
                             <Form.Label>Email</Form.Label>
@@ -58,7 +63,6 @@ function Memodal(props) {
                                     placeholder="email"
                                     value={profileData.email}
                                     onChange={inputHandler}
-
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a valid email.
@@ -73,7 +77,6 @@ function Memodal(props) {
                                 placeholder="firstName"
                                 value={profileData.firstName}
                                 onChange={inputHandler}
-
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
@@ -100,24 +103,27 @@ function Memodal(props) {
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
+
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary"
-                            onClick={closeModal}>Close</Button>
-                        <Button variant="success"
-                            onClick={() => {
-                                profileUpdate()
-                                navigate("/profile")
-                            }}>Save changes</Button>
-                            <Password
-                                profileData={profileData}
-                                inputHandler={inputHandler}
-                                token={token} />
-                    
+                        <Link variant="primary" onClick={openPasswordModal}>
+                            Change Password
+                        </Link>
+                        <Button variant="secondary" onClick={closeModal}>Close</Button>
+                        <Button variant="success" onClick={() => {
+                            profileUpdate();
+                            navigate("/profile");
+                        }}>Save changes</Button>
                     </Modal.Footer>
                 </Modal>
+                <ModalPassword
+                    profileData={profileData}
+                    token={token}
+                    show={showPasswordModal}
+                    onHide={closePasswordModal}
+                />
             </div>
         </>
     );
 }
-export default Memodal
+export default Memodal;

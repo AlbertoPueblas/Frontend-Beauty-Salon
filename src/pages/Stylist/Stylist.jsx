@@ -48,12 +48,10 @@ export const Stylist = () => {
                 const res = await allStylist(token, currentPage);
                 const response = await bringAllStylists(token, currentPage)
                 setUsers(res.data.stylists);
-                console.log("users",res.data.stylists);
                 setStylists(response.data.stylists)
-                console.log("stylist",response.data.stylists);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
-                console.log(error);
+                showToast(error);
             }
         };
         fetchStylist();
@@ -120,14 +118,14 @@ export const Stylist = () => {
         };
         let placeholders = [];
         //Crea el numero de filas necesarias para completar la tabla
-        if (stylists.length < itemsPerPage) {
+        if (users.length < itemsPerPage) {
     
             placeholders = Array(itemsPerPage - users.length).fill({})
         }
 
     return (
         <div className="table-responsive">
-                <h4>Styilist </h4>
+                <h3>Styilist </h3>
                     <ModalCreateStylist
                     onStateUserSuccess={handleStateUserSuccessfully} />
             <Table striped bordered hover className="table">
@@ -147,7 +145,7 @@ export const Stylist = () => {
                             <td>{user.firstName}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
-                            <td className="status">
+                            <td>
                                 <StylistCard user={user}
                                     restoreUser={restoreProfile}
                                     desactiveUser={desactiveProfile}

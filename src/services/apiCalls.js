@@ -30,7 +30,6 @@ export const bringAllStylists = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  // return axios.get(`${API_URL}user/allStylist`, config)
   return axios.get(`${API_URL}appointment/allStylists`, config)
 }
 
@@ -110,6 +109,8 @@ export const updateProfile = async (profileData, token) => {
   const res = await axios.put(`${API_URL}user/putProfile`, profileData, config)
   return res
 }
+
+
 
 //Admin calls.
 

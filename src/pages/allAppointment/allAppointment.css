@@ -10,17 +10,8 @@
 .table-responsive {
     margin: 0 auto;
     padding: 20px;
-} */
+} 
 
-
-.placeholder-row {
-    height: 2.55em; 
-    background-color: #f8f9fa;
-}
-
-/* .rowAppointment {
-height: 2em;
-} */
 @media (max-width: 768px){
     .Id {
         display: none;

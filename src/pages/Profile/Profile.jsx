@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData, logout } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
-import { bringDates, desactiveProfile, meProfile } from '../../services/apiCalls';
+import { bringDates, meProfile } from '../../services/apiCalls';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -14,7 +14,8 @@ import Memodal from '../../components/Modal/Modal';
 import { useNavigate } from 'react-router-dom';
 import Delete from "../../components/ModalAlert/ModalAlert";
 //Iconos
-import { FcFinePrint, FcPlus, FcHome,  } from "react-icons/fc";
+import { FcPlus } from "react-icons/fc";
+import { IoCalendarSharp, IoHomeOutline } from "react-icons/io5";
 
 //--------------------------------------------------------
 
@@ -25,7 +26,7 @@ export const Profile = () => {
         lastName: "",
         email: "",
         phone: "",
-        password:""
+        password: ""
     });
 
     const [userData, setUserData] = useState([]);
@@ -70,9 +71,9 @@ export const Profile = () => {
                                 <h6>Appointment</h6>
                                 <div className="icons">
                                     <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
-                                    <FcHome className='icon' onClick={() => { navigate("/modAppointment", { state: { userData } }) }} />
+                                    <IoHomeOutline className='icon' onClick={() => { navigate("/modAppointment", { state: { userData } }) }} />
                                     {userData.length > 0 && (
-                                        <FcFinePrint className='icon' onClick={() => navigate("/medates")} />
+                                        <IoCalendarSharp className='icon' onClick={() => navigate("/medates")} />
                                     )}
                                 </div>
                                 <Image src="../../src/Images/iconoPerfil.jpeg" width={150} roundedCircle />
@@ -80,22 +81,21 @@ export const Profile = () => {
                                 <div className="profile">
                                     <div className="modify">
 
-                                    <Memodal
-                                        profileData={profileData}
-                                        inputHandler={inputHandler}
-                                        token={token} />
+                                        <Memodal
+                                            profileData={profileData}
+                                            inputHandler={inputHandler}
+                                            token={token} />
                                         <h6>Mod</h6>
-                                        </div>
-                                        <div className="delete">
-                                    <Delete
-                                        profileData={profileData}
-                                        // inputHandler={inputHandler}
-                                        token={token} 
+                                    </div>
+                                    <div className="delet">
+                                        <Delete
+                                            profileData={profileData}
+                                            // inputHandler={inputHandler}
+                                            token={token}
                                         />
                                         <h6>Del</h6>
-                                        </div>
-                                        
-                                        </div>
+                                    </div>
+                                </div>
                             </Col>
                             <Col xs={12} md={8}>
 

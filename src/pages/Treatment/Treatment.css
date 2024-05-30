@@ -1,5 +1,5 @@
-.placeholder-row2 {
-    height: 2.55em;
+.placeholder-row3 {
+    height: 2.79em;
 }
 
 .cita {
@@ -20,4 +20,9 @@
     width: 1.5em;
     height: 1.5em;
     cursor: crosshair;
+}
+
+.table .status {
+    display: contents;
+
 }

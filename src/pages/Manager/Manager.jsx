@@ -48,7 +48,7 @@ export const Manager = () => {
                 setAppointments(sortedAppointments);
                 setTotalPages(res.data.total_pages || 1); 
             } catch (error) {
-                console.log(error);
+                showToast(error);
             }
         };
         fetchAppointments();
