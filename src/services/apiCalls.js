@@ -30,7 +30,8 @@ export const bringAllStylists = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  return axios.get(`${API_URL}user/allStylist`, config)
+  // return axios.get(`${API_URL}user/allStylist`, config)
+  return axios.get(`${API_URL}appointment/allStylists`, config)
 }
 
 export const bringAllTreatments = async (token) => {
@@ -128,6 +129,7 @@ export const allStylist = async (token, page = 1, limit = 15) => {
     },
   };
   return axios.get(`${API_URL}user/allStylist?page=${page}&limit${limit}`, config);
+  // return axios.get(`${API_URL}appointment/allStylists?page=${page}&limit${limit}`, config);
 }
 
 export const allTreatments = async (token, page = 1, limit = 15) => {

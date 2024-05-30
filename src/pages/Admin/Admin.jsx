@@ -53,7 +53,6 @@ export const Admin = () => {
                 let fetchedUsers = res.data.users;
                 setUsers(fetchedUsers);
                 setFilterUser(res.data.users)
-                console.log(res.data.users);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);

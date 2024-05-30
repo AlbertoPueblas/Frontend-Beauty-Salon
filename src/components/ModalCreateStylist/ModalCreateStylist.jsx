@@ -9,6 +9,7 @@ import { newStylist } from '../../services/apiCalls';
 import { FcPlus } from "react-icons/fc";
 import { getUserData } from '../../app/slice/userSlice';
 import { useSelector } from 'react-redux';
+import "./ModalCreateStylist.css"
 
 //-----------------------------------------------------------
 
@@ -53,7 +54,7 @@ function ModalCreateStylist({ onStateUserSuccess }) {
                 className="modal show"
                 style={{ display: 'block', position: 'initial' }}
             >
-                <FcPlus className='icon' variant="primary" onClick={() => setShow(true)}>
+                <FcPlus className='iconCreate' variant="primary" onClick={() => setShow(true)}>
                     Create Stylist
                 </FcPlus>
                 <Modal show={show} onHide={closeModal}>

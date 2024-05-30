@@ -3,11 +3,21 @@
 }
 
 .cita {
-    width: 2em;
-    height: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0.1em;
+    cursor: pointer;
+
 }
 
+.setings {
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+}
 
 .delete {
-    width: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    cursor: crosshair;
 }

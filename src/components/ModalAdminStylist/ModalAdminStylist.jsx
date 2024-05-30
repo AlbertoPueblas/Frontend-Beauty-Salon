@@ -5,14 +5,13 @@ import Button from 'react-bootstrap/Button';
 import { FcPlanner, FcCancel } from 'react-icons/fc';
 import { CgProfile } from "react-icons/cg";
 import { MdDeleteForever } from "react-icons/md";
-import "./ModalCard.css";
 import { getUserData } from '../../app/slice/userSlice';
 import { useSelector } from 'react-redux';
 import dayjs from "dayjs";
 
 //------------------------------------------------
 
-function UserCard({ user, restoreUser, deleteUser,
+function StylistCard({ user, restoreUser, deleteUser,
     desactiveUser, onStateUserSuccess, deleteAppointmentByAdmin, appointment,
 }) {
     const [showProfile, setShowProfile] = useState(false);
@@ -139,27 +138,7 @@ function UserCard({ user, restoreUser, deleteUser,
                     <Modal.Title>Citas de {user.firstName} {user.lastName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {user.clientDates.length > 0 ? (
-                        user.clientDates.map((appointment) => (
-                            <Card key={appointment.id}>
-                                <Card.Body>
-                                    <Card.Title>Cita ID: {appointment.id}</Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">
-                                    </Card.Subtitle>
-                                    <Card.Subtitle>
-                                        Treatment: {appointment.treatment ? appointment.treatment.treatment : '-'} <br />
-                                        Stylist : {appointment.stylist ? appointment.stylist.firstName : "-"}
-                                    </Card.Subtitle>
-                                    <MdDeleteForever className='icon'
-                                        onClick={() => handleDeleteAppointment(appointment.id)} />
-                                </Card.Body>
-                            </Card>
-                        ))
-
-                    ) : (
-                        null
-                    )}
-                    {/* {appointment.length > 0 ? (
+                    {appointment.length > 0 ? (
                         appointment.map((dates) => (
                             <Card key={dates.id}>
                                 <Card.Body>
@@ -168,8 +147,10 @@ function UserCard({ user, restoreUser, deleteUser,
                                         Date: {new Date(dates.appointmentDate).toLocaleString()}
                                     </Card.Subtitle>
                                     <Card.Subtitle>
+                                        Client : {dates.client.firstName} <br />
+                                        Email : {dates.client.email} <br />
                                         Trateatment: {dates.treatment.treatment} <br />
-                                        Client : {dates.userId}
+                                        Price: {dates.treatment.price} € <br />
                                     </Card.Subtitle>
                                     <MdDeleteForever className='icon'
                                         onClick={() => handleDeleteAppointment(dates.id)} />
@@ -178,7 +159,7 @@ function UserCard({ user, restoreUser, deleteUser,
                         ))
                     ) : (
                         <p></p>
-                    )} */}
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAppointments}>
@@ -190,4 +171,4 @@ function UserCard({ user, restoreUser, deleteUser,
     );
 };
 
-export default UserCard;
+export default StylistCard;

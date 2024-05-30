@@ -27,14 +27,14 @@ export const Register = () => {
     const[registerTime, setRegisterTime] = useState(null)
 
     // Muestra mensajes de error
-    const showToast = (message) => {
+    const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 3000, // Duración 3 seg
+            duration: 1000, // Duración 1 seg
             close: true, // Mostrar botón de cierre
             gravity: "top", // Posición del toast
             position: "center", // Alineación del toast
-            backgroundColor: "#f44336", // Color de fondo (rojo para errores)
+            backgroundColor: backgroundColor, // Color de fondo
             stopOnFocus: true, // Mantener el toast mientras esté enfocado
         }).showToast();
     }
@@ -62,7 +62,7 @@ export const Register = () => {
                     navigate("/home");
                 }, 1000);
             } else {
-                showToast(res.data.message || "Register failed");
+                showToast(res.data.message, "#4caf50"  || "Register failed");
                 setTimeout(() => {
                     navigate("/home")
                 }, 1000)

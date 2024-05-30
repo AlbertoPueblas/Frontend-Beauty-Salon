@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import { 
-    deleteAppointmentByAdmin, 
-    deleteUser, 
-    resetUser, 
-    desactiveUser, 
-    allStylist,
-    bringAllStylists
+import { deleteAppointmentByAdmin, deleteUser, 
+    resetUser, desactiveUser, allStylist, bringAllStylists
 } from "../../services/apiCalls";
 import { useSelector } from "react-redux";
 import { getUserData } from "../../app/slice/userSlice";
-import UserCard from "../../components/Card/ModalCard";
 import "toastify-js/src/toastify.css";
 import Toastify from 'toastify-js';
 import ModalCreateStylist from "../../components/ModalCreateStylist/ModalCreateStylist";
 import Pagination from 'react-bootstrap/Pagination';
+import StylistCard from "../../components/ModalAdminStylist/ModalAdminStylist";
 
 //--------------------------------------------------
 
@@ -29,7 +24,7 @@ export const Stylist = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const itemsPerPage = 12;
+    const itemsPerPage = 10;
 
     const userReduxData = useSelector(getUserData);
     const token = userReduxData.token;
@@ -38,7 +33,7 @@ export const Stylist = () => {
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 3000,
+            duration: 1000,
             close: true,
             gravity: "top",
             position: "center",
@@ -53,6 +48,9 @@ export const Stylist = () => {
                 const res = await allStylist(token, currentPage);
                 const response = await bringAllStylists(token, currentPage)
                 setUsers(res.data.stylists);
+                console.log("users",res.data.stylists);
+                setStylists(response.data.stylists)
+                console.log("stylist",response.data.stylists);
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 console.log(error);
@@ -113,8 +111,7 @@ export const Stylist = () => {
     }
     const handleShowAppointments = (stylist) => {
         setShow(true); 
-        const orderArray = stylist.sort((a,b) => a.firstName.localCompare(b.firstName));
-        setStylists(orderArray);
+        setAppointment(stylist);
     }
 
         //Paginacion
@@ -123,16 +120,16 @@ export const Stylist = () => {
         };
         let placeholders = [];
         //Crea el numero de filas necesarias para completar la tabla
-        if (users.length < itemsPerPage) {
+        if (stylists.length < itemsPerPage) {
     
             placeholders = Array(itemsPerPage - users.length).fill({})
         }
 
     return (
         <div className="table-responsive">
-                <h4>Styilist 
+                <h4>Styilist </h4>
                     <ModalCreateStylist
-                    onStateUserSuccess={handleStateUserSuccessfully} /></h4>
+                    onStateUserSuccess={handleStateUserSuccessfully} />
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>
@@ -151,13 +148,14 @@ export const Stylist = () => {
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
                             <td className="status">
-                                <UserCard user={user}
+                                <StylistCard user={user}
                                     restoreUser={restoreProfile}
                                     desactiveUser={desactiveProfile}
                                     deleteUser={deletePermanent}
                                     onStateUserSuccess={handleStateUserSuccessfully}
                                     deleteAppointmentByAdmin={delAppointment} 
                                     handleShowAppointments={() => handleShowAppointments(user.stylist.length > 0)}
+                                    appointment={stylists[user.firstName] || []}
                                     /></td>
                         </tr>
                     ))}

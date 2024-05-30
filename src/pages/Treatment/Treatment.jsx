@@ -123,12 +123,11 @@ export const Treatments = () => {
             }
         }
     };
-    
 
     let placeholders = [];
 
     if (treatments.length < itemsPerPage) {
-        
+
         //Crea el numero de filas necesarias para completar la tabla
         placeholders = Array(itemsPerPage - treatments.length).fill({})
     }
@@ -157,9 +156,12 @@ export const Treatments = () => {
                             <td>{t.treatment}</td>
                             <td>{t.price} €</td>
                             <td className="status">
-                                <FcPlus className="cita" onClick={handleShowCreate} />
-                                <FiSettings onClick={() => handleShowModify(t)} />
-                                <MdOutlineDeleteForever className="delete" onClick={(e) => handleDeleteTreatment(t.id)} />
+                                    <FcPlus className="cita" 
+                                    onClick={handleShowCreate} />
+                                    <FiSettings className="setings" 
+                                    onClick={() => handleShowModify(t)} />
+                                    <MdOutlineDeleteForever className="delete" 
+                                    onClick={(e) => handleDeleteTreatment(t.id)} />
                             </td>
                         </tr>
                     ))}
