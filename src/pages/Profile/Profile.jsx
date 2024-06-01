@@ -72,7 +72,7 @@ export const Profile = () => {
                                 <h6>Appointment</h6>
                                 <div className="icons">
                                     <FcPlus className='icon' onClick={() => { navigate("/appointment") }} />
-                                    <IoHomeOutline className='icon' onClick={() => { navigate("/modAppointment", { state: { userData } }) }} />
+                                    <IoHomeOutline className='icon' onClick={() => { navigate("/menu", { state: { userData } }) }} />
                                     {userData.length > 0 && (
                                         <IoCalendarSharp className='icon' onClick={() => navigate("/medates")} />
                                     )}

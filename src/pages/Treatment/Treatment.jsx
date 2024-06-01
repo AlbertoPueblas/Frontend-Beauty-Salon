@@ -119,6 +119,7 @@ export const Treatments = () => {
                 console.error(error);
                 showToast("Error al eliminar el tratamiento", "#f44336");
             }
+            handleDeleteSuccess();
         }
     };
 

@@ -77,7 +77,7 @@ export const Manager = () => {
 
     return (
         <div className="table-responsive">
-            <h5>All Users</h5>
+            <h5>All Dates</h5>
             <Table striped bordered hover className="table">
                 <thead>
                     <tr>

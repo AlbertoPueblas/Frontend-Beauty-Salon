@@ -71,7 +71,7 @@ function ModalCreateStylist({ onStateUserSuccess }) {
                                     type="email"
                                     name="email"
                                     placeholder="email"
-                                    value={credentials.email}
+                                    value={credentials.email || ""}
                                     onChange={inputHandler}
 
                                 />
@@ -123,12 +123,12 @@ function ModalCreateStylist({ onStateUserSuccess }) {
                             onClick={() => {
                                 createStylist()
                             }}>Create Stylist</Button>
-                            <Password
+                            {/* <Password
                                 credentials={credentials}
                                 inputHandler={inputHandler}
 
                                  />
-                    
+                     */}
                     </Modal.Footer>
                 </Modal>
             </div>

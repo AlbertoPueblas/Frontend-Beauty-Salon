@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { useSelector } from 'react-redux';
 import { getUserData } from '../../app/slice/userSlice';
 import { useEffect, useState } from 'react';
-import { bringDates, bringAllStylists, bringAllTreatments, deleteDate } from '../../services/apiCalls';
+import { bringDates, allStylist, bringAllTreatments, deleteDate } from '../../services/apiCalls';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -45,7 +45,7 @@ export const Dates = () => {
             const resDates = await bringDates(token);
             setDates(resDates.clientDates);
             
-            const resStylists = await bringAllStylists(token);
+            const resStylists = await allStylist(token);
             setStylists(resStylists.data.stylists);
         
             const resTreatments = await bringAllTreatments(token);
@@ -70,6 +70,9 @@ export const Dates = () => {
                 const updatedDates = dates.filter(date => date.id !== id);
                 setDates(updatedDates);
                 showToast("Cita eliminada con éxito", "rgb(122, 201, 43)");
+                if (updatedDates.length === 0) {
+                    navigate("/profile");
+                }
             } else {
                 showToast("Error al eliminar la cita");
             }

@@ -52,7 +52,7 @@ export const Admin = () => {
                 const res = await allUsers(token, currentPage);
                 let fetchedUsers = res.data.users;
                 setUsers(fetchedUsers);
-                setFilterUser(res.data.users)
+                // setFilterUser(res.data.users)
                 setTotalPages(res.data.total_pages);
             } catch (error) {
                 showToast(error);
@@ -77,6 +77,7 @@ export const Admin = () => {
         } catch (error) {
             showToast("Error to restore")
         }
+        handleStateUserSuccessfully()
     }
 
     const desactiveProfile = async (id) => {
@@ -91,6 +92,7 @@ export const Admin = () => {
         } catch (error) {
             showToast("Error to disable")
         }
+        handleStateUserSuccessfully()
     }
 
     const deletePermanent = async (id) => {
@@ -108,6 +110,7 @@ export const Admin = () => {
         } catch (error) {
             showToast("Error to delete profile")
         }
+        handleStateUserSuccessfully()
     }
 
     const delAppointment = async (id) => {
