@@ -67,11 +67,11 @@ function Header() {
 
           ) : userType === 2 ? (
             <>
-              <NavDropdown title="Manager" >
+              <NavDropdown title="Manager" className='actions' >
                 <NavDropdown.Item href="/manager">Users</NavDropdown.Item>
                 <NavDropdown.Item href="/treatments">Treatment</NavDropdown.Item>
                 <NavDropdown.Divider />
-                {token && <Nav.Link href="/profile" className='actions'>Profile</Nav.Link>}
+                {token && <Nav.Link href="/profile">Profile</Nav.Link>}
               </NavDropdown>
             </>
           ) : (
