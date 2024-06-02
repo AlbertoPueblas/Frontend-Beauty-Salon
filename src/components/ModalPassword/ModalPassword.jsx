@@ -3,6 +3,8 @@ import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { updateProfile } from '../../services/apiCalls';
 import "./ModalPassword.css";
+import "toastify-js/src/toastify.css";
+import Toastify from 'toastify-js';
 
 //------------------------------------------------------------------------------
 
@@ -42,6 +44,13 @@ function ModalPassword(props) {
     };
 
     const handlePasswordChange = async () => {
+
+        if(currentPassword !== currentPassword) {
+            showToast("Current password is incorrect.");
+            return;
+        }
+
+
         if (newPassword !== confirmPassword) {
             showToast("New passwords do not match.");
             return;
