@@ -28,6 +28,7 @@ export const Home = () => {
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
+        isActive: ""
     });
 
     const [isValid, setIsValid] = useState({
@@ -56,7 +57,7 @@ export const Home = () => {
     const loginMe = async () => {
         try {
             const res = await loginCall(credentials);
-
+            console.log(res);
             if (res.data && res.data.token) {
                 const uDecoded = decodeToken(res.data.token);
 
@@ -64,28 +65,31 @@ export const Home = () => {
                     token: res.data.token,
                     decoded: uDecoded,
                 };
-                dispatch(login(passport))
+                dispatch(login(passport));
 
                 setTimeout(() => {
-                    const userRole = passport.decoded.userRole
-                    if ( userRole === 1 ) {
-                        navigate("/admin")
-
-                    } else if( userRole === 2 ) {
-                        navigate("/manager")
-                    } else if ( userRole === 3 ) {
-                        navigate("/menu")
+                    const userRole = passport.decoded.userRole;
+                    if (userRole === 1) {
+                        navigate("/admin");
+                    } else if (userRole === 2) {
+                        navigate("/manager");
+                    } else if (userRole === 3) {
+                        navigate("/menu");
                     }
                 }, 1000);
-            } else if (res.data && res.data.user && !res.data.user.isActive) {
-                showToast("Tu cuenta no esta activa contacta con el administrador")
             } else {
-                showToast("Error al iniciar sesion")
+                showToast("Error al iniciar sesión");
             }
         } catch (error) {
+            console.log("error", error);
+            if (error.response.data.isActive === false) {
+                showToast("Tu cuenta no está activa, contacta al administrador");
+            }
             showToast("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
         }
-    }
+    };
+
+
 
     const showToast = (message) => {
         Toastify({

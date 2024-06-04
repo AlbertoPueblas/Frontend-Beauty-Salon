@@ -144,7 +144,11 @@ export const Treatments = () => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Treatment</th>
+                        <th>Treatment
+                            <FcPlus className="cita"
+                                onClick={handleShowCreate} />
+
+                            </th>
                         <th>Price</th>
                         <th>Action</th>
                     </tr>
@@ -156,8 +160,6 @@ export const Treatments = () => {
                             <td>{t.treatment}</td>
                             <td>{t.price} €</td>
                             <td >
-                                <FcPlus className="cita"
-                                    onClick={handleShowCreate} />
                                 <FiSettings className="setings"
                                     onClick={() => handleShowModify(t)} />
                                 <MdOutlineDeleteForever className="delete"

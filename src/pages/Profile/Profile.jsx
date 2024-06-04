@@ -34,10 +34,14 @@ export const Profile = () => {
 
     const myPassport = useSelector(getUserData)
     const token = myPassport.token;
+    const userReduxData = useSelector(getUserData) || {}
+    const userType = userReduxData?.decoded?.userRole
+
 
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
+
 
     useEffect(() => {
         const fetchDataAndProfile = async () => {
@@ -80,21 +84,28 @@ export const Profile = () => {
                                 <Image src={Icon} width={150} roundedCircle />
                                 <h6>Profile</h6>
                                 <div className="profile">
-                                    <div className="modify">
+                                    <div className={userType === 3 ? "modify-left" : "modify-center"}>
 
                                         <Memodal
                                             profileData={profileData}
                                             inputHandler={inputHandler}
                                             token={token} />
-                                        <h6>Mod</h6>
                                     </div>
+
                                     <div className="delet">
-                                        <Delete
-                                            profileData={profileData}
-                                            // inputHandler={inputHandler}
-                                            token={token}
-                                        />
-                                        <h6>Del</h6>
+                                        {userType === 3 ? (
+                                            <>
+                                            <Delete
+                                                profileData={profileData}
+                                                // inputHandler={inputHandler}
+                                                token={token}
+                                                />
+                                                </>
+                                            
+                                        ) : (
+                                            null
+                                        )}
+
                                     </div>
                                 </div>
                             </Col>

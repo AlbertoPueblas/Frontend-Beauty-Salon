@@ -31,7 +31,7 @@ export const Register = () => {
     const showToast = (message, backgroundColor = "#f44336") => {
         Toastify({
             text: message,
-            duration: 1000, // Duración 1 seg
+            duration: 2000, // Duración 2 seg
             close: true, // Mostrar botón de cierre
             gravity: "top", // Posición del toast
             position: "center", // Alineación del toast
@@ -63,7 +63,7 @@ export const Register = () => {
                     navigate("/home");
                 }, 1000);
             } else {
-                showToast(res.data.message, "#4caf50"  || "Register failed");
+                showToast(res.data.message ||  "#4caf50", "User is Deactivated");
                 setTimeout(() => {
                     navigate("/home")
                 }, 1000)

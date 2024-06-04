@@ -44,7 +44,7 @@ function Header() {
     <Navbar expand="lg" className="navBar">
       <Container fluid>
         <Image src={MPImage} width={40} roundedCircle></Image>
-        <Navbar.Brand href="#"><h2>MP</h2></Navbar.Brand>
+        <Navbar.Brand href="home"><h2>MP</h2></Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="navbarScroll" /> */}
         {/* <Navbar.Collapse id="navbarScroll"> */}
         {/* <Nav.Link href="/home">Home</Nav.Link> */}
