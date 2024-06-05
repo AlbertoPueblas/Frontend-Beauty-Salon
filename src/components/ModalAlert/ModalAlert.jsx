@@ -62,7 +62,7 @@ function Delete(profileData) {
 
                     // Verifica si la respuesta es correcta
                     if (res.status === 200) {
-                        showToast("Failed to delete profile");
+                        showToast("Delete profile");
                     }
                 } catch (error) {
                     showToast("Error deleting profile");

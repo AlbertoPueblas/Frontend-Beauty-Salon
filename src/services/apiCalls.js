@@ -4,6 +4,15 @@ import axios from "axios"
 
 const API_URL = "http://localhost:3000/api/"
 
+export const activeProfile = async (active, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.put(`${API_URL}user/active`, active, config)
+}
+
 export const appointmentCreate = async(appCreate, token) => {
   const config = {
     headers: {

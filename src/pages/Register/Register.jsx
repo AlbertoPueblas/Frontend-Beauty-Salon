@@ -78,6 +78,16 @@ export const Register = () => {
         }
     };
 
+    const activeProfile = async () => {
+        try {
+            const response = await activeUser(id, token);
+            navigate("/home")
+            
+        } catch (error) {
+            
+        }
+    }
+
     const inputHandler = (e) => {
         setCredentials((prevState) => ({
             ...prevState,
